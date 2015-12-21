@@ -9,8 +9,7 @@ title:               3 Diagrams per Page
 tagline:             ... here will be my blog one day...
 description:         'My blog!'
 url:                 http://felix11h.github.io/
-baseurl:             ''
-
+baseurl:             blog
 
 # About/contact
 author:
