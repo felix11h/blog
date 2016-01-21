@@ -1,0 +1,101 @@
+#+STARTUP: noindent showeverything
+#+OPTIONS: toc:nil;
+#+BEGIN_HTML
+---
+layout: post
+title: A reproducible research environment with Sumatra and Docker
+categories:
+    - reproducible-research
+    - Docker
+    - Sumatra
+---
+#+END_HTML
+
+
+Docker is a [[http://arxiv.org/abs/1410.0846][promising candidate]] ~!! make this a proper citation?~ for creating a computational research environment that allows for easy replication of computations and results. [[http://www.neuralensemble.org/sumatra/][Sumatra]] is an automated laboratory notebook for computationl research projects. Do Sumatra and Docker work well together? 
+
+#+BEGIN_HTML
+<!-- more -->
+#+END_HTML
+
+Yes. Here's some explanations that might help you get started using Docker and Sumatra in combination: 
+
+* A docker image for Sumatra
+
+Here's ~!! link to docker hub~ a basic docker image containing Sumatra 0.7.0. It's built from the following Dockerfile: 
+
+#+BEGIN_SRC dockerfile
+!!!! wrong file
+FROM neuralensemble/simulation
+
+USER root
+
+RUN $VENV/bin/pip install sumatra
+
+EXPOSE 8000
+
+WORKDIR /home
+#+END_SRC
+
+
+You can 
+#+BEGIN_SRC sh
+docker run -it -p 127.0.0.1:8000:8000 /    /bin/bash
+#+END_SRC
+
+This command, after not finding """" locally, pulls the Sumatra docker image from the DockerHub and runs it with the following parameters:
+
+
+
+
+* Sumatra within the container
+
+
+From within the container, let's test if Sumatra works as expected:
+
+Do 
+#+BEGIN_SRC sh
+mkdir smt_test
+cd smt_test
+git init
+smt init Test_Project
+smtweb --allips 
+#+END_SRC
+
+
+Here the flag ~--allips~ to smtweb is critical. It hosts the Sumatra webinterface at 0.0.0.0:8000 (as opposed to 127.0.0.1:8000), which is exactly the address the docker container assumes when trying to publish the content the host. With this you should be able to
+
+~curl~
+
+On the Docker host (i.e. outside the container!) 
+
+* More
+
+You can either
+
+#+BEGIN_SRC sh
+sudo docker run
+#+END_SRC
+
+
+or build the image yourself by creating a directory containing the dockerfile above (named "dockerfile") and execute
+
+
+* Permanently host the webinterface with screen
+
+Both smt and neuroenv images (!!! correct image names) have ~screen~ installed. With this you can
+
+#+BEGIN_SRC sh
+screen
+smtweb --allips
+#+END_SRC
+
+Then press ~CTRL+a d~ to detach the screen. This allows you to keep the webinterface hosted while you're running simulations. To get back the original screen, use ~screen -r~ and you can stop and restart the server if you need to.
+
+
+* What I'm using
+
+Finally, here's the Docker image I'm using. It's built on top of neuralensemble/simulation and additionally provides Sumatra, Texlive (matplotlib.pyplot LaTeX rendering) and screen. It also automatically activates the correct Python virtualenv and . More here.
+
+* References
+http://neuralensemble.blogspot.de/2015/08/docker-images-for-neuronal-network.html
