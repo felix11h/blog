@@ -1,0 +1,79 @@
+---
+layout: post
+title: Arrowheads for axis in Matplotlib
+categories:
+    - Matplotlib
+    - Python
+---
+
+
+<p>
+This is a short demo showing how to make abstract plots in matplotlib that have arrows pointing in the x and y direction as axis.<br  />
+</p>
+
+<!-- more -->
+
+
+<img src="{{ site.baseurl }}/assets/arrow_axis.png" alt="matplotlib_helvetica" width="620" style="border:0 none;display:block;margin:0 auto 1.5em;" class="alignnone" />
+
+<p>
+The idea is to remove the default axis completely and insert arrows with the correct dimensions as substitute axis:<br  />
+</p>
+
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span style="color: #859900;">import</span> pylab <span style="color: #859900;">as</span> pl
+
+<span style="color: #b58900;">fig</span> = pl.figure()
+<span style="color: #b58900;">ax</span> = fig.add_subplot(111)
+
+<span style="color: #b58900;">x</span> = pl.arange(-5,5,0.1)
+ax.plot(x, x**2-8.8)
+
+<span style="color: #b58900;">xmin</span>, <span style="color: #b58900;">xmax</span> = ax.get_xlim() 
+<span style="color: #b58900;">ymin</span>, <span style="color: #b58900;">ymax</span> = ax.get_ylim()
+
+<span style="color: #586e75; font-style: italic;"># </span><span style="color: #657b83; font-style: italic;">removing the default axis on all sides:</span>
+<span style="color: #859900;">for</span> side <span style="color: #859900;">in</span> [<span style="color: #2aa198;">'bottom'</span>,<span style="color: #2aa198;">'right'</span>,<span style="color: #2aa198;">'top'</span>,<span style="color: #2aa198;">'left'</span>]:
+    ax.spines[side].set_visible(<span style="color: #6c71c4;">False</span>)
+
+<span style="color: #586e75; font-style: italic;"># </span><span style="color: #657b83; font-style: italic;">removing the axis ticks</span>
+pl.xticks([]) <span style="color: #586e75; font-style: italic;"># </span><span style="color: #657b83; font-style: italic;">labels </span>
+pl.yticks([])
+ax.xaxis.set_ticks_position(<span style="color: #2aa198;">'none'</span>) <span style="color: #586e75; font-style: italic;"># </span><span style="color: #657b83; font-style: italic;">tick markers</span>
+ax.yaxis.set_ticks_position(<span style="color: #2aa198;">'none'</span>)
+
+<span style="color: #586e75; font-style: italic;"># </span><span style="color: #657b83; font-style: italic;">wider figure for demonstration</span>
+fig.set_size_inches(4,2.2)
+
+<span style="color: #586e75; font-style: italic;"># </span><span style="color: #657b83; font-style: italic;">get width and height of axes object to compute </span>
+<span style="color: #586e75; font-style: italic;"># </span><span style="color: #657b83; font-style: italic;">matching arrowhead length and width</span>
+<span style="color: #b58900;">dps</span> = fig.dpi_scale_trans.inverted()
+<span style="color: #b58900;">bbox</span> = ax.get_window_extent().transformed(dps)
+<span style="color: #b58900;">width</span>, <span style="color: #b58900;">height</span> = bbox.width, bbox.height
+
+<span style="color: #586e75; font-style: italic;"># </span><span style="color: #657b83; font-style: italic;">manual arrowhead width and length</span>
+<span style="color: #b58900;">hw</span> = 1./20.*(ymax-ymin) 
+<span style="color: #b58900;">hl</span> = 1./20.*(xmax-xmin)
+<span style="color: #b58900;">lw</span> = 1. <span style="color: #586e75; font-style: italic;"># </span><span style="color: #657b83; font-style: italic;">axis line width</span>
+<span style="color: #b58900;">ohg</span> = 0.3 <span style="color: #586e75; font-style: italic;"># </span><span style="color: #657b83; font-style: italic;">arrow overhang</span>
+
+<span style="color: #586e75; font-style: italic;"># </span><span style="color: #657b83; font-style: italic;">compute matching arrowhead length and width</span>
+<span style="color: #b58900;">yhw</span> = hw/(ymax-ymin)*(xmax-xmin)* height/width 
+<span style="color: #b58900;">yhl</span> = hl/(xmax-xmin)*(ymax-ymin)* width/height
+
+<span style="color: #586e75; font-style: italic;"># </span><span style="color: #657b83; font-style: italic;">draw x and y axis</span>
+ax.arrow(xmin, 0, xmax-xmin, 0., fc=<span style="color: #2aa198;">'k'</span>, ec=<span style="color: #2aa198;">'k'</span>, lw = lw, 
+         head_width=hw, head_length=hl, overhang = ohg, 
+         length_includes_head= <span style="color: #6c71c4;">True</span>, clip_on = <span style="color: #6c71c4;">False</span>) 
+
+ax.arrow(0, ymin, 0., ymax-ymin, fc=<span style="color: #2aa198;">'k'</span>, ec=<span style="color: #2aa198;">'k'</span>, lw = lw, 
+         head_width=yhw, head_length=yhl, overhang = ohg, 
+         length_includes_head= <span style="color: #6c71c4;">True</span>, clip_on = <span style="color: #6c71c4;">False</span>) 
+
+<span style="color: #586e75; font-style: italic;"># </span><span style="color: #657b83; font-style: italic;">clip_on = False if only positive x or y values.</span>
+
+pl.savefig(<span style="color: #2aa198;">'arrow_axis.png'</span>, dpi = 300)
+</pre>
+</div>

@@ -25,7 +25,7 @@ Yes. Here's some explanations that might help you get started using Docker and S
 Here's ~!! link to docker hub~ a basic docker image containing Sumatra 0.7.0. It's built from the following Dockerfile: 
 
 #+BEGIN_SRC dockerfile
-!!!! wrong file
+# !!!! wrong file
 FROM neuralensemble/simulation
 
 USER root

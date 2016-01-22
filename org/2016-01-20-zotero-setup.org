@@ -21,19 +21,22 @@ In this post I want to share my Zotero setup. It took me a while to figure out a
 
 The main issue I have is the way files that are attached to Zotero entries get stored. In the default setup, Zotero saves the PDF (and other) documents in the Firefox profile directory. The [[https://www.zotero.org/support/zotero_data][path]] to your library (on Linux) looks like this:
 
-#+BEGIN_SRC 
+#+BEGIN_SRC
 ~/.mozilla/firefox/Profiles/<randomstring>/zotero 
 #+END_SRC
 
 I find this very impractical. But it gets worse: Even knowing this path, I can't predict where a specific file will be stored, as Zotero creates seemingly random subdirectories in which the files are stored with cryptic file names. This makes locating the files in the file system unnecessarily hard. 
 
+
 * Zotfile to the rescue!
 
 [[http://zotfile.com/][Zotfile]], written by Joscha Legewie, is a plug-in for Zotero that is able to address almost every issue I have with Zotero. Get it [[http://zotfile.com/][here]] and consider supporting the developer if you find the tool as useful as I do.
 
+
 * Renaming & Relocating with Zotfile
 
 Renaming and relocating the attachments is easy using Zotfile. Open the Zotfile preferences in Zotero (located right under the stanrad preferences) and define your location and renaming rules. Combing the <a href="">default wildcards</a> you can get pretty nice results already.
+
 
 * Document type specific renaming and storing with custom wildcards
 
