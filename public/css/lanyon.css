@@ -573,3 +573,20 @@ a.pagination-item:hover {
     margin-left:4%;
     margin-right:4%;
 }
+
+.navbar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+
+.navitem {
+    float: left;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 0px 0px;
+    text-decoration: none;
+}
