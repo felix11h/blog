@@ -20,10 +20,12 @@ title: Home
       {% else %}
         {{ post.content }}
       {% endif %}
-      {% if post.content contains "<!-- more -->" %}
-        <a href="{{ site.baseurl }}/{{ post.url }}">
-	  Continue reading &rarr;
-	</a>
+	{% if post.content contains "<!-- more -->" %}
+	<div style="margin-top:-0.5em;">
+            <a href="{{ site.baseurl }}/{{ post.url }}">
+		Continue reading &rarr;
+	    </a>
+	</div>
       {% endif %}
     </div>
     <p>&nbsp;</p>
