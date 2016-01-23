@@ -3,7 +3,7 @@
 #+BEGIN_HTML
 ---
 layout: post
-title: Zotero setup (prelim title)
+title: Better Zotero file management
 categories:
     - Zotero
     - reference-management
@@ -11,7 +11,7 @@ categories:
 #+END_HTML
 
 
-In this post I want to share my Zotero setup. It took me a while to figure out all the pieces and I figure it might be helpful to someone else.
+In this post I'm detailing my Zotero setup. It took me a while to figure out all the pieces and I figure it might be helpful to someone else.
 
 #+BEGIN_HTML
 <!-- more -->
@@ -19,13 +19,13 @@ In this post I want to share my Zotero setup. It took me a while to figure out a
 
 * Why isn't the default Zotero setup good enough?
 
-The main issue I have is the way files that are attached to Zotero entries get stored. In the default setup, Zotero saves the PDF (and other) documents in the Firefox profile directory. The [[https://www.zotero.org/support/zotero_data][path]] to your library (on Linux) looks like this:
+The main issue is the way files that are attached to Zotero entries get stored. In the default setup, Zotero saves the PDF (and other) documents in the Firefox profile directory. The [[https://www.zotero.org/support/zotero_data][path]] to your library (on Linux) looks like this:
 
 #+BEGIN_SRC
 ~/.mozilla/firefox/Profiles/<randomstring>/zotero 
 #+END_SRC
 
-I find this very impractical. But it gets worse: Even knowing this path, I can't predict where a specific file will be stored, as Zotero creates seemingly random subdirectories in which the files are stored with cryptic file names. This makes locating the files in the file system unnecessarily hard. 
+I find this very impractical. But it gets worse: Even knowing this path, it is impossible to predict where a specific file will be stored, as Zotero creates seemingly random subdirectories in which the files are stored, using cryptic file names. This makes locating Zotero attachements in the file system unnecessarily hard. 
 
 
 * Zotfile to the rescue!
@@ -33,18 +33,18 @@ I find this very impractical. But it gets worse: Even knowing this path, I can't
 [[http://zotfile.com/][Zotfile]], written by Joscha Legewie, is a plug-in for Zotero that is able to address almost every issue I have with Zotero. Get it [[http://zotfile.com/][here]] and consider supporting the developer if you find the tool as useful as I do.
 
 
-* Renaming & Relocating with Zotfile
+** Renaming & Relocating with Zotfile
 
 Renaming and relocating the attachments is easy using Zotfile. Open the Zotfile preferences in Zotero (located right under the stanrad preferences) and define your location and renaming rules. Combing the <a href="">default wildcards</a> you can get pretty nice results already.
 
 
-* Document type specific renaming and storing with custom wildcards
+** Document type specific renaming and storing with custom wildcards
 
 However, if you would like document type specific renaming and relocating rules you have to resort to writing your own wildcards. Here's two things I wanted to do:
 
 - I would like custom folder names for the specific documents. Instead of sorting journal article type documents into "Journal Articles" I'd rather have them in a folder "articles". 
 
-- Similarly, for the document type manuscript I'd like to rename them to /AuthorYear_Title/. 
+- Similarly, for the document type manuscript I'd like to rename them to ~AuthorYear_Title~. 
 
 This is exactly what the two following wildcards achieve:
 
@@ -146,8 +146,7 @@ This is exactly what the two following wildcards achieve:
 
 Here, ~%3~ is for the renaming while ~%4~ handles the relocating. 
 
-If you're defining wildcards yourself, or want to use the one above,
-you should first <a href="">validate the JSON</a> and then convert it to a <a href="">single line of code</a>.
+If you're defining wildcards yourself, or want to use the one above, you should first <a href="">validate the JSON</a> and then convert it to a <a href="">single line of code</a>.
 
 Here's screenshots of my Zotfile settings:
 
@@ -155,36 +154,26 @@ Here's screenshots of my Zotfile settings:
 
 * Syncing across multiple machines
 
-Setting up Zotero in this way allows you to easily synchronize your
-Zotero library across multiple machines. All you need to do is:
+Setting up Zotero in this way allows you to easily synchronize your Zotero library across multiple machines. All you need to do is:
 
-1. Synchronize your library directory (the one you specified in
-   Zotfile), for example via Dropbox or ownCloud.
-2. Synchronize your Zotero profile via the service provided within
-   Zotero (you have to create an account).
+1. Synchronize your library directory (the one you specified in Zotfile), for example via Dropbox or ownCloud.
+2. Synchronize your Zotero profile via the service provided within Zotero (you have to create an account).
 3. IMPORTANT! In the Zotero settings, set the file paths to relative.
   
 
 
 * Easily sharing papers
 
-Another very helpful feature that Zotfile provides is exporting the
-pdfs attached to a collection or selection within Zotero. This
-specifically helpful when you need to share papers with others and
-just need the pdfs of these three items in Zotero.
+Another very helpful feature that Zotfile provides is exporting the pdfs attached to a collection or selection within Zotero. This specifically helpful when you need to share papers with others and just need the pdfs of these three items in Zotero.
 
-To do this, set up the "Send to Tablet" functionality. You don't need
-to send it to a tablet. All it really does is copy selected pdfs to a
-folder specified by you. 
+To do this, set up the "Send to Tablet" functionality. You don't need to send it to a tablet. All it really does is copy selected pdfs to a folder specified by you. 
 
 
 * A final step for LaTeX enthusiasts
 
-If you're using Bibtex to generate your bibliographies, there's one
-more thing you can do. 
+If you're using Bibtex to generate your bibliographies, there's one more thing you can do. 
 
-With this, articles become available to you for citation the moment
-you add them to Zotero library. 
+With this, articles become available to you for citation the moment you add them to Zotero library. 
 
 
 
