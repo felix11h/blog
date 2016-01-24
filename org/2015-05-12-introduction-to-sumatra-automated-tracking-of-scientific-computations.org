@@ -1,8 +1,8 @@
 #+BEGIN_HTML
 ---
 layout: post
-title: Introduction to Sumatra - Automated tracking of scientific
-permalink: intro-to-sumatra computations
+title: Introduction to Sumatra - Automated tracking of scientific computations
+permalink: intro-to-sumatra 
 date: 2015-05-12
 type: post
 published: true

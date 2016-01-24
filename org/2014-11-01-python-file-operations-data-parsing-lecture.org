@@ -1,0 +1,26 @@
+#+BEGIN_HTML
+---
+layout: post
+title: 'Python: File operations & Data parsing lecture'
+permalink: python-file-ops
+date: 2014-11-01
+published: true
+categories:
+- Python
+tags:
+- Python
+---
+#+END_HTML
+
+
+In the latest edition of the Introduction to Scientific Programming in Python lecture at my institution, I held a tutorial on "File operations & Data parsing". Below the lecture slides:
+
+#+BEGIN_HTML
+<!-- more -->
+#+END_HTML
+
+#+BEGIN_HTML
+<iframe src="//www.slideshare.net/slideshow/embed_code/key/waMBlkI1uwXEUY" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="margin-top: 2em; border:1px solid #CCC; border-width:1px; margin-left: auto;margin-right: auto; display:block; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:2em"></div
+#+END_HTML
+
+You can find the LaTeX source code for the slides on [[https://github.com/Felix11H/LaTeX-presentations-data_processing][GitHub]].
