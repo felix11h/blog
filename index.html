@@ -7,7 +7,7 @@ title: Home
   {% for post in paginator.posts %}
   <div class="post">
     <h1 class="post-title">
-      <a href="{{ site.baseurl }}/{{ post.url }}">
+      <a href="{{ site.baseurl }}{{ post.url }}">
         {{ post.title }}
       </a>
     </h1>
@@ -22,7 +22,7 @@ title: Home
       {% endif %}
 	{% if post.content contains "<!-- more -->" %}
 	<div style="margin-top:-0.5em;">
-            <a href="{{ site.baseurl }}/{{ post.url }}">
+            <a href="{{ site.baseurl }}{{ post.url }}">
 		Continue reading &rarr;
 	    </a>
 	</div>
