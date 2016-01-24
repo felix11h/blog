@@ -3,7 +3,7 @@ layout: page
 title: About
 ---
 
-<!--<a href="https://3diagramsperpage.files.wordpress.com/2015/12/2009_126x1431.jpg"><img class="alignright size-full wp-image-109" style="border:0 none;" title="Avatar Tafel" alt="" src="https://3diagramsperpage.files.wordpress.com/2015/12/2009_126x1431.jpg" width="126" height="143" /></a>-->
+<img src="{{ site.baseurl }}/assets/2009_V2_300x300.jpg" style="border:0 none;display:block;margin:0 auto 3em;" class="alignright" />
 
 <em>3 Diagrams per Page</em> is my personal blog for anything related to computational neuroscience, mathematics, physics, programming, open science and the tools I use to organize my thoughts and ideas.
 
