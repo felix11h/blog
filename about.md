@@ -9,3 +9,4 @@ title: About
 
 My name is <a href="http://felix11h.github.io/">Felix Z. Hoffmann</a> and I'm a PhD student in computational neuroscience in Frankfurt, Germany.
 
+<i class="fa fa-github"></i> <i class="fa fa-twitter">  <i class="fa fa-bitbucket">
