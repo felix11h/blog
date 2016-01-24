@@ -1,0 +1,50 @@
+---
+layout: page
+title: About
+---
+
+<p style="margin-top:2em;">
+  <img src="{{ site.baseurl }}/assets/2009_V2_300x300.jpg" style="border:0 none;display:block;margin: -0.25em 2em -1em;float:right" width="175px" />
+  <em>3 Diagrams per Page</em> is my personal blog for anything related to computational neuroscience, mathematics, physics, programming, open science and the tools I use to organize my thoughts and ideas.
+</p>
+
+<p style="margin-top:3em;">
+  My name is <a href="http://felix11h.github.io/">Felix Z. Hoffmann</a> and I'm a PhD student in computational neuroscience in Frankfurt, Germany.
+</p>
+
+<style>
+ .fa_link{
+     color:#111;
+     }
+</style>
+
+<p style="margin-top:3em; text-align: center;">
+  <a href="https://github.com/Felix11H" class="fa_link" style="text-decoration:none;">
+    <i class="fa fa-github fa-lg"></i>
+  </a>
+  &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;
+  <a href="https://twitter.com/Felix11H" class="fa_link" style="text-decoration:none;">
+    <i class="fa fa-twitter fa-lg"> </i>
+  </a>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  <a href="https://bitbucket.org/Felix11H/" class="fa_link" style="text-decoration:none;">
+    <i class="fa fa-bitbucket fa-lg"></i>
+  </a>
+</p>
+
+
+<div class="related" style="margin-top:20em;">
+  <h2>Latest Posts</h2>
+  <ul class="related-posts">
+    {% for post in site.posts limit:3 %}
+    <li>
+      <h3>
+        <a href="{{ site.baseurl }}{{ post.url }}">
+          {{ post.title }}
+          <small>{{ post.date | date_to_string }}</small>
+        </a>
+      </h3>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
