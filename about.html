@@ -3,10 +3,41 @@ layout: page
 title: About
 ---
 
+<style>
+ .profileimg{
+     float:right;
+     display:block;
+     margin: -0.25em 2em 1em;
+     border-radius: 4px;}
+ @media (max-width: 800px) {
+     .profileimg {
+         float: none;
+         margin-right: auto;
+         margin-left: auto;
+         display: none;}
+ }
+
+ .profileimg_narrow{
+     float:right;
+     display:none;
+     margin: 2em auto -1em;
+     border-radius: 4px;}
+ @media (max-width: 800px) {
+     .profileimg_narrow {
+         float: none;
+         margin-right: auto;
+         margin-left: auto;
+         display: block;}
+ }
+
+</style>
+
 <p style="margin-top:2em;">
-  <img src="{{ site.baseurl }}/assets/2009_V2_300x300.jpg" style="display:block;margin: -0.25em 2em 1em;float:right; border-radius: 4px;" width="175px" />
+  <img src="{{ site.baseurl }}/assets/2009_V2_300x300.jpg" class="profileimg" width="175px" />
   <em>3 Diagrams per Page</em> is my personal blog for anything related to computational neuroscience, mathematics, physics, programming, open science and the tools I use to organize my thoughts and ideas.
 </p>
+
+<img src="{{ site.baseurl }}/assets/2009_V2_300x300.jpg" class="profileimg_narrow" width="150px" />
 
 <p style="margin-top:3em;">
   My name is <a href="http://felix11h.github.io/">Felix Z. Hoffmann</a> and I'm a PhD student in computational neuroscience in Frankfurt, Germany.
