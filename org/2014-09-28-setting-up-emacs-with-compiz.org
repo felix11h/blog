@@ -1,0 +1,86 @@
+#+STARTUP: noindent showeverything
+#+OPTIONS: toc:nil;
+#+BEGIN_HTML
+---
+layout: post
+title: Setting up Emacs with Compiz and wmctrl
+permalink: emacs-compiz-config
+date: 2014-09-28 
+type: post
+published: true
+status: publish
+categories:
+ - Emacs
+tags:
+ - tools
+---
+#+END_HTML
+
+
+I recently spent some time to set up GNU Emacs 24.3.1 properly in my Ubuntu 12.04/14.04 environments with the Compiz windows manager. I wanted to
+
+  1. start Emacs in a specified position and size, and
+  2. set focus (activate) Emacs in the current workspace
+
+#+BEGIN_HTML
+<!-- more -->
+#+END_HTML
+
+using the Compiz window manager. Note that if you're using another window manager (find out by typing ~wmctrl -m~ in a terminal), most of the tips in this post will be useless to you.
+
+* Start Emacs in a specified position and size 
+
+I strictly keep Emacs on the right side of my screen and try to adjust the width to 80 columns. Emacs size can be controlled on start-up by passing the [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Window-Size-X.html][right set of parameters]]. In my setup I use
+
+#+BEGIN_SRC sh
+emacs24 -fh
+#+END_SRC
+
+to start in full height; the windows is 80 column wide by default.
+
+To start in a specified position, I used the [[https://apps.ubuntu.com/cat/applications/compizconfig-settings-manager/][CompizConfig Settings Manager]]. Easily installed via
+
+#+BEGIN_SRC sh
+sudo apt-get install compiz compizconfig-settings-manager
+#+END_SRC
+
+the manager allows to set start-up window positions for classes of applications. In *Place Windows* selected the tab *Fixed Window Placement*. When adding a new fixed position for a class, note the *grab* functionality to easily extract the window class name.
+
+#+BEGIN_HTML
+<img src="{{ site.baseurl }}/assets/ccsm.png" width="90%" style="display:block;margin:2em auto 3em;"/>
+#+END_HTML
+
+* Activate Emacs in the current workspace
+
+The command line tool gives you (almost) everything you need to set the focus on your Emacs window. If you only ever have a single Emacs window open, all you need is
+
+#+BEGIN_SRC sh
+wmctrl -x -a Emacs
+#+END_SRC
+
+
+However, I like to have multiple Emacs instances across my workspaces. The solution to activate the Emacs window in the current workspace was given on AskUbuntu by [[http://askubuntu.com/a/195201/72546][user55822]]. Here's the script adapted to activate Emacs:
+
+#+BEGIN_SRC sh
+#!/bin/bash
+# Adapted from user55822 on AskUbuntu: 
+# http://askubuntu.com/a/195201/72546
+
+SCREEN_W=$(xwininfo -root | sed -n 's/^  Width: \(.*\)$/\1/p')
+SCREEN_H=$(xwininfo -root | sed -n 's/^  Height: \(.*\)$/\1/p')
+
+NAME='emacs24.Emacs'
+
+wmctrl -xlG | awk -v W=&amp;quot;$SCREEN_W&amp;quot; -v H=&amp;quot;$SCREEN_H&amp;quot; \
+       -v NAME=&amp;quot;$NAME&amp;quot; \
+       '$7==NAME &amp;amp;&amp;amp; $3&amp;gt;=0 &amp;amp;&amp;amp; $3&amp;lt;W &amp;amp;&amp;amp; $4&amp;gt;=0 &amp;amp;&amp;amp; $4&amp;lt;H {print $1}' \
+       | while read WINS; do wmctrl -ia &amp;quot;$WINS&amp;quot;; done
+
+exit 0
+#+END_SRC
+
+Finally, set keyboard shortcuts to your custom commands/script in the Keyboard settings:
+
+#+BEGIN_HTML
+<img src="{{ site.baseurl }}/assets/key1.png" width="80%" style="display:block;margin:2em auto 3em;"/>
+#+END_HTML

@@ -1,0 +1,112 @@
+---
+layout: post
+title: Setting up Emacs with Compiz and wmctrl
+permalink: emacs-compiz-config
+date: 2014-09-28 
+type: post
+published: true
+status: publish
+categories:
+ - Emacs
+tags:
+ - tools
+---
+
+
+<p>
+I recently spent some time to set up GNU Emacs 24.3.1 properly in my Ubuntu 12.04/14.04 environments with the Compiz windows manager. I wanted to<br  />
+</p>
+
+<ol class="org-ol">
+<li>start Emacs in a specified position and size, and<br  />
+</li>
+<li>set focus (activate) Emacs in the current workspace<br  />
+</li>
+</ol>
+
+<!-- more -->
+
+<p>
+using the Compiz window manager. Note that if you're using another window manager (find out by typing <code>wmctrl -m</code> in a terminal), most of the tips in this post will be useless to you.<br  />
+</p>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Start Emacs in a specified position and size</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+I strictly keep Emacs on the right side of my screen and try to adjust the width to 80 columns. Emacs size can be controlled on start-up by passing the <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Window-Size-X.html">right set of parameters</a>. In my setup I use<br  />
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">emacs24 -fh
+</pre>
+</div>
+
+<p>
+to start in full height; the windows is 80 column wide by default.<br  />
+</p>
+
+<p>
+To start in a specified position, I used the <a href="https://apps.ubuntu.com/cat/applications/compizconfig-settings-manager/">CompizConfig Settings Manager</a>. Easily installed via<br  />
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">sudo apt-get install compiz compizconfig-settings-manager
+</pre>
+</div>
+
+<p>
+the manager allows to set start-up window positions for classes of applications. In <b>Place Windows</b> selected the tab <b>Fixed Window Placement</b>. When adding a new fixed position for a class, note the <b>grab</b> functionality to easily extract the window class name.<br  />
+</p>
+
+<img src="{{ site.baseurl }}/assets/ccsm.png" width="90%" style="display:block;margin:2em auto 3em;"/>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2">Activate Emacs in the current workspace</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+The command line tool gives you (almost) everything you need to set the focus on your Emacs window. If you only ever have a single Emacs window open, all you need is<br  />
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">wmctrl -x -a Emacs
+</pre>
+</div>
+
+
+<p>
+However, I like to have multiple Emacs instances across my workspaces. The solution to activate the Emacs window in the current workspace was given on AskUbuntu by <a href="http://askubuntu.com/a/195201/72546">user55822</a>. Here's the script adapted to activate Emacs:<br  />
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh"><span style="color: #586e75; font-style: italic;">#</span><span style="color: #657b83; font-style: italic;">!/bin/</span><span style="color: #859900;">bash</span>
+<span style="color: #586e75; font-style: italic;"># </span><span style="color: #657b83; font-style: italic;">Adapted from user55822 on AskUbuntu: </span>
+<span style="color: #586e75; font-style: italic;"># </span><span style="color: #657b83; font-style: italic;">http://askubuntu.com/a/195201/72546</span>
+
+<span style="color: #b58900;">SCREEN_W</span>=$(<span style="color: #839496;">xwininfo</span> -root | sed -n <span style="color: #2aa198;">'s/^  Width: \(.*\)$/\1/p'</span>)
+<span style="color: #b58900;">SCREEN_H</span>=$(<span style="color: #839496;">xwininfo</span> -root | sed -n <span style="color: #2aa198;">'s/^  Height: \(.*\)$/\1/p'</span>)
+
+<span style="color: #b58900;">NAME</span>=<span style="color: #2aa198;">'emacs24.Emacs'</span>
+
+wmctrl -xlG | awk -v <span style="color: #b58900;">W</span>=&amp;amp;quot;$<span style="color: #b58900;">SCREEN_W</span>&amp;amp;quot; -v <span style="color: #b58900;">H</span>=&amp;amp;quot;$<span style="color: #b58900;">SCREEN_H</span>&amp;amp;quot; <span style="color: #2aa198;">\</span>
+       -v <span style="color: #b58900;">NAME</span>=&amp;amp;quot;$<span style="color: #b58900;">NAME</span>&amp;amp;quot; <span style="color: #2aa198;">\</span>
+       <span style="color: #2aa198;">'$7==NAME &amp;amp;amp;&amp;amp;amp; $3&amp;amp;gt;=0 &amp;amp;amp;&amp;amp;amp; $3&amp;amp;lt;W &amp;amp;amp;&amp;amp;amp; $4&amp;amp;gt;=0 &amp;amp;amp;&amp;amp;amp; $4&amp;amp;lt;H {print $1}'</span> <span style="color: #2aa198;">\</span>
+       | <span style="color: #859900;">while </span><span style="color: #6c71c4;">read</span> WINS; <span style="color: #859900;">do</span> wmctrl -ia &amp;amp;quot;$<span style="color: #b58900;">WINS</span>&amp;amp;quot;; <span style="color: #859900;">done</span>
+
+<span style="color: #859900;">exit</span> 0
+</pre>
+</div>
+
+<p>
+Finally, set keyboard shortcuts to your custom commands/script in the Keyboard settings:<br  />
+</p>
+
+<img src="{{ site.baseurl }}/assets/key1.png" width="80%" style="display:block;margin:2em auto 3em;"/>
+</div>
+</div>

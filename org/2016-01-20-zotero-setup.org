@@ -11,7 +11,7 @@ categories:
 #+END_HTML
 
 
-In this post I'm detailing my Zotero setup. It took me a while to figure out all the pieces and I figure it might be helpful to someone else.
+In this post I'm detailing my Zotero setup. It took me a while to figure out all the pieces and I figured describing my configuration might be helpful to someone else.
 
 #+BEGIN_HTML
 <!-- more -->
