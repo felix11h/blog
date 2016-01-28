@@ -1,0 +1,218 @@
+---
+layout: post
+title: Comparing the Euler, Midpoint and Runge-Kutta method
+permalink: euler-midpoint-rk
+date: 2012-01-25 
+type: post
+published: true
+status: publish
+categories:
+- mathematics
+tags:
+- numerical analysis
+---
+
+
+<p>
+To find an approximate solution to the initial value problem<br  />
+</p>
+
+$$
+\begin{align} y'(t) &= f(t,y(t)), \\
+                  y(t_0) &= y_0
+\end{align}  
+$$
+
+<p>
+we compare three different methods: The Euler method, the Midpoint method and Runge-Kutta method. The accuracy of the solutions we obtain through the<br  />
+different methods depend on the given step size.<br  />
+</p>
+
+<!-- more -->
+
+<p>
+Let always \(e\), \(m\) and \(r\) denote the step sizes of Euler, Midpoint and Runge-Kutta method respectively.<br  />
+</p>
+
+
+<p>
+In the <b>Euler method</b> the value \(y_n+1\) of \(y\) at the point \(t_n+1 = t_n + e\) is is given by the first two of the taylor expansion of \(y\) at \(t_n\), that is<br  />
+</p>
+
+\[ y_n+1 = y_n + e*f(t_n,y(t_n)). \]
+
+<p>
+In the <b>Midpoint method</b> we have \(t_n+1 = t_n + m\) and<br  />
+</p>
+
+\[y_n+1 = y_n + m f\left(t_n + \frac{m}{2}, y_n + \frac{m}{2} f(t_n,y_n)\right).\]
+<p>
+Note, that here we have to eveluate the function \(f\) <i>twice</i> to obtain our next value \(y_n+1\), whereas when using Euler method we only needed to do this <i>once</i>.<br  />
+</p>
+
+<p>
+Lastly the <b>Runge-Kutta method</b> (of fourth order) is a further refinement of the methods above, where we now have \(t_n+1 = t_n + r\) and<br  />
+</p>
+
+\[y_n+1 = y_n + \frac{1}{6}(k_1 + 2k_2 + 2k_3 + k_4)\]
+
+<p>
+where the calculation of the coefficients \(k_1, k_2, k_3, k_4\) requires an independent evaluation of \(f\) each.<br  />
+</p>
+
+<p>
+Thus the Runge-Kutta needs <i>four</i> steps of calculation to get the next value \(y_n+1\).<br  />
+</p>
+
+<p>
+When comparing the three methods, one should therefore choose the stepsizes accordingly, that is in such a way that<br  />
+</p>
+
+\[4e = 2m = r\]
+
+<p>
+holds.<br  />
+</p>
+
+<p>
+A justified question is to ask wether the midpoint method yields better results than the Euler method with half the step size at all. I wrote a script to investigate that question. Here are some examples, for which I compared the three methods:<br  />
+</p>
+
+<p>
+Consider \(y'(t) = -2t\,y(t)\) with initial value \(y(0) = 1\). We easily verify that \(y(t) = \exp(-t^2)\) is an exact solution to the problem. Calculating the solutions with three different methods I got the diagram<br  />
+</p>
+
+<img src="{{ site.baseurl }}/assets/euler-midpoint-rk_normal.png" width="90%" style="display:block;margin:0 auto 0;" />
+
+Here the graphs show the <span style="color: #0000ff;">exact solution</span> and solutions obtained with the <span style="color: #33ccff;">Runge-Kutta method</span>, the <span style="color: #ff0000;">midpoint method</span> and the <span style="color: #008000;">Euler method</span>.
+
+
+<p>
+The step sizes chosen are \(r=0.5\), \(m=0.25\) and \(e = 0.125\), thus fullfilling our requirement at them for the methods to be comparable.<br  />
+</p>
+
+<p>
+We see, that while the Euler method does yield the smoothest curve it yields the worst result. Here, the way in which the next value \(y_{n+1}\) is determined is inaccurate compared to the other two methods and since \(y_{n+2}\) depends on \(y_{n+1}\), this error progresses in the calculation to eventually yield only a very vague approximation.<br  />
+</p>
+
+<p>
+Here is another example:<br  />
+</p>
+
+<img src="{{ site.baseurl }}/assets/euler-midpoint-rk_exp.png" width="90%" style="display:block;margin:0 auto 0;" />
+
+To solve \(y'(t) = y(t)\), which of course has the <span style="color: #0000ff;">exact solution</span> \(y(t) = exp(t)\), the following step sizes where chosen:
+\[r=1, m=0.5 \,\, \textrm{and} \,\, e = 0.25\]
+
+<p>
+What I wanted to show are two examples in which the Runge-Kutta method yields better results than the Midpoint and Euler method, although for those step sizes are chosen accordingly smaller to have a comparable effort in computation.<br  />
+</p>
+
+<p>
+Please keep in mind that I did this small project mostly in an effort to learn Python. Take what you will out of my descriptions here, but take caution in any case.<br  />
+</p>
+
+<p>
+Here's the code that I used. Careful, it's a mess as I'm programming Python for a only a very short time!<br  />
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">import matplotlib.pyplot as plt
+import numpy as np
+
+<span style="color: #2aa198;">"""</span>
+<span style="color: #2aa198;">def dy_dt(t,y_t):</span>
+<span style="color: #2aa198;">        return y_t</span>
+
+<span style="color: #2aa198;">def y(t):</span>
+<span style="color: #2aa198;">        return np.exp(t)</span>
+
+<span style="color: #2aa198;">t_range = (0,5)</span>
+
+<span style="color: #2aa198;">k=1.0</span>
+<span style="color: #2aa198;">initial_value_pair = (t_range[0],np.exp(t_range[0]))</span>
+<span style="color: #2aa198;">euler_stepsize = k/4</span>
+<span style="color: #2aa198;">midpoint_stepsize = k/2</span>
+<span style="color: #2aa198;">runge_kutta_stepsize = k</span>
+<span style="color: #2aa198;">"""</span>
+
+def dy_dt(t,y_t):
+        <span style="color: #859900;">return</span> -2*t*y_t
+
+def y(t):
+        <span style="color: #859900;">return</span> np.exp(-t**2)
+
+t_range = (-2,2)
+
+initial_value_pair = (t_range[0],np.exp(-t_range[0]**2))
+euler_stepsize = 0.125
+midpoint_stepsize = 0.25
+runge_kutta_stepsize = 0.5
+
+
+
+figure = plt.figure(<span style="color: #b58900;">facecolor</span>=<span style="color: #2aa198;">"white"</span>)
+
+
+<span style="color: #586e75; font-style: italic;">#</span><span style="color: #657b83; font-style: italic;">Draw exact solution</span>
+
+exact_t_range = np.arange(t_range[0],t_range[1],(t_range[1]-t_range[0])/10000.)
+exact_y_vals = y(exact_t_range)
+<span style="color: #268bd2;">plt.plot</span>(exact_t_range,exact_y_vals, <span style="color: #b58900;">linewidth</span>=2.5)  
+
+
+<span style="color: #586e75; font-style: italic;">#</span><span style="color: #657b83; font-style: italic;">Draw Euler solution</span>
+
+<span style="color: #b58900;">h</span>=euler_stepsize
+euler_t_range = np.arange(t_range[0],t_range[1]+h/1000., h)
+euler_y_vals = np.array([initial_value_pair[1]])
+
+<span style="color: #859900;">for</span> k<span style="color: #859900;"> in</span> euler_t_range:
+        <span style="color: #859900;">if</span> k == t_range[0]:
+                <span style="color: #859900;">continue</span>
+        <span style="color: #859900;">else</span>:
+                next_entry = euler_y_vals[-1] + h*dy_dt(k-h,euler_y_vals[-1])
+                euler_y_vals = np.append (euler_y_vals, next_entry)
+
+<span style="color: #268bd2;">plt.plot</span>(euler_t_range,euler_y_vals, <span style="color: #b58900;">linewidth</span>=2.5)
+
+
+<span style="color: #586e75; font-style: italic;">#</span><span style="color: #657b83; font-style: italic;">Draw Midpoint solution</span>
+
+<span style="color: #b58900;">h</span>=midpoint_stepsize
+<span style="color: #b58900;">midpoint_t_range</span>=np.arange(t_range[0],t_range[1]+h/1000.,h)
+<span style="color: #b58900;">midpoint_y_vals</span>=np.array([initial_value_pair[1]])
+
+<span style="color: #859900;">for</span> k<span style="color: #859900;"> in</span> midpoint_t_range:
+        <span style="color: #859900;">if</span> k == t_range[0]:
+                <span style="color: #859900;">continue</span>
+        <span style="color: #859900;">else</span>:
+                next_entry = midpoint_y_vals[-1] + h*dy_dt(k-h+h/2,midpoint_y_vals[-1] + h/2*dy_dt(k-h,midpoint_y_vals[-1]))
+                midpoint_y_vals = np.append(midpoint_y_vals, next_entry)
+
+<span style="color: #268bd2;">plt.plot</span>(midpoint_t_range, midpoint_y_vals, <span style="color: #b58900;">linewidth</span>=2.5)
+
+
+<span style="color: #586e75; font-style: italic;">#</span><span style="color: #657b83; font-style: italic;">Draw Runge-Kutta solution</span>
+
+<span style="color: #b58900;">h</span>=runge_kutta_stepsize
+rk_t_range = np.arange(t_range[0],t_range[1]+h/1000.,h)
+rk_y_vals = np.array([initial_value_pair[1]])
+
+<span style="color: #859900;">for</span> k<span style="color: #859900;"> in</span> rk_t_range:
+        <span style="color: #859900;">if</span> <span style="color: #b58900;">k</span>==t_range[0]:
+                <span style="color: #859900;">continue</span>
+        <span style="color: #859900;">else</span>:
+                k_1 = dy_dt(k-h,rk_y_vals[-1])
+                k_2 = dy_dt(k-h + h/2, rk_y_vals[-1] + h/2*k_1)
+                k_3 = dy_dt(k-h + h/2, rk_y_vals[-1] + h/2*k_2)
+                k_4 = dy_dt(k-h + h, rk_y_vals[-1] + h*k_3)
+                next_entry = rk_y_vals[-1] + 1./6*h*(k_1 + 2*k_2 + 2*k_3 + k_4)
+                rk_y_vals = np.append(rk_y_vals, next_entry)
+
+<span style="color: #268bd2;">plt.plot</span>(rk_t_range, rk_y_vals, <span style="color: #b58900;">linewidth</span>=2.5)
+
+<span style="color: #268bd2;">plt.show</span>()
+</pre>
+</div>
