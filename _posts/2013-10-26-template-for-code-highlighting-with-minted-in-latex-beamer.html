@@ -1,0 +1,88 @@
+---
+layout: post
+title: Template for code highlighting with minted in LaTeX beamer
+permalink: latex-beamer-minted
+date: 2013-10-26
+type: post
+published: true
+status: publish
+categories:
+- LaTeX
+tags:
+- presentation
+- tools
+- LaTeX
+---
+
+<p>
+Syntax highlighting can be achieved in LaTeX via <a href="http://www.ctan.org/tex-archive/macros/latex/contrib/listings/">listings</a> or more recently with <a href="https://github.com/gpoore/minted">minted</a>. The latter package uses Pygments to create beautiful code highlighting and includes fantastic additional features such as line numbering.<br  />
+</p>
+
+<!-- more -->
+
+<p>
+Minted's compatibility with the Latex beamer class, however, is restricted and some workarounds (as laid out by Tristan Ravitch in his <a href="http://nochair.net/posts/2011/05-05-fragile-latex-beamer.html">blog post</a> are needed to assure full functionality of both the beamer class and minted.<br  />
+</p>
+
+<img src="{{ site.baseurl }}/assets/latex-beamer-minted.png" width="90%" style="display:block;margin:2em auto 2em;" />
+
+<p>
+Here's a <a href="https://raw.github.com/Felix11H/LaTeX/master/templates/beamer_syntaxhighlight.tex">template</a> I made for anyone who wants to present code with the beamer class and the minted package, like in the image above:<br  />
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-latex"><span style="color: #859900;">\documentclass</span>{<span style="color: #6c71c4;">beamer</span>}
+<span style="color: #859900;">\usetheme</span>{default}
+
+<span style="color: #859900;">\usepackage</span>{<span style="color: #6c71c4;">minted</span>}
+
+<span style="color: #859900;">\newminted</span>{python}{fontsize=<span style="color: #859900;">\scriptsize</span>, 
+                   linenos,
+                   numbersep=8pt,
+                   gobble=4,
+                   frame=lines,
+                   bgcolor=bg,
+                   framesep=3mm} 
+
+
+<span style="color: #859900;">\begin</span>{<span style="color: #268bd2;">document</span>}
+
+<span style="color: #859900;">\definecolor</span>{bg}{rgb}{0.95,0.95,0.95}
+
+<span style="color: #859900;">\defverbatim</span>[colored]<span style="color: #859900;">\exampleCode</span>{
+<span style="color: #859900;">\begin</span>{<span style="color: #268bd2;">pythoncode</span>}
+
+
+    import numpy as np
+    import pylab as pl
+
+    def f_x(x):
+      return np.exp(x)+x**2-5*x
+
+    def approx_f(x):
+      return 1 -4*x +3./2*x**2
+
+    xvals = np.arange(-4,4,0.1)
+    fx_vals = [f_x(x) for x in xvals]
+    approx_vals = [approx_f(x) for x in xvals]
+
+    pl.plot(xvals,fx_vals)
+    pl.plot(xvals,approx_vals)
+
+    pl.show()
+
+
+<span style="color: #859900;">\end</span>{<span style="color: #268bd2;">pythoncode</span>}
+}
+
+<span style="color: #859900;">\begin</span>{<span style="color: #268bd2;">frame</span>}
+<span style="color: #859900;">\frametitle</span>{Code example}
+<span style="color: #859900;">\exampleCode</span>
+<span style="color: #859900;">\pause</span>
+Overlays work!
+<span style="color: #859900;">\end</span>{<span style="color: #268bd2;">frame</span>}
+
+<span style="color: #859900;">\end</span>{<span style="color: #268bd2;">document</span>}
+</pre>
+</div>
