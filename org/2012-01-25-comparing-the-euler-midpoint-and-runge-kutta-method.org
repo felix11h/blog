@@ -38,7 +38,7 @@ Let always $e$, $m$ and $r$ denote the step sizes of Euler, Midpoint and Runge-K
 In the *Euler method* the value $y_n+1$ of $y$ at the point $t_n+1 = t_n + e$ is is given by the first two of the taylor expansion of $y$ at $t_n$, that is
 
 #+BEGIN_HTML
-\[ y_n+1 = y_n + e*f(t_n,y(t_n)). \]
+\[ y_n+1 = y_n + e\,f(t_n,y(t_n)). \]
 #+END_HTML
 
 In the *Midpoint method* we have $t_n+1 = t_n + m$ and
@@ -90,7 +90,7 @@ Here is another example:
 #+END_HTML
 
 #+BEGIN_HTML
-To solve \(y'(t) = y(t)\), which of course has the <span style="color: #0000ff;">exact solution</span> \(y(t) = exp(t)\), the following step sizes where chosen:
+To solve \(y'(t) = y(t)\), which of course has the <span style="color: #0000ff;">exact solution</span> \(y(t) = \exp(t)\), the following step sizes where chosen:
 \[r=1, m=0.5 \,\, \textrm{and} \,\, e = 0.25\]
 #+END_HTML
 
@@ -98,7 +98,7 @@ What I wanted to show are two examples in which the Runge-Kutta method yields be
 
 Please keep in mind that I did this small project mostly in an effort to learn Python. Take what you will out of my descriptions here, but take caution in any case.
 
-Here's the code that I used. Careful, it's a mess as I'm programming Python for a only a very short time! 
+Here's the code that I used. Careful, it's a mess as I'm programming Python for only a very short time! 
 
 #+BEGIN_SRC sh
 import matplotlib.pyplot as plt

@@ -39,7 +39,7 @@ Let always \(e\), \(m\) and \(r\) denote the step sizes of Euler, Midpoint and R
 In the <b>Euler method</b> the value \(y_n+1\) of \(y\) at the point \(t_n+1 = t_n + e\) is is given by the first two of the taylor expansion of \(y\) at \(t_n\), that is<br  />
 </p>
 
-\[ y_n+1 = y_n + e*f(t_n,y(t_n)). \]
+\[ y_n+1 = y_n + e\,f(t_n,y(t_n)). \]
 
 <p>
 In the <b>Midpoint method</b> we have \(t_n+1 = t_n + m\) and<br  />
@@ -101,7 +101,7 @@ Here is another example:<br  />
 
 <img src="{{ site.baseurl }}/assets/euler-midpoint-rk_exp.png" width="90%" style="display:block;margin:0 auto 0;" />
 
-To solve \(y'(t) = y(t)\), which of course has the <span style="color: #0000ff;">exact solution</span> \(y(t) = exp(t)\), the following step sizes where chosen:
+To solve \(y'(t) = y(t)\), which of course has the <span style="color: #0000ff;">exact solution</span> \(y(t) = \exp(t)\), the following step sizes where chosen:
 \[r=1, m=0.5 \,\, \textrm{and} \,\, e = 0.25\]
 
 <p>
@@ -113,7 +113,7 @@ Please keep in mind that I did this small project mostly in an effort to learn P
 </p>
 
 <p>
-Here's the code that I used. Careful, it's a mess as I'm programming Python for a only a very short time!<br  />
+Here's the code that I used. Careful, it's a mess as I'm programming Python for only a very short time!<br  />
 </p>
 
 <div class="org-src-container">
