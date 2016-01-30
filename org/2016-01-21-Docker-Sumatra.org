@@ -12,40 +12,45 @@ categories:
 #+END_HTML
 
 
-Docker is a [[http://arxiv.org/abs/1410.0846][promising candidate]] ~!! make this a proper citation?~ for creating a computational research environment that allows for easy replication of computations and results. [[http://www.neuralensemble.org/sumatra/][Sumatra]] is an automated laboratory notebook for computationl research projects. Do Sumatra and Docker work well together? 
+Docker is a [[http://arxiv.org/abs/1410.0846][promising candidate]] for a computational research environment that allows for easy replication of computations and results. [[http://www.neuralensemble.org/sumatra/][Sumatra]] is an automated laboratory notebook for computationl research projects. Do Sumatra and Docker work well together? 
 
 #+BEGIN_HTML
 <!-- more -->
 #+END_HTML
 
-Yes. Here's some explanations that might help you get started using Docker and Sumatra in combination: 
+Yes! Here's some details that might help you get started using Docker and Sumatra in combination: 
 
 * A docker image for Sumatra
 
-Here's ~!! link to docker hub~ a basic docker image containing Sumatra 0.7.0. It's built from the following Dockerfile: 
+I've created a basic docker image with Sumatra 0.7.0 and git bindings and uploaded it to the [[https://hub.docker.com/r/felix11h/smt_docker/][Docker Hub]]. The image  ~felix11h/smt_docker~ is built from the following Dockerfile: 
 
 #+BEGIN_SRC dockerfile
-# !!!! wrong file
-FROM neuralensemble/simulation
+FROM ubuntu:14.04
 
-USER root
-
-RUN $VENV/bin/pip install sumatra
-
-EXPOSE 8000
+RUN apt-get -y update
+RUN apt-get install -y python python-dev python-pip
+ 
+RUN apt-get install -y git
+RUN pip install sumatra
+RUN pip install gitpython
 
 WORKDIR /home
+
+EXPOSE 8000 
 #+END_SRC
 
+If you have Docker set up, you can
 
-You can 
 #+BEGIN_SRC sh
-docker run -it -p 127.0.0.1:8000:8000 /    /bin/bash
+docker run -it -p 8000:8000 felix11h/smt_docker /bin/bash
 #+END_SRC
 
-This command, after not finding """" locally, pulls the Sumatra docker image from the DockerHub and runs it with the following parameters:
+This command, after not finding the image locally, pulls the Sumatra docker image created from the Dockerfile above from DockerHub and runs it with the following parameters:
 
-
+ - ~-i~
+ - ~-t~
+ - ~-p 8000:8000~
+ - ~/bin/bash~
 
 
 * Sumatra within the container
@@ -53,7 +58,6 @@ This command, after not finding """" locally, pulls the Sumatra docker image fro
 
 From within the container, let's test if Sumatra works as expected:
 
-Do 
 #+BEGIN_SRC sh
 mkdir smt_test
 cd smt_test
@@ -63,15 +67,17 @@ smtweb --allips
 #+END_SRC
 
 
-Here the flag ~--allips~ to smtweb is critical. It hosts the Sumatra webinterface at 0.0.0.0:8000 (as opposed to 127.0.0.1:8000), which is exactly the address the docker container assumes when trying to publish the content the host. With this you should be able to
+Here the flag ~--allips~ to smtweb is critical. It hosts the Sumatra webinterface at ~0.0.0.0:8000~ (as opposed to ~127.0.0.1:8000~), which is exactly the address the docker container assumes when trying to publish the content the host. I was about to add this option to Sumatra myself, but found it was alrealdy there!
 
-~curl~
+With this you should be able to
 
-On the Docker host (i.e. outside the container!) 
+#+BEGIN_SRC
+curl 
+#+END_SRC
 
-* More
+from the Docker host, that is outside the container! Or, of course, simply navigate to ~127.0.0.1:8000~ in your browser.
 
-You can either
+* Setting up your computational environment
 
 #+BEGIN_SRC sh
 sudo docker run
