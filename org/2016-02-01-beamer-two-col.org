@@ -16,7 +16,7 @@ tags:
 ---
 #+END_HTML
 
-I made a [[https://github.com/Felix11H/latex-beamer-two-col-template][LaTex Beamer template]] for creating presentations in a two-column format. I use this style to have figures on the right and text on the right. Here's the presentation the template produces:
+I made a [[https://github.com/Felix11H/latex-beamer-two-col-template][LaTex Beamer template]] for creating presentations in a two-column format. I use this style to have figures on the right and text on the left. Here's the presentation the template produces:
 
 #+BEGIN_HTML
 <!-- more -->
