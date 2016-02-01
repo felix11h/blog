@@ -1,0 +1,116 @@
+---
+layout: post
+title: A LaTeX Beamer two-column frame template with proper vertical spacing
+permalink: beamer-two-col
+date: 2016-02-01
+type: post
+published: true
+status: publish
+categories:
+- LaTeX
+tags:
+- LaTex
+- Beamer
+- tools
+---
+
+<p>
+I made a <a href="https://github.com/Felix11H/latex-beamer-two-col-template">LaTex Beamer template</a> for creating presentations in a two-column format. I use this style to have figures on the right and text on the right. Here's the presentation the template produces:<br  />
+</p>
+
+<!-- more -->
+
+<img src="{{ site.baseurl }}/assets/two-col-template.gif" width="90%" style="display:block;margin:2em auto 2em;"/>
+
+<p>
+Vertical spacing and overlays can be tricky when working in columns. First, to allow for convenient spacing via <code>\vfill</code>, a minipage has to be included in the text-column.<br  />
+</p>
+
+<p>
+In the figure column, you might want figures to vertically centered (single image) or aligned from the top (multiple images, overlay). Both can be achieved by including either a <code>\parbox</code> or <code>\minipage</code>. The full frame producing the presentation above is:<br  />
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-latex"><span style="color: #859900;">\begin</span>{<span style="color: #268bd2;">frame</span>}{A Frame with two Columns}
+  <span style="color: #657b83; font-style: italic;">% </span>
+  <span style="color: #859900;">\begin</span>{<span style="color: #268bd2;">columns</span>}
+    <span style="color: #657b83; font-style: italic;">%</span>
+    <span style="color: #859900;">\begin</span>{<span style="color: #268bd2;">column</span>}{.45<span style="color: #859900;">\textwidth</span>}
+      <span style="color: #859900;">\minipage</span>[c][0.65<span style="color: #859900;">\textheight</span>][s]{<span style="color: #859900;">\columnwidth</span>}
+      <span style="color: #859900;">\vspace</span>{0.05<span style="color: #859900;">\textheight</span>}
+
+      On the left side text, figures on the right.
+
+      <span style="color: #859900;">\vfill</span>
+
+      <span style="color: #859900;">\onslide</span>&lt;2-&gt;
+
+      Start with basic figures, add more information later
+
+      <span style="color: #859900;">\vfill</span>
+
+      <span style="color: #859900;">\onslide</span>&lt;3-&gt;
+
+      Use <span style="color: #859900;">\texttt</span>{<span style="color: #859900;">\textbackslash</span> vfill} for the text 
+      column but not for figures.
+
+      <span style="color: #859900;">\vfill</span>
+      <span style="color: #859900;">\onslide</span>&lt;4-&gt;
+      <span style="color: #859900;">\begin</span>{<span style="color: #268bd2;">tabular</span>}{|p{0.9<span style="color: #859900;">\textwidth</span>}}
+        Use <span style="color: #859900;">\texttt</span>{minipage} for top aligned images, and
+        <span style="color: #859900;">\texttt</span>{parbox} for vertically centered images.
+      <span style="color: #859900;">\end</span>{<span style="color: #268bd2;">tabular</span>}
+
+
+      <span style="color: #859900;">\endminipage</span>      
+    <span style="color: #859900;">\end</span>{<span style="color: #268bd2;">column</span>}
+    <span style="color: #657b83; font-style: italic;">%</span>
+    <span style="color: #859900;">\begin</span>{<span style="color: #268bd2;">column</span>}{.55<span style="color: #859900;">\textwidth</span>}
+
+      <span style="color: #657b83; font-style: italic;">% for top aligned images use minipage</span>
+      <span style="color: #859900;">\only</span>&lt;1-3&gt;{
+        <span style="color: #859900;">\minipage</span>[c][0.8<span style="color: #859900;">\textheight</span>][s]{<span style="color: #859900;">\columnwidth</span>}
+
+        <span style="color: #859900;">\onslide</span>&lt;1-&gt;    
+
+        <span style="color: #859900;">\only</span>&lt;1-3&gt;{
+          <span style="color: #859900;">\begin</span>{<span style="color: #268bd2;">figure</span>}
+            <span style="color: #859900;">\centering</span>
+            <span style="color: #859900;">\includegraphics</span>&lt;1&gt;[width=<span style="color: #859900;">\textwidth</span>]{<span style="color: #657b83; font-style: italic;">%</span>
+              img/figure1.png} <span style="color: #657b83; font-style: italic;">%</span>
+            <span style="color: #859900;">\includegraphics</span>&lt;2-3&gt;[width=<span style="color: #859900;">\textwidth</span>]{<span style="color: #657b83; font-style: italic;">%</span>
+              img/figure1_red.png} <span style="color: #657b83; font-style: italic;">%</span>
+        <span style="color: #859900;">\end</span>{<span style="color: #268bd2;">figure</span>}}
+
+        <span style="color: #859900;">\only</span>&lt;3&gt;{
+          <span style="color: #859900;">\begin</span>{<span style="color: #268bd2;">figure</span>}
+            <span style="color: #859900;">\centering</span>
+            <span style="color: #859900;">\includegraphics</span>[width=<span style="color: #859900;">\textwidth</span>]{<span style="color: #657b83; font-style: italic;">%</span>
+              img/figure2.png} <span style="color: #657b83; font-style: italic;">%</span>
+        <span style="color: #859900;">\end</span>{<span style="color: #268bd2;">figure</span>}}
+
+        <span style="color: #859900;">\endminipage</span>
+      }   
+
+      <span style="color: #657b83; font-style: italic;">% for vertically centered images use parbox</span>
+      <span style="color: #859900;">\only</span>&lt;4&gt;{
+        <span style="color: #859900;">\parbox</span>[c][0.8<span style="color: #859900;">\textheight</span>][c]{<span style="color: #859900;">\columnwidth</span>}{
+          <span style="color: #859900;">\begin</span>{<span style="color: #268bd2;">figure</span>}
+            <span style="color: #859900;">\centering</span>
+            <span style="color: #859900;">\includegraphics</span>[height=0.5<span style="color: #859900;">\textheight</span>]{<span style="color: #657b83; font-style: italic;">%</span>
+              img/figure4.png} <span style="color: #657b83; font-style: italic;">%</span>
+          <span style="color: #859900;">\end</span>{<span style="color: #268bd2;">figure</span>}
+        }
+      }
+
+    <span style="color: #859900;">\end</span>{<span style="color: #268bd2;">column</span>}
+  <span style="color: #859900;">\end</span>{<span style="color: #268bd2;">columns</span>}
+
+<span style="color: #859900;">\end</span>{<span style="color: #268bd2;">frame</span>}
+</pre>
+</div>
+
+<p>
+Check out the <a href="https://github.com/Felix11H/latex-beamer-two-col-template">GitHub repository</a> for the full <code>.tex</code> files.<br  />
+</p>

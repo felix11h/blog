@@ -10,7 +10,7 @@ status: publish
 categories:
 - LaTeX
 tags:
-- presentation
+- Beamer
 - tools
 - LaTeX
 ---

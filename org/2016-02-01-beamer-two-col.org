@@ -1,0 +1,114 @@
+#+BEGIN_HTML
+---
+layout: post
+title: A LaTeX Beamer two-column frame template with proper vertical spacing
+permalink: beamer-two-col
+date: 2016-02-01
+type: post
+published: true
+status: publish
+categories:
+- LaTeX
+tags:
+- LaTex
+- Beamer
+- tools
+---
+#+END_HTML
+
+I made a [[https://github.com/Felix11H/latex-beamer-two-col-template][LaTex Beamer template]] for creating presentations in a two-column format. I use this style to have figures on the right and text on the right. Here's the presentation the template produces:
+
+#+BEGIN_HTML
+<!-- more -->
+#+END_HTML
+
+#+BEGIN_HTML
+<img src="{{ site.baseurl }}/assets/two-col-template.gif" width="90%" style="display:block;margin:2em auto 2em;"/>
+#+END_HTML
+
+Vertical spacing and overlays can be tricky when working in columns. First, to allow for convenient spacing via ~\vfill~, a minipage has to be included in the text-column. 
+
+In the figure column, you might want figures to vertically centered (single image) or aligned from the top (multiple images, overlay). Both can be achieved by including either a ~\parbox~ or ~\minipage~. The full frame producing the presentation above is:
+
+#+BEGIN_SRC latex
+
+\begin{frame}{A Frame with two Columns}
+  % 
+  \begin{columns}
+    %
+    \begin{column}{.45\textwidth}
+      \minipage[c][0.65\textheight][s]{\columnwidth}
+      \vspace{0.05\textheight}
+      
+      On the left side text, figures on the right.
+
+      \vfill
+
+      \onslide<2->
+
+      Start with basic figures, add more information later
+
+      \vfill
+
+      \onslide<3->
+
+      Use \texttt{\textbackslash vfill} for the text 
+      column but not for figures.
+
+      \vfill
+      \onslide<4->
+      \begin{tabular}{|p{0.9\textwidth}}
+        Use \texttt{minipage} for top aligned images, and
+        \texttt{parbox} for vertically centered images.
+      \end{tabular}
+      
+      
+      \endminipage      
+    \end{column}
+    %
+    \begin{column}{.55\textwidth}
+
+      % for top aligned images use minipage
+      \only<1-3>{
+        \minipage[c][0.8\textheight][s]{\columnwidth}
+        
+        \onslide<1->    
+
+        \only<1-3>{
+          \begin{figure}
+            \centering
+            \includegraphics<1>[width=\textwidth]{%
+              img/figure1.png} %
+            \includegraphics<2-3>[width=\textwidth]{%
+              img/figure1_red.png} %
+        \end{figure}}
+        
+        \only<3>{
+          \begin{figure}
+            \centering
+            \includegraphics[width=\textwidth]{%
+              img/figure2.png} %
+        \end{figure}}
+        
+        \endminipage
+      }   
+
+      % for vertically centered images use parbox
+      \only<4>{
+        \parbox[c][0.8\textheight][c]{\columnwidth}{
+          \begin{figure}
+            \centering
+            \includegraphics[height=0.5\textheight]{%
+              img/figure4.png} %
+          \end{figure}
+        }
+      }
+      
+    \end{column}
+  \end{columns}
+
+\end{frame}
+
+#+END_SRC
+
+Check out the [[https://github.com/Felix11H/latex-beamer-two-col-template][GitHub repository]] for the full ~.tex~ files.

@@ -3,8 +3,8 @@
 #+BEGIN_HTML
 ---
 layout: post
-title: Some org-mode hacks
-permalink: org-mode-hacks
+title: An org-mode configuration
+permalink: org-mode-config
 categories:
 - Emacs
 tags:
