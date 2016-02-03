@@ -589,3 +589,8 @@ a.pagination-item:hover {
     text-align: center;
     text-decoration: none;
 }
+
+
+h2 {
+    margin-top: 2em;
+}
