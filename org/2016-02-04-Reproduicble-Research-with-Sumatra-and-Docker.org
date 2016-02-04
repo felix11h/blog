@@ -87,26 +87,26 @@ from the Docker host (that is outside the container!). Or, of course, simply nav
 If you want to save the results of computations that you're running within a container, mounting a data volume of your docker host to the container is likely the easiest solution. To do this, you have add yet another argument to the docker run command
 
 #+BEGIN_SRC sh
-docker run -v /path/to/host_dir:/path/to/container_dir
+docker run -v /path/to/host_dir:/path/to/container_dir ...
 #+END_SRC
 
-You might, for example,n want to host the working directory to ~/home/wdir~:
+You might, for example, want to host the working directory to ~/home/wdir~:
 
 #+BEGIN_SRC sh
-docker run -v $(pwd):/home/wdir
+docker run -v $(pwd):/home/wdir ...
 #+END_SRC
 
-When dealing with data volumes, it's worth to think about permissions. I'm still experimenting with this, but I helpful command argument I found is 
+When dealing with data volumes, it's worth to think about permissions. I'm still experimenting with this, but a helpful command argument I found is 
 
 #+BEGIN_SRC sh
-docker run --user="$(id -u):$(id -g)"
+docker run --user="$(id -u):$(id -g)" ...
 #+END_SRC
 
 which, as I understand it, passes the current user.
 
 * Permanently host the web interface with screen
 
-When running computational experiments within a Docker container, it is beneficial to be able to host the webinterface and run simulations at the same time. An easy solution is to use ~screen~. Install it in the container via
+When running computational experiments within a Docker container, it would be great to be able to host the web interface and run simulations at the same time. An easy solution for this is to use ~screen~. Install it in the container via
 
 #+BEGIN_SRC sh
 apt-get update
@@ -114,12 +114,13 @@ apt-get install screen
 #+END_SRC
 
 Then you can call ~screen~, run ~smtweb --allips~ and detach the screen by pressing ~CTRL+a d~. This allows you to keep the webinterface hosted while you're running simulations. To get back the original screen, use ~screen -r~. 
+
 The neuroenv image (see below) has ~screen~ included.
 
 
 * Reproducible computational neuroscience simulations
 
-At [[http://neuralensemble.blogspot.de/2015/08/docker-images-for-neuronal-network.html][neuralensemlbe]], Andrew Davison has provided a docker image cotaining NEST 2.6, NEURON 7.3, Brian 1.4 and PyNN 0.8.0rc1. The docker image I'm using in my current research project builds upon this ~neuralensemble/simulation~ image and additionally adds:
+At [[http://neuralensemble.blogspot.de/2015/08/docker-images-for-neuronal-network.html][neuralensemlbe]], Andrew Davison has provided a docker image cotaining NEST 2.6, NEURON 7.3, Brian 1.4 and PyNN 0.8.0rc1. The docker image I'm using in my current research project builds upon this ~neuralensemble/simulation~ image and additionally provides:
 
  1. Sumatra
  2. ~screen~ 
@@ -127,7 +128,7 @@ At [[http://neuralensemble.blogspot.de/2015/08/docker-images-for-neuronal-networ
 
 LaTeX was added for text rendering in Matplotlib. You can find this image under ~felix11h/neuroenv_smt_ltx~ on the [[https://hub.docker.com/r/felix11h/neuroenv_smt_ltx/][Docker Hub]].
 
-Here's the shell script I put into my working directory to run the image: 
+Here's the shell script I have in my working directory to run the image conveniently: 
 
 #+BEGIN_SRC sh
 sudo docker run -it -p 127.0.0.1:8000:8000 --user="$(id -u):$(id -g)" -v $(pwd):/lab felix11h/neuroenv_smt_ltx /bin/bash

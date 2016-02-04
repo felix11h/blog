@@ -120,27 +120,27 @@ If you want to save the results of computations that you're running within a con
 
 <div class="org-src-container">
 
-<pre class="src src-sh">docker run -v /path/to/host_dir:/path/to/container_dir
+<pre class="src src-sh">docker run -v /path/to/host_dir:/path/to/container_dir ...
 </pre>
 </div>
 
 <p>
-You might, for example,n want to host the working directory to <code>/home/wdir</code>:<br  />
+You might, for example, want to host the working directory to <code>/home/wdir</code>:<br  />
 </p>
 
 <div class="org-src-container">
 
-<pre class="src src-sh">docker run -v $(<span style="color: #839496;">pwd</span>):/home/wdir
+<pre class="src src-sh">docker run -v $(<span style="color: #839496;">pwd</span>):/home/wdir ...
 </pre>
 </div>
 
 <p>
-When dealing with data volumes, it's worth to think about permissions. I'm still experimenting with this, but I helpful command argument I found is<br  />
+When dealing with data volumes, it's worth to think about permissions. I'm still experimenting with this, but a helpful command argument I found is<br  />
 </p>
 
 <div class="org-src-container">
 
-<pre class="src src-sh">docker run --user=<span style="color: #2aa198;">"$(</span><span style="color: #839496;">id</span><span style="color: #2aa198;"> -u):$(</span><span style="color: #839496;">id</span><span style="color: #2aa198;"> -g)"</span>
+<pre class="src src-sh">docker run --user=<span style="color: #2aa198;">"$(</span><span style="color: #839496;">id</span><span style="color: #2aa198;"> -u):$(</span><span style="color: #839496;">id</span><span style="color: #2aa198;"> -g)"</span> ...
 </pre>
 </div>
 
@@ -154,7 +154,7 @@ which, as I understand it, passes the current user.<br  />
 <h2 id="sec-4">Permanently host the web interface with screen</h2>
 <div class="outline-text-2" id="text-4">
 <p>
-When running computational experiments within a Docker container, it is beneficial to be able to host the webinterface and run simulations at the same time. An easy solution is to use <code>screen</code>. Install it in the container via<br  />
+When running computational experiments within a Docker container, it would be great to be able to host the web interface and run simulations at the same time. An easy solution for this is to use <code>screen</code>. Install it in the container via<br  />
 </p>
 
 <div class="org-src-container">
@@ -166,6 +166,9 @@ apt-get install screen
 
 <p>
 Then you can call <code>screen</code>, run <code>smtweb --allips</code> and detach the screen by pressing <code>CTRL+a d</code>. This allows you to keep the webinterface hosted while you're running simulations. To get back the original screen, use <code>screen -r</code>.<br  />
+</p>
+
+<p>
 The neuroenv image (see below) has <code>screen</code> included.<br  />
 </p>
 </div>
@@ -176,7 +179,7 @@ The neuroenv image (see below) has <code>screen</code> included.<br  />
 <h2 id="sec-5">Reproducible computational neuroscience simulations</h2>
 <div class="outline-text-2" id="text-5">
 <p>
-At <a href="http://neuralensemble.blogspot.de/2015/08/docker-images-for-neuronal-network.html">neuralensemlbe</a>, Andrew Davison has provided a docker image cotaining NEST 2.6, NEURON 7.3, Brian 1.4 and PyNN 0.8.0rc1. The docker image I'm using in my current research project builds upon this <code>neuralensemble/simulation</code> image and additionally adds:<br  />
+At <a href="http://neuralensemble.blogspot.de/2015/08/docker-images-for-neuronal-network.html">neuralensemlbe</a>, Andrew Davison has provided a docker image cotaining NEST 2.6, NEURON 7.3, Brian 1.4 and PyNN 0.8.0rc1. The docker image I'm using in my current research project builds upon this <code>neuralensemble/simulation</code> image and additionally provides:<br  />
 </p>
 
 <ol class="org-ol">
@@ -193,7 +196,7 @@ LaTeX was added for text rendering in Matplotlib. You can find this image under 
 </p>
 
 <p>
-Here's the shell script I put into my working directory to run the image:<br  />
+Here's the shell script I have in my working directory to run the image conveniently:<br  />
 </p>
 
 <div class="org-src-container">
