@@ -1,0 +1,209 @@
+---
+layout: post
+title: A reproducible research environment with Sumatra and Docker
+permalink: sumatra-docker-image
+date: 2016-02-04
+categories:
+- reproducible-research
+tags:
+- tools
+- Docker
+- Sumatra
+- reproducible-research
+---
+
+
+<p>
+Docker is a <a href="http://arxiv.org/abs/1410.0846">promising candidate</a> for a computational research environment that allows for easy replication of computations and results. <a href="http://www.neuralensemble.org/sumatra/">Sumatra</a> is an automated laboratory notebook for computational research projects. Do Sumatra and Docker work well together?<br  />
+</p>
+
+<!-- more -->
+
+<p>
+Yes! Here's some details that might help you get started using Docker and Sumatra in combination:<br  />
+</p>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">A docker image for Sumatra</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+I've created a basic docker image with Sumatra 0.7.0 and git bindings and uploaded it to the <a href="https://hub.docker.com/r/felix11h/smt_docker/">Docker Hub</a>. The image  <code>felix11h/smt_docker</code> is built from the following Dockerfile:<br  />
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-dockerfile"><span style="color: #859900;">FROM</span> ubuntu:14.04
+
+<span style="color: #859900;">RUN</span> apt-get -y update
+<span style="color: #859900;">RUN</span> apt-get install -y python python-dev python-pip
+
+<span style="color: #859900;">RUN</span> apt-get install -y git
+<span style="color: #859900;">RUN</span> pip install sumatra
+<span style="color: #859900;">RUN</span> pip install gitpython
+
+<span style="color: #859900;">WORKDIR</span> /home
+
+<span style="color: #859900;">EXPOSE</span> 8000
+</pre>
+</div>
+
+<p>
+If you have Docker correctly installed, you can<br  />
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">docker run -it -p 8000:8000 felix11h/smt_docker /bin/bash
+</pre>
+</div>
+
+<p>
+This command, after not finding the image <code>felix11h/smt_docker</code> locally, pulls the docker image created from the code above from the Docker Hub and runs it with the following parameters:<br  />
+</p>
+
+<ul class="org-ul">
+<li><code>-i (--interactive)</code>  Keeps STDIN open even if not attached.<br  />
+</li>
+<li><code>-t (--tty)</code>  Allocates a pseudo-TTY. Used here to run a throwaway interactive shell.<br  />
+</li>
+<li><code>-p 8000:8000 (--publish)</code> Publishes the container's port <code>8000</code> to the host. <code>ip:hostPort:containerPort</code> and <code>hostPort:containerPort</code> are the two formats I used so far.<br  />
+</li>
+<li><code>/bin/bash</code> Opens a Bash shell.<br  />
+</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2">Sumatra within the container</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+From within the container, let's test if Sumatra works as expected:<br  />
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">mkdir smt_test
+<span style="color: #6c71c4;">cd</span> smt_test
+git init
+smt init Test_Project
+smtweb --allips
+</pre>
+</div>
+
+
+<p>
+Here, the flag <code>--allips</code> to smtweb is critical. It hosts the Sumatra web interface at <code>0.0.0.0:8000</code> (as opposed to <code>127.0.0.1:8000</code>), which is exactly the address the docker container assumes when trying to publish the content the host. (I was about to add this option to Sumatra myself, but found it was alrealdy there!)<br  />
+</p>
+
+<p>
+With this you should be able to<br  />
+</p>
+
+<pre class="example">
+curl 127.0.0.1:8000
+</pre>
+
+<p>
+from the Docker host (that is outside the container!). Or, of course, simply navigate to <code>127.0.0.1:8000</code> in your browser.<br  />
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3">Mounting a data volume</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+If you want to save the results of computations that you're running within a container, mounting a data volume of your docker host to the container is likely the easiest solution. To do this, you have add yet another argument to the docker run command<br  />
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">docker run -v /path/to/host_dir:/path/to/container_dir
+</pre>
+</div>
+
+<p>
+You might, for example,n want to host the working directory to <code>/home/wdir</code>:<br  />
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">docker run -v $(<span style="color: #839496;">pwd</span>):/home/wdir
+</pre>
+</div>
+
+<p>
+When dealing with data volumes, it's worth to think about permissions. I'm still experimenting with this, but I helpful command argument I found is<br  />
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">docker run --user=<span style="color: #2aa198;">"$(</span><span style="color: #839496;">id</span><span style="color: #2aa198;"> -u):$(</span><span style="color: #839496;">id</span><span style="color: #2aa198;"> -g)"</span>
+</pre>
+</div>
+
+<p>
+which, as I understand it, passes the current user.<br  />
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4">Permanently host the web interface with screen</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+When running computational experiments within a Docker container, it is beneficial to be able to host the webinterface and run simulations at the same time. An easy solution is to use <code>screen</code>. Install it in the container via<br  />
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">apt-get update
+apt-get install screen
+</pre>
+</div>
+
+<p>
+Then you can call <code>screen</code>, run <code>smtweb --allips</code> and detach the screen by pressing <code>CTRL+a d</code>. This allows you to keep the webinterface hosted while you're running simulations. To get back the original screen, use <code>screen -r</code>.<br  />
+The neuroenv image (see below) has <code>screen</code> included.<br  />
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5">Reproducible computational neuroscience simulations</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+At <a href="http://neuralensemble.blogspot.de/2015/08/docker-images-for-neuronal-network.html">neuralensemlbe</a>, Andrew Davison has provided a docker image cotaining NEST 2.6, NEURON 7.3, Brian 1.4 and PyNN 0.8.0rc1. The docker image I'm using in my current research project builds upon this <code>neuralensemble/simulation</code> image and additionally adds:<br  />
+</p>
+
+<ol class="org-ol">
+<li>Sumatra<br  />
+</li>
+<li><code>screen</code> <br  />
+</li>
+<li>a mostly complete TeX Live installation<br  />
+</li>
+</ol>
+
+<p>
+LaTeX was added for text rendering in Matplotlib. You can find this image under <code>felix11h/neuroenv_smt_ltx</code> on the <a href="https://hub.docker.com/r/felix11h/neuroenv_smt_ltx/">Docker Hub</a>.<br  />
+</p>
+
+<p>
+Here's the shell script I put into my working directory to run the image:<br  />
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">sudo docker run -it -p 127.0.0.1:8000:8000 --user=<span style="color: #2aa198;">"$(</span><span style="color: #839496;">id</span><span style="color: #2aa198;"> -u):$(</span><span style="color: #839496;">id</span><span style="color: #2aa198;"> -g)"</span> -v $(<span style="color: #839496;">pwd</span>):/lab felix11h/neuroenv_smt_ltx /bin/bash
+</pre>
+</div>
+
+<p>
+Let me know about your experience with Sumatra and Docker!<br  />
+</p>
+</div>
+</div>

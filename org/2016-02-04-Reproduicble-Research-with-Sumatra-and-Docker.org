@@ -72,7 +72,7 @@ smtweb --allips
 #+END_SRC
 
 
-Here, the flag ~--allips~ to smtweb is critical. It hosts the Sumatra web interface at ~0.0.0.0:8000~ (as opposed to ~127.0.0.1:8000~), which is exactly the address the docker container assumes when trying to publish the content the host. I was about to add this option to Sumatra myself, but found it was alrealdy there!
+Here, the flag ~--allips~ to smtweb is critical. It hosts the Sumatra web interface at ~0.0.0.0:8000~ (as opposed to ~127.0.0.1:8000~), which is exactly the address the docker container assumes when trying to publish the content the host. (I was about to add this option to Sumatra myself, but found it was alrealdy there!)
 
 With this you should be able to
 
@@ -132,3 +132,5 @@ Here's the shell script I put into my working directory to run the image:
 #+BEGIN_SRC sh
 sudo docker run -it -p 127.0.0.1:8000:8000 --user="$(id -u):$(id -g)" -v $(pwd):/lab felix11h/neuroenv_smt_ltx /bin/bash
 #+END_SRC
+
+Let me know about your experience with Sumatra and Docker!
