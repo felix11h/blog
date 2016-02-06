@@ -5,9 +5,13 @@
 layout: post
 title: Better Zotero file management with Zotfile
 permalink: zotero-zotfile-config
+date:
 categories:
-    - Zotero
-    - reference-management
+ - reference-management
+tags:
+ - reference-management
+ - Zotero
+ - tools
 ---
 #+END_HTML
 
@@ -47,7 +51,7 @@ However, if you would like document type specific renaming and relocating rules 
 
 - For specific document types (manuscripts) I want to adapt the default ~AuthorYear~ renaming rule to include the title as well, ~AuthorYear_Title~.
 
-- For relocating, I would like custom folder names for the different documents types. For example, instead of sorting journal article type documents into "Journal Articles" I'd rather have them in a folder "articles". 
+- For relocating, I would like custom folder names for the different documents types. For example, instead of sorting journal article type documents into ~Journal Articles/~, I'd rather have them in a folder ~articles/~. 
 
 This can be achieved by the following two wildcards ~%3~ and ~%4~. The renaming rules I have defined as
 
@@ -161,7 +165,7 @@ and like this for relocating:
 
  
 
-If you want to define wildcards yourself, or want to use the one above, you should first <a href="">validate the JSON</a> and then convert it to a <a href="">single line of code</a>.
+If you want to define wildcards yourself, or want to use the one above, you should first validate the JSON (I used [[http://pro.jsonlint.com/][pro.jsonlint.com]]) and then convert it to a single line of code (I used [[http://www.freeformatter.com/json-formatter.html#ad-output][freemformatter.com]]).
 
 
 * Syncing across multiple machines
