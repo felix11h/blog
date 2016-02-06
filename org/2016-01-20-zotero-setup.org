@@ -38,14 +38,14 @@ I find this very impractical. But it gets worse: Even knowing this path, it is i
 [[http://zotfile.com/][Zotfile]], written by Joscha Legewie, is a plug-in for Zotero that is able to address almost every issue I have with Zotero. Download it from the [[http://zotfile.com/][plugin's website]] and consider supporting the developer if you find the tool as useful as I do.
 
 
-** Renaming & Relocating with Zotfile
+* Renaming & Relocating with Zotfile
 
 Renaming and relocating the attachments is easy using Zotfile. Open the Zotfile preferences in Zotero (located right under the standard preferences) and define your location and renaming rules. Combing the [[http://zotfile.com/#renaming-rules][default wildcards]] you can get pretty nice results already.
 
 For long time, for example, I've been using ~%a%y~ as renaming rule to obtain names of the format ~Authorname2002~.
 
 
-** Document type specific renaming rules with custom wildcards
+* Document type specific renaming rules with custom wildcards
 
 However, if you would like document type specific renaming and relocating rules you have to resort to writing your own wildcards. Here's two things I wanted to do:
 
@@ -185,11 +185,6 @@ Another helpful feature that Zotfile provides is exporting the pdfs attached to 
 To do this, set up the ~Send to Tablet~ functionality. You don't need to actually send it to a tablet. All it really does is copy selected pdfs to a folder you specified. From there you can easily copy the files to wherever you want to have them.
 
 
-* A final step for LaTeX enthusiasts
-
-If you're using Bibtex to generate your bibliographies, there's one more thing you can do. 
-
-With this, articles become available to you for citation the moment you add them to Zotero library. 
 
 
 
