@@ -5,7 +5,7 @@
 layout: post
 title: Better Zotero file management with Zotfile
 permalink: zotero-zotfile-config
-date:
+date: 2016-02-07
 categories:
  - reference-management
 tags:

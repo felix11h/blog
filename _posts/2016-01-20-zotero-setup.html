@@ -1,0 +1,232 @@
+---
+layout: post
+title: Better Zotero file management with Zotfile
+permalink: zotero-zotfile-config
+date: 2016-02-07
+categories:
+ - reference-management
+tags:
+ - reference-management
+ - Zotero
+ - tools
+---
+
+
+<p>
+In this post I'm detailing my Zotero setup. It took me a while to figure out all the bits and pieces and I figure describing my configuration might be helpful to someone else.<br  />
+</p>
+
+<!-- more -->
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Why isn't the default Zotero setup good enough?</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+The main issue is the way files that are attached to Zotero entries get stored. In the default setup, Zotero saves the PDF (and other) documents in the Firefox profile directory. The <a href="https://www.zotero.org/support/zotero_data">path</a> to your library (on Linux) looks like this:<br  />
+</p>
+
+<pre class="example">
+~/.mozilla/firefox/Profiles/&lt;randomstring&gt;/zotero
+</pre>
+
+<p>
+I find this very impractical. But it gets worse: Even knowing this path, it is impossible to predict where a specific file will be stored, as Zotero creates random(?) subdirectories in which the files are stored, using equally cryptic file names. This makes locating Zotero attachements in the file system unnecessarily hard.<br  />
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2">Zotfile to the rescue!</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<a href="http://zotfile.com/">Zotfile</a>, written by Joscha Legewie, is a plug-in for Zotero that is able to address almost every issue I have with Zotero. Download it from the <a href="http://zotfile.com/">plugin's website</a> and consider supporting the developer if you find the tool as useful as I do.<br  />
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3">Renaming &amp; Relocating with Zotfile</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Renaming and relocating the attachments is easy using Zotfile. Open the Zotfile preferences in Zotero (located right under the standard preferences) and define your location and renaming rules. Combing the <a href="http://zotfile.com/#renaming-rules">default wildcards</a> you can get pretty nice results already.<br  />
+</p>
+
+<p>
+For long time, for example, I've been using <code>%a%y</code> as renaming rule to obtain names of the format <code>Authorname2002</code>.<br  />
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4">Document type specific renaming rules with custom wildcards</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+However, if you would like document type specific renaming and relocating rules you have to resort to writing your own wildcards. Here's two things I wanted to do:<br  />
+</p>
+
+<ul class="org-ul">
+<li>For specific document types (manuscripts) I want to adapt the default <code>AuthorYear</code> renaming rule to include the title as well, <code>AuthorYear_Title</code>.<br  />
+</li>
+
+<li>For relocating, I would like custom folder names for the different documents types. For example, instead of sorting journal article type documents into <code>Journal Articles/</code>, I'd rather have them in a folder <code>articles/</code>.<br  />
+</li>
+</ul>
+
+<p>
+This can be achieved by the following two wildcards <code>%3</code> and <code>%4</code>. The renaming rules I have defined as<br  />
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-json">{
+    <span style="color: #859900;">"3"</span>: {
+        <span style="color: #859900;">"default"</span>: {},
+        <span style="color: #859900;">"manuscript"</span>: {
+            <span style="color: #859900;">"field"</span>: <span style="color: #2aa198;">"title"</span>,
+            <span style="color: #859900;">"operations"</span>: [
+                {
+                    <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
+                    <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">" "</span>,
+                    <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">"-"</span>
+                },
+                {
+                    <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
+                    <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">"^(.*)$"</span>,
+                    <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">"_$1"</span>
+                }
+            ]
+        },
+        <span style="color: #859900;">"book"</span>: {
+            <span style="color: #859900;">"field"</span>: <span style="color: #2aa198;">"title"</span>,
+            <span style="color: #859900;">"operations"</span>: [
+                {
+                    <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
+                    <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">" "</span>,
+                    <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">"-"</span>
+                },
+                {
+                    <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
+                    <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">"^(.*)$"</span>,
+                    <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">"_$1"</span>
+                }
+            ]
+        },
+        <span style="color: #859900;">"report"</span>: {
+            <span style="color: #859900;">"field"</span>: <span style="color: #2aa198;">"title"</span>,
+            <span style="color: #859900;">"operations"</span>: [
+                {
+                    <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
+                    <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">" "</span>,
+                    <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">"_"</span>
+                },
+                {
+                    <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"toLowerCase"</span>
+                }
+            ]
+        }
+    },
+    <span style="color: #859900;">"4"</span>: {
+        <span style="color: #859900;">"default"</span>: {
+            <span style="color: #859900;">"field"</span>: <span style="color: #2aa198;">"itemType"</span>,
+            <span style="color: #859900;">"operations"</span>: [
+                {
+                    <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
+                    <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">"Journal Article"</span>,
+                    <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">"articles"</span>
+                },
+                {
+                    <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
+                    <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">"^Book$"</span>,
+                    <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">"books"</span>
+                },
+                {
+                    <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
+                    <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">"Manuscript"</span>,
+                    <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">"manuscripts"</span>
+                },
+                {
+                    <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
+                    <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">"^Book Section$"</span>,
+                    <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">"book_sections"</span>
+                },
+                {
+                    <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
+                    <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">"Document"</span>,
+                    <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">"documents"</span>
+                },
+                {
+                    <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
+                    <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">"Thesis"</span>,
+                    <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">"thesis"</span>
+                },
+                {
+                    <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
+                    <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">"Presentation"</span>,
+                    <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">"presentations"</span>
+                }
+            ]
+        },
+        <span style="color: #859900;">"report"</span>: {
+            <span style="color: #859900;">"field"</span>: <span style="color: #2aa198;">"extra"</span>
+        }
+    }
+}
+</pre>
+</div>
+
+<p>
+Here, <code>%3</code> is for the renaming while <code>%4</code> handles the relocating. I use those wildcards like this for renaming;<br  />
+</p>
+
+<img src="{{ site.baseurl }}/assets/zotfile_renaming_rules.png" width="80%" style="display:block;margin:2em auto 2em;"/>
+
+<p>
+and like this for relocating:<br  />
+</p>
+
+<img src="{{ site.baseurl }}/assets/zotfile_relocating_rules.png" width="80%" style="display:block;margin:2em auto 2em;"/>
+
+
+
+<p>
+If you want to define wildcards yourself, or want to use the one above, you should first validate the JSON (I used <a href="http://pro.jsonlint.com/">pro.jsonlint.com</a>) and then convert it to a single line of code (I used <a href="http://www.freeformatter.com/json-formatter.html#ad-output">freemformatter.com</a>).<br  />
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5">Syncing across multiple machines</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Setting up Zotero in this way allows you to easily synchronize your Zotero library across multiple machines. All you need to do is:<br  />
+</p>
+
+<ol class="org-ol">
+<li>Synchronize your library directory (the one you specified in Zotfile), for example via Dropbox or ownCloud.<br  />
+</li>
+<li>Synchronize your Zotero profile via the service provided within Zotero (you have to create an account).<br  />
+</li>
+<li><b>IMPORTANT</b>: In the Zotero(!) settings find the option <code>Advanced</code> - <code>Files and Folders</code> and set the path of the <code>Linked Attachment Base Directory</code> to your library directory (same as in 1.).<br  />
+</li>
+</ol>
+</div>
+</div>
+
+
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6">Easily sharing papers</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+Another helpful feature that Zotfile provides is exporting the pdfs attached to a collection or selection within Zotero. This is specifically convenient when you need to share papers with your colleagues via Email, Dropbox or even USB stick.<br  />
+</p>
+
+<p>
+To do this, set up the <code>Send to Tablet</code> functionality. You don't need to actually send it to a tablet. All it really does is copy selected pdfs to a folder you specified. From there you can easily copy the files to wherever you want to have them.<br  />
+</p>
+</div>
+</div>
