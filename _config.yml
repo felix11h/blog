@@ -8,7 +8,7 @@ permalink:           pretty
 title:               3 Diagrams per Page
 tagline:             
 description:         Personal blog of Felix Z. Hoffmann on computational neuroscience, mathematics, open science and the tools he uses keep organizes his thoughts and ideas. 
-url:                 http://felix11h.github.io/
+url:                 http://felix11h.github.io
 baseurl:             /blog
 
 # About/contact
@@ -19,6 +19,8 @@ author:
 
 # Custom vars
 version:             1.0.0
+
+exclude: [org/_posts, org/_drafts]
 
 gems: [jekyll-paginate, jekyll-sitemap]
 paginate: 8
