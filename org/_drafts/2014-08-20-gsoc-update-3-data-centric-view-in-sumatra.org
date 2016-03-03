@@ -1,0 +1,60 @@
+---
+layout: post
+title: GSoC Update 3 - Data-centric view in Sumatra
+date: 2014-08-20 08:58:39.000000000 +02:00
+type: post
+published: true
+status: publish
+categories:
+- GSoC14
+tags: []
+meta:
+  _edit_last: '12765625'
+  geo_public: '0'
+  _publicize_pending: '1'
+author:
+  login: felix11h
+  email: felix.mail.hoffmann@gmail.com
+  display_name: Felix
+  first_name: ''
+  last_name: ''
+---
+<p><em>This is the fourth entry in a <a href="http://3diagramsperpage.wordpress.com/category/gsoc14/">series</a> of posts on my participation in this year's Google Summer of Code program working on the reproducible research tool <a href="http://neuralensemble.org/sumatra/">Sumatra</a> with mentor <a href="http://www.unic.cnrs-gif.fr/people/Andrew_Davison/">Andrew Davison</a> under the mentoring organization <a href="http://incf.org/">INCF</a>.</em></p>
+<p>In my proposal to participate in this year's Google Summer of Code program I suggested to implement a data-centric view to the reproducible research tool Sumatra. First establishing the necessary framework for strong process-to-data associations, it was my aim to update Sumatra's web interface to feature an equally powerful and informative data-centric view, alongside the current record-centric pages. Users should not only be able to conveniently switch between the views, but use them in conjunction, finding information in the view that is currently most useful to their purposes.</p>
+<p>Sumatra's web interface is build on a Django framework. Three models stand out: <strong>Project</strong>, which holds information on the current computational project. Details on an executed computation within in a project is stored in the <strong>Record</strong> model. In the model, for example, time and duration of the simulation are stored, the used parameters and version of the code is stored. Information on the input and output data of the computation is stored in the <strong>DataKey</strong> model; for each of the input and output files a DataKey is created, capturing file meta-information such as file size and content-type. The Record and DataKey were formerly connected through two <code>ManyToManyField</code>s, <code>input_data</code> and <code>output_data</code>, both defined in the <strong>Record</strong> class. Through the input_data field, for example,</p>
+<p>[sourcecode language="python"]<br />
+class Record(models.Model)</p>
+<p>    #...</p>
+<p>    input_data = models.ManyToManyField(DataKey,<br />
+                     related_name=&quot;input_to_records&quot;)<br />
+[/sourcecode]</p>
+<p>DataKey and Record are connected: While</p>
+<p>[sourcecode language="python"]<br />
+smt_record.input_data.all()<br />
+[/sourcecode]</p>
+<p>returns the DataKeys, which served as input for the Record <code>smt_record</code>, through the reverse relationship,</p>
+<p>[sourcecode language="python"]<br />
+smt_data.input_to_records.all()<br />
+[/sourcecode]</p>
+<p>returns the Records to which the DataKey <code>smt_data</code> provided input.</p>
+<p>To strengthen a data-centric view in Sumatra, a subtle, yet important change to this logic was applied. Changing the <code>output_data</code> field from a many-to-many relationship to a one-to-many relationship, gives a distinct advantage; now at most one Record can be at any the related record from which a DataKey was created, allowing through this relationship to easily query for the creation time of a DataKey:</p>
+<p>[sourcecode language="python"]<br />
+creation_time = smt_data.output_from_record.timestamp<br />
+[/sourcecode]</p>
+<p>The implementation of the one-to-many relationship is given by the <code>ForeignKey</code> field, here now implemented in DataKey model:</p>
+<p>[sourcecode language="python"]<br />
+class DataKey(models.Model)</p>
+<p>    #...</p>
+<p>    output_from_record = models.ForeignKey('Record',<br />
+          related_name = 'output_data', null = True)<br />
+[/sourcecode]</p>
+<p>&nbsp;<br />
+Utilizing this updated framework as well as the DataTable integration referenced in the previous post, allowed me to create balanced record and data-centric in Sumatra. This includes the following four main pages of interest:</p>
+<ul>
+<li>The listings of data and records,</li>
+<li>and the detailed views of single data and record entries.</li>
+</ul>
+<p>With this new interface, users can easily switch from between record and data-centric views, ultimately allowing them to better track provenance of their computations with Sumatra.</p>
+<p>The implementation of what was described above is found in the <a href="https://bitbucket.org/Felix11H/sumatra/branch/default?head=833ead4fb6f12a7a89ee96d04ec6f75b2ba84a93" target="_blank">datatable_dev</a>) bookmark of my Sumatra fork. Below a gallery of the new interface:</p>
+<p>&nbsp;<br />
+[gallery ids="507,509,508,506,505,504"]</p>

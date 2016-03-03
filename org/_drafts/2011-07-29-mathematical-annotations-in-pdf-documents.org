@@ -1,0 +1,72 @@
+---
+layout: post
+title: Mathematical Annotations in PDF Documents
+date: 2011-07-29 14:24:11.000000000 +02:00
+type: post
+published: true
+status: publish
+categories:
+- tools
+tags: []
+meta:
+  _edit_last: '12765625'
+author:
+  login: felix11h
+  email: felix.mail.hoffmann@gmail.com
+  display_name: Felix
+  first_name: ''
+  last_name: ''
+---
+<p style="text-align:justify;">I'm often in the situation that while working with an interesting pdf, I want to add small notes to the document. Those annotations, for the sake of being short and precise, then almost always include math symbols. The problem is, that I rarely own the LaTeX source-code to the file; all I have is the pdf.</p>
+<p style="text-align:justify;"><em>How to add mathematical annotations to a pdf, of which you don't own the LaTex source-code?</em></p>
+<p style="text-align:justify;">While this is a question that does get asked from time to time (<a title="here" href="http://stackoverflow.com/questions/2996123/mathematical-annotations-in-a-pdf-file" target="_blank">here</a> and <a title="here" href="http://tex.stackexchange.com/questions/6306/how-to-annotate-pdf-files-generated-by-pdflatex" target="_blank">here</a>), I had yet to find a comprehensive solution to the problem.</p>
+<p style="text-align:justify;font-size:1.25em;"><strong>Here is mine:</strong></p>
+<p style="text-align:justify;">I first create an otherwise empty pdf document, which only consists of my annotations, and then <em>stamp</em> this mask onto the target pdf, using the multi-stamp function of the pdf-tool <a title="pdf-tk" href="http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/" target="_blank">pdf-tk</a>.</p>
+<p style="text-align:center;"><a href="http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/" target="_blank"><img class="aligncenter" style="border:0 none;" title="pdftk" src="{{ site.baseurl }}/assets/pdftk.jpg?w=300" alt="" width="300" height="68" /></a></p>
+<p style="text-align:justify;font-size:1.25em;"><strong>A step-by-step guide to making mathematical annotations:</strong></p>
+<p style="text-align:justify;padding-left:30px;"><strong>(1)  Download pdftk</strong></p>
+<p style="text-align:justify;padding-left:30px;">Go to <a title="pdflabs.com" href="http://www.pdflabs.com/docs/install-pdftk/" target="_blank">pdflabs.com</a> and download pdftk. Of course you will want to download the correct version for your operating system, but for this guide I will only reference Windows.</p>
+<p style="padding-left:30px;">Unzip the downloaded file and I recommend following Sid Stewart's advice and copy the contents (<code>pdftk.exe</code> and <code>libiconv2.dll</code>) of the <code>bin</code>-folder to <code></code></p>
+<p style="padding-left:30px;text-align:center;"><code>C:\windows\system32</code></p>
+<p style="padding-left:30px;text-align:justify;">Another possible choice is to set up a working folder, where you will have your mask- and target pdf and copy the files there.</p>
+<p style="padding-left:30px;text-align:justify;"><strong>(2) Creating the mask</strong></p>
+<p style="padding-left:30px;text-align:justify;">Next we will create an empty pdf file of at least as many pages as your target document and will put the annotations in the right places using LaTex.</p>
+<p style="padding-left:30px;text-align:justify;">Tex.stackexchange user <a href="http://tex.stackexchange.com/users/4427/egreg" target="_blank">egreg</a> , had a wonderful <a href="http://tex.stackexchange.com/questions/17264/creating-a-mask-with-n-empty-pages-for-stamping" target="_blank">suggestion</a> of how to do this. Here is his sample code:</p>
+<p style="padding-left:60px;"><code>\documentclass[a4paper]{article}</code></p>
+<pre style="padding-left:60px;">\newcommand{\multistamp}[1]{% raw %}{{{%}}{% endraw %}
+ \loop\unless\ifnum\value{page}&gt;#1
+ \dowhatsonthispage
+ \repeat}</pre>
+<pre style="padding-left:60px;">\newcommand{\dowhatsonthispage}{% raw %}{{{%}}{% endraw %}
+ \null\csname onthispage\thepage\endcsname\newpage}</pre>
+<pre style="padding-left:60px;">\newcommand{\putonpage}[2]{% raw %}{{{%}}{% endraw %}
+ \expandafter\def\csname onthispage#1\endcsname{#2}}</pre>
+<pre style="padding-left:60px;">\begin{document}</pre>
+<pre style="padding-left:60px;">\putonpage{1}{Hello world}
+ \putonpage{3}{\vspace*{\fill}Hello world\par\vspace{\fill}}</pre>
+<pre style="padding-left:60px;">\multistamp{4}</pre>
+<pre style="padding-left:60px;">\end{document}</pre>
+<p style="padding-left:30px;">As he explains, "this creates a four page document, with something on the first and third pages as decided by the commands <code>\putonpage</code><code>".</code></p>
+<p style="padding-left:30px;">If you are not too sure of how to create your custom stamp mask from here, you can download this <a href="http://3diagramsperpage.files.wordpress.com/2011/07/mask.doc">sample mask</a>. (Sadly, I am not allowed to upload .tex files and had to settle for the awkward .doc file. Please open with notepad (or better <a href="http://notepad-plus-plus.org/" target="_blank">notepad++</a>) and copy&amp;paste into the TeX Editor of your liking.)</p>
+<p style="padding-left:30px;">Now create the pdf file from the source and for the sake of the tutorial name it</p>
+<pre style="text-align:center;">mask.pdf</pre>
+<p style="padding-left:30px;">(Don't worry,  if you couldn't create a mask for whatever reason, here are a <a href="http://3diagramsperpage.files.wordpress.com/2011/07/mask.pdf">mask</a> and a <a href="http://3diagramsperpage.files.wordpress.com/2011/07/target.pdf">target</a> you can use.)</p>
+<p style="padding-left:30px;"><strong>(3) Stamping</strong></p>
+<p style="padding-left:30px;">Copy your <code>mask.pdf</code> and your target pdf to a folder of your choice. Please rename your target pdf to</p>
+<pre style="text-align:center;">target.pdf</pre>
+<p style="padding-left:30px;">for this tutorial.</p>
+<p style="padding-left:30px;text-align:justify;"><a href="http://3diagramsperpage.files.wordpress.com/2011/07/stampingfolder.jpg" target="_blank"><img class="aligncenter size-full wp-image-126" style="border:0 none;margin-top:35px;margin-bottom:35px;" title="stampingfolder" src="{{ site.baseurl }}/assets/stampingfolder.jpg" alt="" width="472" height="357" /></a><em>Note:</em> <em>If you didn't copy pdftk files to System32, they must be copied to this folder for the procedure to work!</em></p>
+<p style="padding-left:30px;">Now all we need to do is stamping the mask onto the target using pdftk.</p>
+<p style="padding-left:30px;">For this run a terminal (by clicking on the windows start button and entering cmd in the search field).</p>
+<p style="padding-left:30px;">Next change to the directory where your <code>mask.pdf</code> and <code>target.pdf</code> are.</p>
+<p style="padding-left:30px;">(You can do this by entering</p>
+<pre style="padding-left:30px;text-align:center;">cd  %path-to-your-directory</pre>
+<p style="padding-left:30px;">for example</p>
+<pre style="padding-left:30px;text-align:center;">cd C:\Windows\stampingfolder</pre>
+<p style="padding-left:30px;">If you need to change drives, enter the name of the drive with a colon, for example</p>
+<pre style="padding-left:30px;text-align:center;">D:</pre>
+<p style="padding-left:30px;">if <code>D</code> is the name of your drive. Then locate your folder like above.)</p>
+<p style="text-align:center;"><a href="http://3diagramsperpage.files.wordpress.com/2011/07/terminal.jpg" target="_blank"><img class="aligncenter size-full wp-image-122" style="border:0 none;margin-top:35px;margin-bottom:35px;" title="terminal" src="{{ site.baseurl }}/assets/terminal.jpg" alt="" width="472" height="243" /></a></p>
+<p style="padding-left:30px;">Finally we enter the command that will tell pdftk to stamp the <code>mask.pdf</code> onto the <code>target.pdf</code>. Enter</p>
+<pre style="padding-left:30px;text-align:center;">pdftk target.pdf multistamp mask.pdf output stamped.pdf</pre>
+<p style="padding-left:30px;">This will create a pdf called <code>stamped.pdf</code> and it should contain everything of your target pdf with the annotations of your mask stamped upon it!</p>

@@ -1,0 +1,27 @@
+---
+layout: post
+title: An outline of quantum mechanics
+date: 2012-05-18 09:34:23.000000000 +02:00
+type: post
+published: true
+status: publish
+categories:
+- physics
+tags: []
+meta:
+  _edit_last: '12765625'
+author:
+  login: felix11h
+  email: felix.mail.hoffmann@gmail.com
+  display_name: Felix
+  first_name: ''
+  last_name: ''
+---
+<p>Hearing my first quantum mechanics lecture in summer 2009, I was incredibly confused with the concepts presented to me. Probability, operators, eigenspectra, uncertainty - all these ideas were in the room, but I couldn't arrange them into a coherent picture.</p>
+<p>The first ray of hope of bringing structure into my understanding of quantum mechanics was buying and reading Leslie E. Ballentine's book, <em>Quantum Mechanics - A Modern Development</em>. After having heard a one year lecture on the operator algebraic methods of quantum mechanics in 2010, I recently returned to quantum mechanics and reading Ballentine's book.</p>
+<p style="text-align:center;"><a href="http://3diagramsperpage.files.wordpress.com/2012/05/outline_of_quantum_mechanics.pdf"><img class=" wp-image-171 aligncenter" style="border:0 none;margin-top:50px;" src="{{ site.baseurl }}/assets/gram_cut.png" alt="" width="431" height="191" /></a></p>
+<p style="text-align:center;"><em>Download the <a href="http://3diagramsperpage.files.wordpress.com/2012/05/outline_of_quantum_mechanics.pdf">pdf.</a></em></p>
+<p> &nbsp; </p>
+<p>With this little article I, in a way, summarize my understanding so far. I am not sure if this can be helpful to anyone else, but as the article was written with the intent to be posted online, I want follow through.</p>
+<p>Download the <a href="http://3diagramsperpage.files.wordpress.com/2012/05/outline_of_quantum_mechanics.pdf">pdf</a> and the <a href="https://github.com/Felix11H/LaTeX/tree/master/articles/physics/outline_quantum_mechanics">source code</a>.</p>
+<p style="text-align:right;"><span style="color:#999999;"><em>0.3 diagrams per page (1 total)</em></span></p>

@@ -1,0 +1,61 @@
+---
+layout: post
+title: Mathjax theorems - CSS for LaTeX-like environments - Custom names
+date: 2013-08-29 08:14:57.000000000 +02:00
+type: post
+published: true
+status: publish
+categories:
+- tools
+tags:
+- css
+- latex
+- mathematics
+- mathjax
+meta:
+  _edit_last: '12765625'
+  _publicize_pending: '1'
+  _wpas_skip_facebook: '1'
+  _wpas_skip_google_plus: '1'
+  _wpas_skip_twitter: '1'
+  _wpas_skip_linkedin: '1'
+  _wpas_skip_tumblr: '1'
+  _wpas_skip_path: '1'
+author:
+  login: felix11h
+  email: felix.mail.hoffmann@gmail.com
+  display_name: Felix
+  first_name: ''
+  last_name: ''
+---
+<p>EDIT: As mentionend in the comments, this solutions does not currently work in all browsers.</p>
+<p>In a fantastic <a href="http://drz.ac/2013/01/17/latex-theorem-like-environments-for-the-web/" title="post">post </a> on his blog earlier this year, Zachary T. Harmany explained how LaTex-like environments, such as definitions, theorems and proofs, should be done with CSS.</p>
+<p>His solution is a great way for writing mathematics on the web and I took his idea one step further, looking for a way to have custom names for theorems, which we would TeX as</p>
+<p>[sourcecode language="latex"]<br />
+\begin{theorem}[Prime numbers]<br />
+All odd numbers are prime.<br />
+\end{theorem}<br />
+[/sourcecode]</p>
+<p>To combine such functionality with Zachary's approach, I got the right idea from <a href="http://stackoverflow.com/a/16007160/692634">BigMacAttack's answer</a> to a stackoverflow question about a <a href="http://stackoverflow.com/questions/14436155/how-to-create-inline-style-with-before-and-after">related topic</a>.</p>
+<p>Here's what I am suggesting:</p>
+<p>[sourcecode language="css"]<br />
+.theorem {<br />
+    display: block;<br />
+    font-style: italic;<br />
+    margin-left: 4.5%; margin-right: 4.5%; margin-top: 2em;<br />
+    content: &amp;quot;Theorem&amp;amp;nbsp;&amp;quot;;<br />
+}</p>
+<p>.theorem:before {<br />
+    content: inherit;<br />
+    font-weight: bold;<br />
+    font-style: normal;<br />
+}<br />
+[/sourcecode]</p>
+<p>With this one could write </p>
+<p>[sourcecode language="css"]<br />
+&amp;lt;div class=&amp;quot;theorem&amp;quot; style=&amp;quot;content:'Theorem (Prime numbers)';&amp;quot;&amp;gt;<br />
+All odd numbers are prime.&amp;lt;/div&amp;gt;<br />
+[/sourcecode]</p>
+<p>to get </p>
+<p style="text-align:center;"> <b>Theorem (Prime numbers)</b> <i>All odd numbers are prime.</i></p>
+<p>For more about this, please visit Zachary's <a href="http://drz.ac/2013/01/17/latex-theorem-like-environments-for-the-web/" title="post">original post </a>!</p>

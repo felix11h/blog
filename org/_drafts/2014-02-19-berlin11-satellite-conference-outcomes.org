@@ -1,0 +1,43 @@
+---
+layout: post
+title: Berlin11 Satellite Conference - Outcomes
+date: 2014-02-19 15:36:31.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Open Science
+tags: []
+meta:
+  _edit_last: '12765625'
+  _publicize_pending: '1'
+  geo_public: '0'
+author:
+  login: felix11h
+  email: felix.mail.hoffmann@gmail.com
+  display_name: Felix
+  first_name: ''
+  last_name: ''
+---
+<p><strong>Important</strong>: The recordings are now available at the <a href="http://www.righttoresearch.org/act/berlin11/webcast">conference website</a>!</p>
+<p>The <a href="http://www.righttoresearch.org/act/berlin11/index.shtml" target="_blank">Berlin11</a> Satellite Conference for Students and Early Stage Researchers took place on November 18th, 2013. Not being able to attend, I only watched some parts of the livestream broadcast, relying on the <a href="https://twitter.com/R2RC/status/402447504991465472" target="_blank">promise</a> that video recordings of the presentations will be posted shortly after the conference. Three months after the event and after a month of unsuccessfully trying to get a statement from the organizers on whether there's still any chance to see the videos, I realize that neither recordings, nor any other outcomes of the meeting will be published. It's hard for me to understand how a conference on Open Access ends up portraying exactly the closed and inaccessible behaviour, that the concept of Open Access itself is trying to battle.</p>
+<p>So I decided to do something about it. Following the <a href="http://www.force11.org/outcomes" target="_blank">example</a> of the Beyond the PDF2 conference, I'm trying to compile an outcomes page with any resources, summaries and reports to the conference I can find. I'm hoping that eventually I would be able to collect at least the presentations of all speakers. So far I'm 4 out of 9 and I want to thank those presenters for making their slides accessible to everyone who couldn't attend the conference. <em>Thank you!</em></p>
+<p>Presentations:</p>
+<p style="padding-left:30px;"><strong>Jack Andraka</strong>:<br />
+<strong>Carl-Christian Buhr</strong>: <em>Making EU Open Access Policies Work</em> (<a href="http://www.slideshare.net/ccbuhr/making-eu-open-access-policies-work">Slideshare</a>)<br />
+<strong>Heather Joseph</strong>: <em>Open Access Update</em> (<a href="http://www.google.de/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=1&amp;cad=rja&amp;ved=0CCcQFjAA&amp;url=http://sparc.arl.org/sites/default/files/HJOSEPH%20B11%20Students.pdf&amp;ei=6o0EU-aDAYOw7Aa52YDQCw&amp;usg=AFQjCNF4Hc-pkIHRssOuAMiOru2Fz599vQ&amp;sig2=uGEpIWgRQtdKgW9ej3qBCg" target="_blank">direct download</a>)<br />
+<strong>Iryna Kuchma</strong>:<br />
+<strong>Cameron Neylon</strong>:<br />
+<strong>Ulrich Pöschl</strong>:<br />
+<strong>Bernard Rentier</strong>:<br />
+<strong>Alek Tarkowski</strong>: <em>From Open Access to Open All</em> (<a href="http://www.slideshare.net/tarkowski/2013-berlin11-satellite-presentation-tarkowski" target="_blank">Slideshare</a>)<br />
+<strong>Mike Taylor</strong>: <em>Towards universal Open Access: what we can do about it, and who should do it.</em> (<a href="http://svpow.com/2013/11/21/mikes-talks-at-the-berlin-11-conference/" target="_blank">blog post</a>, <a title="direct download" href="http://www.miketaylor.org.uk/dino/pubs/berlin11/berlin11-satellite-taylor-what-we-can-do.pdf" target="_blank">direct download</a>)</p>
+<p>Reflections and Summaries:</p>
+<p style="padding-left:30px;">Open Access Working Group: <em>Recap of the Berlin 11 conference: the call for a change in scientific culture becomes stronger</em> (<a href="http://access.okfn.org/2014/01/22/recap-of-the-berlin-11-conference-the-call-for-a-change-in-scientific-culture-becomes-stronger/" target="_blank">blog post</a>)<br />
+Open Access Button: <em>The Open Access Button Launch Roundup</em> (<a href="http://blog.openaccessbutton.org/2013/11/26/the-open-access-button-launch-roundup/" target="_blank">blog post</a>)</p>
+<p><strong>Please help!</strong> If you have access to any resources, presentations, summaries from the Berlin11 Satellite Conference, anything that you think could contribute to this list, please contact me and I will add it here.</p>
+<p>--------------------------------------------------------------------------------------------------------------------------</p>
+<p><strong>EDIT1 (Feb 22, 2014)</strong>: There's good news! One of the organizers of the conference contacted me and explained the situation. Audio recordings of the talks will be published soon (1-2 weeks). I'm also hoping that all presentations will be posted and will link from here once the official site has been updated.</p>
+<p><strong>EDIT2 (May 7, 2014)</strong>: Almost three months after my conversation with the organizers about recordings of the talks, neither audio nor slides have been officially posted. I still feel strongly about this topic and I realize that the good intentions of the organizers to make the talks publicly available was (is?) present. For now I hope that in planing potential future events the "post-production" will be considered as in important part of the conference, as it is for those not being able to attend in person the best opportunity to still participate.</p>
+<p><strong>EDIT3 (August 7, 2014)</strong>: The recordings have been posted! You can find them at the <a href="http://www.righttoresearch.org/act/berlin11/webcast">conference website</a>. This is fantastic and I hope that with <a href="http://www.opencon2014.org/" target="_blank">OpenCon 2014</a>, a follow-up event to the successful satellite conference in Berlin, coming up, quite some people might be interested in going back and listening to these talks!</p>
+<p>--------------------------------------------------------------------------------------------------------------------------</p>

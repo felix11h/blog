@@ -1,0 +1,9 @@
+
+
+I had na.o .
+
+For me this problem occured when compiling and synchronizing over different machines. A simple 
+
+rm -rf x86....
+
+solved the problem when running nrnivmodl again. 

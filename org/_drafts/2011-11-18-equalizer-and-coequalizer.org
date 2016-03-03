@@ -1,0 +1,59 @@
+---
+layout: post
+title: Equalizer and Coequalizer
+date: 2011-11-18 12:35:30.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- category theory
+tags: []
+meta:
+  _edit_last: '12765625'
+  _oembed_5301a06ae2a2608a9192007001a0e534: "{{unknown}}"
+  _oembed_270e92a3a88757d90883be47d2dc4090: "{{unknown}}"
+  _oembed_56dc9e62818178260842ca4e9037d615: "{{unknown}}"
+  _oembed_8f8585b1c072195a35028b4b29089cb0: "{{unknown}}"
+  _oembed_38da64aadecf400447f9bb18ce9c050f: "{{unknown}}"
+  _oembed_12e5e300a1705b1d445bd5cacfddbdcc: "{{unknown}}"
+  _oembed_b2cea10689827f229c2d3e2c1a48c410: "{{unknown}}"
+  _oembed_384deb43bb40c073f979e5cf00ffac6e: "{{unknown}}"
+  _oembed_87ac794f4baeeb4facd223e6eb9fb108: "{{unknown}}"
+  _oembed_2009773f92a2da4d67ea9ce1b90ccdcd: "{{unknown}}"
+  _oembed_46e8200ffb673f0209b551b3990f7321: "{{unknown}}"
+  _oembed_72e64b72c8525377e0879f7123a46069: "{{unknown}}"
+  _oembed_b2caeb39f5477ff3a631f8d89176aee0: "{{unknown}}"
+  _oembed_8b147d6fcf13a742c3869716636ac867: "{{unknown}}"
+  _oembed_099ac7549e1e6333edca4136ad51e203: "{{unknown}}"
+  _oembed_dde317497c6d1ccd34418181d190738d: "{{unknown}}"
+  _oembed_2ebab055156c7bfb1538fc5b5142c670: "{{unknown}}"
+  _oembed_52de124eef2a056b3c88f878c65f8951: "{{unknown}}"
+  _oembed_d161c7d3cd5c04bdacc7130949fca95b: "{{unknown}}"
+  _oembed_179410d2af836e4c6ff0f505e24e85f0: "{{unknown}}"
+  _oembed_36e4877cd3a58c6d36e24f2966eb5524: "{{unknown}}"
+  _oembed_737d1d47503666ef1e0f09c236d26459: "{{unknown}}"
+  _oembed_74fe67222c0511c33372b15476b44b99: "{{unknown}}"
+  _oembed_e3475413205ff4d825456549b87512ef: "{{unknown}}"
+  _oembed_a51f86accb6cf27b88c1790adb6cd7a1: "{{unknown}}"
+  _oembed_8a25783779adf55565898966d0f740a5: "{{unknown}}"
+  _oembed_8f68baa5e93ee7d0eea4bb8d6965270b: "{{unknown}}"
+  _oembed_2eaba4b1dd698a781b24a427460e21d4: "{{unknown}}"
+  _oembed_1bd8a7b86251b8cf687c23ff2e798173: "{{unknown}}"
+  _oembed_e5e09b3fd2e77f2df15e69e7670c2324: "{{unknown}}"
+author:
+  login: felix11h
+  email: felix.mail.hoffmann@gmail.com
+  display_name: Felix
+  first_name: ''
+  last_name: ''
+---
+<p>In my algebraic topology lecture, I learned that <em>product topology</em> constructions are actually categorial products in <strong>Top</strong> and that, dually, coproducts are <em>disjoint union</em> spaces. We even learned that<em> adjunction spaces</em> are pushouts. But when talking about <em>subspace</em> and <em>quotient space</em> topology constructions, apart from the notions being dual to each other, no words about the underlying categorial concepts were lost.</p>
+<p>Of course, these are just equalizers and coequalizers. While I found it rather obvious in the case of products &amp; coproducts, I didn't immediately see the correspondence for subspace and quotient space topologies. Specifically, given for example a subspace topology construction, how do you construct a diagram of which the subspace topology is an equalizer of?</p>
+<p style="text-align:center;"><a href="http://3diagramsperpage.files.wordpress.com/2011/11/equalizer-and-coequalizer-31.pdf"><img class=" wp-image-171 aligncenter" style="border:0 none;margin-top:50px;" src="{{ site.baseurl }}/assets/coeq.png" alt="" width="523" height="231" /></a></p>
+<p style="text-align:center;"><em>Download the <a href="http://3diagramsperpage.files.wordpress.com/2011/11/equalizer-and-coequalizer-31.pdf">pdf.</a></em></p>
+<p> &nbsp; </p>
+<p>In my little article (my first one!) I try to answer that question. I start with defining the concepts of equalizers and coequalizers and show that every equalizer morphism is already a monomorphism. Duality then gives us that coequalizer morphisms are epimorphisms for free. Next I consider equalizers and coequalizers in <strong>Set</strong>. I give the concrete constructions, and show that in <strong>Set</strong>, conversly, every monomorphism may already be interpreted as an equalizer. The dual statement also holds, here the construction felt less obvious and less natural, where representatives of sets of pre-images need to be chosen and one is required to accept the axiom of choice.</p>
+<p>With these results I show in the last section that subspace topology constructions do indeed correspond to equalizers and quotient space constructions to coequalizers.</p>
+<p>Download the <a href="http://3diagramsperpage.files.wordpress.com/2011/11/equalizer-and-coequalizer-31.pdf">pdf</a> and the <a href="https://github.com/Felix11H/LaTeX/blob/master/articles/mathematics/co-equalizer/co-equalizer.tex">source code</a>.</p>
+<p> &nbsp; </p>
+<p style="text-align:right;"><span style="color:#999999;"><em>3.25 diagrams per page (26 total)</em></span></p>

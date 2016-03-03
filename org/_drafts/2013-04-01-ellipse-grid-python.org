@@ -1,0 +1,29 @@
+#+BEGIN_HTML
+---
+layout: post
+title: Ellipse Grid Python
+permalink: ellipse-grid-python
+date: 2013-04-01 
+type: post
+published: true
+status: publish
+categories:
+- Python
+tags:
+- tools
+- Python
+#+END_HTML
+
+Recently, I had to deal with the problem of distributing (roughly) N points in a grid-like manner on an elliptical surface. A quick search for a programmatic solution brought up John Burkardt's [[http://people.sc.fsu.edu/~jburkardt/c_src/ellipse_grid/ellipse_grid.html][Ellipse Grid]].
+
+#+BEGIN_HTML
+<!-- more -->
+#+END_HTML
+
+As I'm almost exclusively working in Python, I made a quick translation of his C++ script. View and <a href="http://pastebin.com/GKVHVH6N">download</a> it on Pastebin.</p>
+<p><a href="http://3diagramsperpage.files.wordpress.com/2013/04/ellp.png"><img class="aligncenter size-large wp-image-279" style="border:0 none;margin-top:3.5em;" alt="ellp" src="{{ site.baseurl }}/assets/ellp.png?w=590" width="463" height="327" /></a></p>
+
+
+#+BEGIN_HTML
+<img src="{{ site.baseurl }}/assets/ellipse-grid-python.png" width="90%" style="display:block;margin:0 auto 0;" />
+#+END_HTML

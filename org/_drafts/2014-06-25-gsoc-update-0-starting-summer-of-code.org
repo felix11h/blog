@@ -1,0 +1,39 @@
+---
+layout: post
+title: GSoC Update 0 - Starting Summer of Code
+date: 2014-06-25 16:40:43.000000000 +02:00
+type: post
+published: true
+status: publish
+categories:
+- GSoC14
+tags: []
+meta:
+  _edit_last: '12765625'
+  geo_public: '0'
+  _publicize_pending: '1'
+author:
+  login: felix11h
+  email: felix.mail.hoffmann@gmail.com
+  display_name: Felix
+  first_name: ''
+  last_name: ''
+---
+<p><em>This is the first entry in a <a href="http://3diagramsperpage.wordpress.com/category/gsoc14/">series</a> of posts on my participation in this year's Google Summer of Code program working on the reproducible research tool <a href="http://neuralensemble.org/sumatra/">Sumatra</a> with mentor <a href="http://www.unic.cnrs-gif.fr/people/Andrew_Davison/">Andrew Davison</a> under the mentoring organization <a href="http://incf.org/">INCF</a>. </em></p>
+<p>Summer of Code! In their annual program, taking place for the 10th time since 2005, Google supports students to work with a mentor on a free and open-source project over the summer. My proposal "Data-centric provenance capture with Sumatra" was accepted in March and I'm happy to post a first update to my work on the project here. <em>Sumatra</em> is a tool promoting reproducible research in computational sciences - "a lab notebook for computational projects". Stumbling upon the software while looking up best practices in computational research, I have come to highly appreciate what the tool can do.</p>
+<p>But of course, it can always be better! This is why I was writing Andrew Davison, the maintainer of Sumatra and now mentor of my GSoC project, about a potential Summer of Code participation already in January. I suggested a stronger connection in Sumatra's architecture and display between process records and the data generated in these processes.</p>
+<p>In my work I'm extensively using Sumatra and have, even before thinking about Summer of Code, written some bash scripts to achieve better data to process associations purely through the data and process labels. As the program is not called Summer of Text, let's look at some code! This is an example of a custom bash script I'm using to first get a label string, possibly depending on parameters, and using it as the Sumatra label as well as the file label for generated plots in plot_data.py:</p>
+<p>[sourcecode language="bash"]<br />
+#!/bin/bash         </p>
+<p>inputfiles=&quot;$@&quot;</p>
+<p>labelstr=`python comp/figure_label.py` ;</p>
+<p>smt run --executable=python \<br />
+        --main=comp/plot_data.py $inputfiles $labelstr \<br />
+        --reason=Test graphic \<br />
+        --tag=graphic \<br />
+        --label=$labelstr \<br />
+        comp/params/plot_data_params_template.py<br />
+[/sourcecode]</p>
+<p>Paths to the data to plot is just passed as parameter while calling the bash script. You can find a full repository with example usage <a href="https://bitbucket.org/Felix11H/gsoc14_sm">here</a>. After a good week of coding on the project now, I got a working prototype of displaying associated records of data in the web interface and opened a first pull-request. Once reviewed by the maintainer, I hope to take this as a base to expand upon in the coming weeks!</p>
+<p><a href="https://3diagramsperpage.files.wordpress.com/2014/06/data_view.png"><img class="aligncenter size-full wp-image-444" src="{{ site.baseurl }}/assets/data_view.png" alt="data_view" width="205" height="130" /></a></p>
+<p>More with the next update!</p>

@@ -1,0 +1,31 @@
+#+BEGIN_HTML
+---
+layout: post
+title: Zotero and BibTeX
+permalink: 
+date: 
+type: post
+published: true
+status: publish
+categories:
+- 
+tags:
+- 
+---
+#+END_HTML
+
+
+* BibTeX integration
+
+If you're using BibTeX/BibLaTeX to generate your bibliographies, there's
+
+With this, articles become available to you for citation the moment you add them to Zotero library. 
+
+
+
+http://zotplus.github.io/zotero-better-bibtex/index.html
+
+
+* Set the citation key
+
+Citation key format: ~[auth][year]~

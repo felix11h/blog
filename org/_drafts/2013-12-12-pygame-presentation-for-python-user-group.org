@@ -1,0 +1,24 @@
+---
+layout: post
+title: Pygame presentation for Python User Group
+date: 2013-12-12 09:28:40.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Python
+tags: []
+meta:
+  _edit_last: '12765625'
+  _publicize_pending: '1'
+author:
+  login: felix11h
+  email: felix.mail.hoffmann@gmail.com
+  display_name: Felix
+  first_name: ''
+  last_name: ''
+---
+<p>In our most recent Python User Group meeting, I presented a short introduction to Pygame:</p>
+<p>[slideshare id=29137440&style=border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:25px; margin-top:15px&sc=no]
+<div style="margin-bottom:5px;"> </div>
+<p>You can find the source for the slides <a href="https://github.com/Felix11H/LaTeX/tree/master/presentations/pygame">here</a>.</p>

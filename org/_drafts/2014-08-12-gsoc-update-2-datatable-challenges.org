@@ -1,0 +1,45 @@
+---
+layout: post
+title: GSoC Update 2 - DataTable Challenges
+date: 2014-08-12 11:58:06.000000000 +02:00
+type: post
+published: true
+status: publish
+categories:
+- GSoC14
+tags: []
+meta:
+  _edit_last: '12765625'
+  geo_public: '0'
+  _publicize_pending: '1'
+author:
+  login: felix11h
+  email: felix.mail.hoffmann@gmail.com
+  display_name: Felix
+  first_name: ''
+  last_name: ''
+---
+<p><em>This is the third entry in a <a href="http://3diagramsperpage.wordpress.com/category/gsoc14/">series</a> of posts on my participation in this year's Google Summer of Code program working on the reproducible research tool <a href="http://neuralensemble.org/sumatra/">Sumatra</a> with mentor <a href="http://www.unic.cnrs-gif.fr/people/Andrew_Davison/">Andrew Davison</a> under the mentoring organization <a href="http://incf.org/">INCF</a>.</em></p>
+<p>Following up on the last post, I have now fully implemented the DataTables plug-in to Sumatra not only on the data page, but for record and data listings as well. Here are some code snippets as solutions to some of the challenges integrationg DataTables in Sumatra provided:<br />
+&nbsp;<br />
+<strong>Sorting:</strong> In the record and data listing we use various ways to display information. For example, filesizes are formatted as "2 MB, 45 KB, ...", while durations are given as "15s, 2h 32min 10s, ...". Despite the formatting, it is highly desirable for the user to sort entries according to this information numerically. The solution in DataTables is to employ the <a href="http://www.datatables.net/examples/advanced_init/html5-data-attributes.html" target="_blank">HTML5 data attributes</a>. In the code:</p>
+<p></p>
+<p>[sourcecode language="html"]<br />
+&lt;td class='dataTable_td' id='size-t'<br />
+    data-sort=&quot;{{data|eval_metadata:'size'}}&quot;&gt;<br />
+  {{data|eval_metadata:'size'|filesizeformat}}<br />
+&lt;/td&gt;<br />
+[/sourcecode]</p>
+<p></p>
+<p>Here <tt>{{data|eval_metadata:'size'}}</tt> gives the filesize as an absolute numerical value, while the table itself displays the formatted filesize using Django's built-in filesizeformat filter.<br />
+&nbsp;<br />
+<strong>Word-wrapping</strong>: As Sumatra's record and data listings have a lot of information to display, horizontal space is, by the relatively high number of columns, sparse. Table values include long labels and system paths. Default word wrapping (to allow columns to remain narrow) in the standard browsers occurs only at empty spaces (" ") and dash ("-"). Neither underscore ("_") nor slash ("/") allow word-wrapping, resulting in columns containing paths to grow exceedingly long. I did not find a way to enable wrapping at these characters globally, but was able to indicate breakables spaces by applying a custom template filter on the paths and labels to be displayed, using the <code>&lt;wbr&gt;</code> tag:</p>
+<p>[sourcecode language="python"]<br />
+@register.filter<br />
+@stringfilter<br />
+def ubreak(text):<br />
+    text_out = text.replace(&quot;_&quot;, &quot;_&lt;wbr&gt;&quot;).replace(&quot;/&quot;,&quot;/&lt;wbr&gt;&quot;)<br />
+    return mark_safe(text_out)<br />
+[/sourcecode]</p>
+<p>&nbsp;<br />
+<strong>Dynamic DataTable</strong>: Finally, DataTables provides a fantastic API to dynamically manipulate the table display. In my current version I'm using <code>column.visibile()</code> to dynamically show/hide columns, <code>table.page.len()</code> to control the number of entries shown in one page of the table and <code>table.page('previous'/'next')</code> to enable page turning via the arrow keys.</p>

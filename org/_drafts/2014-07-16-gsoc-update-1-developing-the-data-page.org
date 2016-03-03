@@ -1,0 +1,29 @@
+---
+layout: post
+title: GSoC Update 1 – Developing the Data page
+date: 2014-07-16 13:04:34.000000000 +02:00
+type: post
+published: true
+status: publish
+categories:
+- GSoC14
+tags: []
+meta:
+  _edit_last: '12765625'
+  geo_public: '0'
+  _publicize_pending: '1'
+author:
+  login: felix11h
+  email: felix.mail.hoffmann@gmail.com
+  display_name: Felix
+  first_name: ''
+  last_name: ''
+---
+<p><em>This is the second entry in a <a href="http://3diagramsperpage.wordpress.com/category/gsoc14/">series</a> of posts on my participation in this year's Google Summer of Code program working on the reproducible research tool <a href="http://neuralensemble.org/sumatra/">Sumatra</a> with mentor <a href="http://www.unic.cnrs-gif.fr/people/Andrew_Davison/">Andrew Davison</a> under the mentoring organization <a href="http://incf.org/">INCF</a>.</em></p>
+<p>The goal of my Google Summer of Code project is to develop a data-centric approach to provenance capture and display in Sumatra. A first milestone in this endeavour is to create a rich data page, showing provenance and meta information of a data file, used in a recorded computational process. This includes two main challenges: <strong>1)</strong> Being able to query for the desired information about the data file and <strong>2) </strong>displaying that information in a concise and robust manner.</p>
+<p>The work in my project so far tackles both points. In a first commit and subsequent pull request (<a href="https://bitbucket.org/apdavison/sumatra/pull-request/31/web-show_file-displays-input-ouptut/diff">#31</a>) I was able to query for a data file's "Associated Records", i.e. provenance information about the processes in which the data item was created and in which it is used as input. Next I updated the display using the jQuery UI Accordions, as they are already used in the record page.</p>
+<p>Eventually, Sumatra should feature two equally powerful modes of displaying provenance information: The existing record-centric view and a new, data-centric view developed in this project. For this, an easily accessible listing in the web interface of all data objects involved in the current project is essential. A first idea is to use the existing listing of records and adapt it to show the data items. This display, however, is itself problematic. In the discussion of Issue <a href="https://bitbucket.org/apdavison/sumatra/issue/167/smtweb-breaks-in-narrow-width-browser">#167</a>, it is suggested to move away from a &lt;div&gt; listing to a &lt;table&gt; environment.</p>
+<p>Researching this issue, I found the jQuery plug-in <a href="http://datatables.net/" target="_blank">DataTables</a>. The latest commit (<a href="https://bitbucket.org/Felix11H/sumatra/commits/833ead4fb6f12a7a89ee96d04ec6f75b2ba84a93" target="_blank"><span class="changeset-hash">833ead4</span></a>, bookmark <a href="https://bitbucket.org/Felix11H/sumatra/branch/default?head=833ead4fb6f12a7a89ee96d04ec6f75b2ba84a93" target="_blank">datatable_dev</a>) of my Sumatra fork shows a prototype of how the plug-in can be used to list the record information in the web interface. Also integrating the DataTable view in the data page, I'm happy with the progress of the page so far, as seen from the original to the current status in the gallery below.</p>
+<p>&nbsp;</p>
+<p>[gallery link="none" ids="458,457,456,455,454"]</p>
+<p>&nbsp;</p>

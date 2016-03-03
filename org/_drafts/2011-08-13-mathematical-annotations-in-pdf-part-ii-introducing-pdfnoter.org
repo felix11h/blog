@@ -1,0 +1,23 @@
+---
+layout: post
+title: Mathematical Annotations in PDF Part II - Introducing pdfnoter
+date: 2011-08-13 09:04:23.000000000 +02:00
+type: post
+published: true
+status: publish
+categories:
+- tools
+tags: []
+meta:
+  _edit_last: '12765625'
+author:
+  login: felix11h
+  email: felix.mail.hoffmann@gmail.com
+  display_name: Felix
+  first_name: ''
+  last_name: ''
+---
+<p>In my <a href="http://3diagramsperpage.wordpress.com/?p=50&amp;preview=true">last post</a> I presented a way to make annotations to a pdf document using LaTeX and the ingenious pdf tool <a href="http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/" target="_blank">pdftk</a>. While the procedure I described served its purpose,  it was quite tedious and not really practical.</p>
+<p>But there is hope: <em>caks</em>, after I contacted him about my solution, went ahead and greatly simplified the procedure by scripting it. Please visit his <a href="https://github.com/cako/pdfnoter" target="_blank">Github page</a> for the latest version of his<span style="color:#28517a;"> <strong><em>pdfnoter</em></strong></span>. All you need to know is described there.</p>
+<p>He's also not stopping there. Ultimately, we want to have some kind of GUI, maybe even an extension to a pdf viewer, so that annotations can be, in fact, TeXed directly into your document. Currently <em>caks</em> is working on making the installation of the pdfnoter more convenient. Look out for further updates and posts!</p>
+<p>If you have any comments and suggestions on the project you can also post them here. Any kind of input would be greatly appreciated!</p>
