@@ -1,0 +1,98 @@
+---
+layout: post
+title: Nonsequential TikZ overlay figures for presentations
+permalink: nonseq_tikz
+date: 2016-05-04
+type: post
+published: true
+status: publish
+categories:
+- LaTeX
+tags:
+- presentation
+- tools
+- LaTeX
+---
+
+<p>
+Creating overlays with TikZ in beamer <a href="http://tex.stackexchange.com/questions/120481/">works nicely</a> with the <code>\onslide</code> and <code>\only</code> commands, but I'm a fan of creating <a href="https://www.ctan.org/pkg/standalone?lang=en">standalone</a> graphics and include them into my presentations or documents later. A way to achieve nonsequential overlay figures is using multiple <code>\input</code> files that make up the different figures.<br  />
+</p>
+
+<!-- more -->
+
+<p>
+An example of what I want to achieve<br  />
+</p>
+
+<img src="{{ site.baseurl }}/assets/network_c_overview.png" width="95%" style="display:block;margin:2em auto 2em;"/>
+
+<p>
+This the main LaTeX files that will be compiled<br  />
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-latex"><span style="color: #859900;">\documentclass</span>{<span style="color: #6c71c4;">standalone</span>}
+
+<span style="color: #859900;">\usepackage</span>{<span style="color: #6c71c4;">local_set</span>}
+
+<span style="color: #859900;">\begin</span>{<span style="color: #268bd2;">document</span>}
+
+<span style="color: #859900;">\begin</span>{<span style="color: #268bd2;">tikzpicture</span>}
+
+  <span style="color: #859900;">\input</span>{<span style="color: #6c71c4;">inputs/base</span>}
+
+  <span style="color: #859900;">\input</span>{<span style="color: #6c71c4;">inputs/set1</span>}
+
+<span style="color: #859900;">\end</span>{<span style="color: #268bd2;">tikzpicture</span>}
+
+<span style="color: #859900;">\end</span>{<span style="color: #268bd2;">document</span>}
+</pre>
+</div>
+
+<p>
+With the input <code>inputs/base.tex</code><br  />
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-latex"><span style="color: #859900;">\begin</span>{<span style="color: #268bd2;">scope</span>}[every node/.style={circle,thick,draw}]
+  <span style="color: #859900;">\node</span> (x1) at (0,0) {<span style="color: #2aa198;">$x_</span><span style="color: #2aa198;">1</span><span style="color: #2aa198;">$</span>};
+  <span style="color: #859900;">\node</span> (x2) at (2.5,1) {<span style="color: #2aa198;">$x_</span><span style="color: #2aa198;">2</span><span style="color: #2aa198;">$</span>};
+  <span style="color: #859900;">\node</span> (x3) at (0,3) {<span style="color: #2aa198;">$x_</span><span style="color: #2aa198;">3</span><span style="color: #2aa198;">$</span>};
+  <span style="color: #859900;">\node</span> (x4) at (2.5,4) {<span style="color: #2aa198;">$x_</span><span style="color: #2aa198;">4</span><span style="color: #2aa198;">$</span>};
+  <span style="color: #859900;">\node</span> (x5) at (2.5,-3) {<span style="color: #2aa198;">$x_</span><span style="color: #2aa198;">5</span><span style="color: #2aa198;">$</span>};
+  <span style="color: #859900;">\node</span> (x6) at (5,3) {<span style="color: #2aa198;">$x_</span><span style="color: #2aa198;">6</span><span style="color: #2aa198;">$</span>} ;
+<span style="color: #859900;">\end</span>{<span style="color: #268bd2;">scope</span>}
+</pre>
+</div>
+
+<p>
+and <code>inputs/set1</code><br  />
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-latex"><span style="color: #859900;">\path</span> [-&gt;] (x1) edge node {} (x3);
+<span style="color: #859900;">\path</span> [-&gt;] (x3) edge node {} (x4);
+<span style="color: #859900;">\path</span> [-&gt;] (x2.75) edge node {} (x4.285);
+<span style="color: #859900;">\path</span> [&lt;-] (x2.105) edge node {} (x4.255);
+<span style="color: #859900;">\path</span> [-&gt;] (x1) edge node {} (x5);
+<span style="color: #859900;">\path</span> [-&gt;] (x2) edge node {} (x5);
+<span style="color: #859900;">\path</span> [-&gt;] (x2) edge node {} (x6);
+<span style="color: #859900;">\path</span> [-&gt;] (x4) edge node {} (x6);
+<span style="color: #859900;">\path</span> [-&gt;] (x5) edge node {} (x6);
+<span style="color: #859900;">\path</span> [-&gt;] (x1.35) edge node[above] {} (x2.180);
+<span style="color: #859900;">\path</span> [&lt;-] (x1.5) edge node[below] {} (x2.210);
+</pre>
+</div>
+
+<p>
+Finally, the overlaid figures<br  />
+</p>
+
+<img src="{{ site.baseurl }}/assets/network_c_animated.gif" height="500px" style="display:block;margin:2em auto 2em;"/>
+
+<p>
+The full code is in the <a href="https://github.com/Felix11H/LaTeX-graphics-connected_network">GitHub repository</a>. Let me know if this was helpful.<br  />
+</p>
