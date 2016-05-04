@@ -1,0 +1,89 @@
+#+STARTUP: noindent showeverything
+#+OPTIONS: toc:nil; html-postamble:nil
+#+BEGIN_HTML
+---
+layout: post
+title: Nonsequential TikZ overlay figures for presentations
+permalink: nonseq_tikz
+date: 2016-05-03
+type: post
+published: true
+status: publish
+categories:
+- LaTeX
+tags:
+- presentation
+- tools
+- LaTeX
+---
+#+END_HTML
+
+Creating overlays with TikZ in beamer [[http://tex.stackexchange.com/questions/120481/][works nicely]] with the ~\onslide~ and ~\only~ commands, but I'm a fan of creating [[https://www.ctan.org/pkg/standalone?lang%3Den][standalone]] graphics and include them into my presentations or documents later. A way to achieve nonsequential overlay figures is using multiple ~\input~ files that make up the different figures.
+
+#+BEGIN_HTML
+<!-- more -->
+#+END_HTML
+
+An example of what I want to achieve
+
+#+BEGIN_HTML
+<img src="{{ site.baseurl }}/assets/network_c_overview.png" width="95%" style="display:block;margin:2em auto 2em;"/>
+#+END_HTML
+
+This the main LaTeX files that will be compiled
+
+#+BEGIN_SRC latex
+\documentclass{standalone}
+
+\usepackage{local_set}
+
+\begin{document}
+
+\begin{tikzpicture}
+
+  \input{inputs/base}
+  
+  \input{inputs/set1}
+  
+\end{tikzpicture}
+
+\end{document}
+#+END_SRC
+
+With the input ~inputs/base.tex~
+
+#+BEGIN_SRC latex
+\begin{scope}[every node/.style={circle,thick,draw}]
+  \node (x1) at (0,0) {$x_1$};
+  \node (x2) at (2.5,1) {$x_2$};
+  \node (x3) at (0,3) {$x_3$};
+  \node (x4) at (2.5,4) {$x_4$};
+  \node (x5) at (2.5,-3) {$x_5$};
+  \node (x6) at (5,3) {$x_6$} ;
+\end{scope}
+#+END_SRC
+
+and ~inputs/set1~
+
+#+BEGIN_SRC latex
+\path [->] (x1) edge node {} (x3);
+\path [->] (x3) edge node {} (x4);
+\path [->] (x2.75) edge node {} (x4.285);
+\path [<-] (x2.105) edge node {} (x4.255);
+\path [->] (x1) edge node {} (x5);
+\path [->] (x2) edge node {} (x5);
+\path [->] (x2) edge node {} (x6);
+\path [->] (x4) edge node {} (x6);
+\path [->] (x5) edge node {} (x6);
+\path [->] (x1.35) edge node[above] {} (x2.180);
+\path [<-] (x1.5) edge node[below] {} (x2.210);
+#+END_SRC
+
+Finally, the overlaid figures
+
+#+BEGIN_HTML
+<img src="{{ site.baseurl }}/assets/network_c_animated.gif" height="500px" style="display:block;margin:2em auto 2em;"/>
+#+END_HTML
+
+The full code is in the [[https://github.com/Felix11H/LaTeX-graphics-connected_network][GitHub repository]]. Let me know if this was helpful.
+
