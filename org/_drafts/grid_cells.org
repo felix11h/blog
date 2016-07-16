@@ -1,0 +1,29 @@
+#+STARTUP: noindent showeverything
+#+OPTIONS: toc:nil; html-postamble:nil
+#+BEGIN_HTML
+---
+layout: post
+title: Rate maps for grid and place cells
+permalink: 
+date: 
+type: post
+published: true
+status: publish
+categories:
+- 
+tags:
+- 
+---
+#+END_HTML
+
+At [[https://camp.ncbs.res.in/][CAMP]], I worked on a small project that involved plotting rate maps for data from grid cells. There has been some interest on how to do this from students in the course, so I'm posting the relevant code here.
+
+#+BEGIN_HTML
+<!-- more -->
+#+END_HTML
+
+
+
+
+
+
