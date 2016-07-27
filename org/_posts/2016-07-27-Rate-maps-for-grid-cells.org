@@ -5,14 +5,14 @@
 layout: post
 title: Rate maps for grid cells
 permalink: grid-cell-rate-maps
-date: 
+date: 2016-07-27 
 type: post
 published: true
 status: publish
 categories:
-- 
-tags:
-- 
+- Python
+tags:n
+- Matplotlib
 ---
 #+END_HTML
 
