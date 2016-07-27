@@ -1,0 +1,123 @@
+---
+layout: post
+title: Rate maps for grid cells
+permalink: grid-cell-rate-maps
+date: 2016-07-27 
+type: post
+published: true
+status: publish
+categories:
+- Python
+tags:n
+- Matplotlib
+---
+
+<p>
+At <a href="https://camp.ncbs.res.in/">CAMP@Bangalore</a>, I worked on a small project that involved plotting rate maps for data from recorded grid cells. There has been some interest on how to do this from other students in the course, so I'm posting the <a href="https://github.com/Felix11H/grid_cell_rate_map">relevant code</a> here.<br  />
+</p>
+
+<!-- more -->
+
+<p>
+A <a href="http://www.scholarpedia.org/article/Grid_cells">rate map</a> for a particular grid cell shows the firing rate of the cell as a mapping onto field the animal moves in. Some locations on the field will be preferred by the cell - it is more active whenever the animal is moving within that spatial location. A rate map shows this concept efficiently:<br  />
+</p>
+
+<img src="{{ site.baseurl }}/assets/grid_cell_rate_map.png" width="70%" style="display:block;margin:2em auto 2em;"/>
+
+
+<p>
+The data I'm using to plot is provided freely by the research group of Edvard Moser. Please see their <a href="http://www.ntnu.edu/kavli/research/grid-cell-data">website</a> which has all the information and the data for available for download.<br  />
+</p>
+
+<p>
+Here we use two files, <code>10704-07070407_POS.mat</code> and <code>10704-07070407_T2C3.mat</code> from a single trial of their experiment. The first file gives us the locations of the animal at every time point and the second file gives the spike timings for a single cell:<br  />
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span style="color: #859900;">from</span> scipy <span style="color: #859900;">import</span> io <span style="color: #859900;">as</span> io
+
+<span style="color: #586e75; font-style: italic;"># </span><span style="color: #657b83; font-style: italic;">from http://www.ntnu.edu/kavli/research/grid-cell-data</span>
+<span style="color: #b58900;">pos</span> = io.loadmat(<span style="color: #2aa198;">'10704-07070407_POS.mat'</span>)
+<span style="color: #b58900;">spk</span> = io.loadmat(<span style="color: #2aa198;">'10704-07070407_T2C3.mat'</span>)
+
+<span style="color: #2aa198;">'''</span>
+<span style="color: #2aa198;">pos["post"]: times at which positions were recorded</span>
+<span style="color: #2aa198;">pos["posx"]: x positions</span>
+<span style="color: #2aa198;">pos["posy"]: y positions</span>
+<span style="color: #2aa198;">---</span>
+<span style="color: #2aa198;">spk["cellTS"]: spike times</span>
+<span style="color: #2aa198;">'''</span>
+</pre>
+</div>
+
+<p>
+With this data we have everything we need to create the rate map. Numpy's  <a href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.histogram2d.html">histogram2d</a> becomes incredibly useful in this task; we use it twice, first to compute the time spent at every location (occupancy) and then to compute the amount of spikes (activity) recorded at the locations. The rate map is the quotient of the number of spikes by the occupancy.<br  />
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span style="color: #859900;">import</span> numpy <span style="color: #859900;">as</span> np
+
+<span style="color: #859900;">def</span> <span style="color: #268bd2;">find_k</span>(array,value):
+    <span style="color: #b58900;">k</span> = (np.<span style="color: #6c71c4;">abs</span>(array-value)).argmin()
+    <span style="color: #859900;">return</span> k
+
+<span style="color: #859900;">def</span> <span style="color: #268bd2;">rate_map</span>(pos,spk,k=10):
+
+    <span style="color: #b58900;">bin_edges</span> = np.linspace(-50,50,k)
+
+    <span style="color: #b58900;">posx</span> = pos[<span style="color: #2aa198;">"posx"</span>].flatten()
+    <span style="color: #b58900;">posy</span> = pos[<span style="color: #2aa198;">"posy"</span>].flatten()
+    <span style="color: #b58900;">spkt</span> = spk[<span style="color: #2aa198;">"cellTS"</span>].flatten()
+
+    <span style="color: #b58900;">indx</span> = [find_k(pos[<span style="color: #2aa198;">"post"</span>],t) <span style="color: #859900;">for</span> t <span style="color: #859900;">in</span> spkt]
+    <span style="color: #b58900;">indy</span> = [find_k(pos[<span style="color: #2aa198;">"post"</span>],t) <span style="color: #859900;">for</span> t <span style="color: #859900;">in</span> spkt]
+
+    <span style="color: #b58900;">occup_m</span> = np.histogram2d(posx, posy,
+                             bins=(bin_edges,bin_edges))[0]
+    <span style="color: #b58900;">activ_m</span> = np.histogram2d(posx[indx],posy[indy],
+                             bins=(bin_edges,bin_edges))[0]
+
+    <span style="color: #586e75; font-style: italic;"># </span><span style="color: #657b83; font-style: italic;">every sampling point accounts for 0.02s spent at loc.</span>
+    <span style="color: #b58900;">rate_map</span> = activ_m/(occup_m*0.02)
+
+    <span style="color: #859900;">return</span> rate_map
+</pre>
+</div>
+
+<p>
+To plot I used the following code - feel free to remove the LaTeX parts if you're missing any of the packages.<br  />
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span style="color: #859900;">import</span> pylab <span style="color: #859900;">as</span> pl
+
+<span style="color: #859900;">def</span> <span style="color: #268bd2;">plot_rate_map</span>(im, nlabels=5):
+
+    <span style="color: #859900;">from</span> matplotlib <span style="color: #859900;">import</span> rc
+
+    rc(<span style="color: #2aa198;">'text'</span>, usetex=<span style="color: #6c71c4;">True</span>)
+    <span style="color: #b58900;">pl.rcParams</span>[<span style="color: #2aa198;">'text.latex.preamble'</span>] = [
+        r<span style="color: #2aa198;">'\usepackage{tgheros}'</span>,    
+        r<span style="color: #2aa198;">'\usepackage{sansmath}'</span>,   
+        r<span style="color: #2aa198;">'\sansmath'</span>                
+        r<span style="color: #2aa198;">'\usepackage{siunitx}'</span>,    
+        r<span style="color: #2aa198;">'\sisetup{detect-all}'</span>,   
+    ]  
+
+    <span style="color: #b58900;">fig</span> = pl.figure(figsize=(6,4))
+    pl.imshow(im, interpolation=<span style="color: #2aa198;">'none'</span>)
+    pl.colorbar(label=<span style="color: #2aa198;">"Hz"</span>)
+    pl.xticks(np.linspace(0,<span style="color: #6c71c4;">len</span>(im),nlabels)-0.5,
+              np.linspace(-50,50,nlabels).astype(<span style="color: #2aa198;">'int'</span>))
+    pl.yticks(np.linspace(0,<span style="color: #6c71c4;">len</span>(im),nlabels)-0.5,
+              np.linspace(-50,50,nlabels).astype(<span style="color: #2aa198;">'int'</span>))
+    <span style="color: #859900;">return</span> fig
+</pre>
+</div>
+
+<p>
+Altogether this will give the rate map above. I've put all of this together in a <a href="https://github.com/Felix11H/grid_cell_rate_map">GitHub repository</a>. Happy rate map plotting!<br  />
+</p>
