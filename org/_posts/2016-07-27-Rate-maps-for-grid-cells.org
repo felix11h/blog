@@ -16,7 +16,7 @@ tags:
 ---
 #+END_HTML
 
-At [[https://camp.ncbs.res.in/][CAMP@Bangalore]], I worked on a small project that involved plotting rate maps for data from recorded grid cells. There has been some interest on how to do this from other students in the course, so I'm posting the [[https://github.com/Felix11H/grid_cell_rate_map][relevant code]] here.
+At [[https://camp.ncbs.res.in/][CAMP@Bangalore]], I worked on a small project that involved plotting rate maps for data recorded from grid cells. There has been some interest on how to do this from other students in the course, so I'm posting the [[https://github.com/Felix11H/grid_cell_rate_map][relevant code]] here.
 
 #+BEGIN_HTML
 <!-- more -->
