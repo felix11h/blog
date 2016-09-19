@@ -57,113 +57,132 @@ This can be achieved by the following two wildcards ~%3~ and ~%4~. The renaming 
 
 #+BEGIN_SRC json
 {
-    "3": {
-        "default": {},
-        "manuscript": {
-            "field": "title",
-            "operations": [
-                {
-                    "function": "replace",
-                    "regex": " ",
-                    "replacement": "-"
-                },
-                {
-                    "function": "replace",
-                    "regex": "^(.*)$",
-                    "replacement": "_$1"
-                }
-            ]
+  "3": {
+    "default": {},
+    "manuscript": {
+      "field": "title",
+      "operations": [
+        {
+          "function": "replace",
+          "regex": " ",
+          "replacement": "-"
         },
-        "book": {
-            "field": "title",
-            "operations": [
-                {
-                    "function": "replace",
-                    "regex": " ",
-                    "replacement": "-"
-                },
-                {
-                    "function": "replace",
-                    "regex": "^(.*)$",
-                    "replacement": "_$1"
-                }
-            ]
-        },
-        "report": {
-            "field": "title",
-            "operations": [
-                {
-                    "function": "replace",
-                    "regex": " ",
-                    "replacement": "_"
-                },
-                {
-                    "function": "toLowerCase"
-                }
-            ]
+        {
+          "function": "replace",
+          "regex": "^(.*)$",
+          "replacement": "_$1"
         }
+      ]
     },
-    "4": {
-        "default": {
-            "field": "itemType",
-            "operations": [
-                {
-                    "function": "replace",
-                    "regex": "Journal Article",
-                    "replacement": "articles"
-                },
-                {
-                    "function": "replace",
-                    "regex": "^Book$",
-                    "replacement": "books"
-                },
-                {
-                    "function": "replace",
-                    "regex": "Manuscript",
-                    "replacement": "manuscripts"
-                },
-                {
-                    "function": "replace",
-                    "regex": "^Book Section$",
-                    "replacement": "book_sections"
-                },
-                {
-                    "function": "replace",
-                    "regex": "Document",
-                    "replacement": "documents"
-                },
-                {
-                    "function": "replace",
-                    "regex": "Thesis",
-                    "replacement": "thesis"
-                },
-                {
-                    "function": "replace",
-                    "regex": "Presentation",
-                    "replacement": "presentations"
-                }
-            ]
+    "book": {
+      "field": "title",
+      "operations": [
+        {
+          "function": "replace",
+          "regex": " ",
+          "replacement": "-"
         },
-        "report": {
-            "field": "extra"
+        {
+          "function": "replace",
+          "regex": "^(.*)$",
+          "replacement": "_$1"
         }
+      ]
+    },
+    "report": {
+      "field": "title",
+      "operations": [
+        {
+          "function": "replace",
+          "regex": " ",
+          "replacement": "_"
+        },
+        {
+          "function": "toLowerCase"
+        }
+      ]
     }
+  },
+  "4": {
+    "default": {
+      "field": "itemType",
+      "operations": [
+        {
+          "function": "replace",
+          "regex": "Journal Article",
+          "replacement": "articles"
+        },
+        {
+          "function": "replace",
+          "regex": "^Book$",
+          "replacement": "books"
+        },
+        {
+          "function": "replace",
+          "regex": "Manuscript",
+          "replacement": "manuscripts"
+        },
+        {
+          "function": "replace",
+          "regex": "^Book Section$",
+          "replacement": "book_sections"
+        },
+        {
+          "function": "replace",
+          "regex": "Document",
+          "replacement": "documents"
+        },
+        {
+          "function": "replace",
+          "regex": "Thesis",
+          "replacement": "thesis"
+        },
+        {
+          "function": "replace",
+          "regex": "Presentation",
+          "replacement": "presentations"
+        }
+      ]
+    },
+    "report": {
+      "field": "extra"
+    }
+  },
+  "5": {
+    "default": {
+      "field": "extra",
+      "operations": [
+        {
+          "function": "replace",
+          "regex": "^(?!poster).*$",
+          "replacement": ""
+        },
+        {
+          "function": "replace",
+          "regex": "poster=(.*)",
+          "replacement": "_$1"
+        }
+      ]
+    }
+  }
 }
 #+END_SRC
 
-Here, ~%3~ is for the renaming while ~%4~ handles the relocating. I use those wildcards like this for renaming;
+Here, ~%3~ is for the renaming while ~%4~ handles the relocating. My renaming rules are 
 
 #+BEGIN_HTML
 <img src="{{ site.baseurl }}/assets/zotfile_renaming_rules.png" width="80%" style="display:block;margin:2em auto 2em;"/>
 #+END_HTML
 
-and like this for relocating:
+and the relocating rules are
 
 #+BEGIN_HTML
 <img src="{{ site.baseurl }}/assets/zotfile_relocating_rules.png" width="80%" style="display:block;margin:2em auto 2em;"/>
 #+END_HTML
 
- 
+Since Zotero allows neither [[https://forums.zotero.org/discussion/33446/item-type-user-manual-and-product-brochure/][manual]] nor [[https://forums.zotero.org/discussion/33446/item-type-user-manual-and-product-brochure/][conference poster]] item types, I have custom solutions to create specific behavior for such documents. I give manuals the item type ~report~ but specify the "extra" field as, for example, ~manuals/latex~. Using ~%4~, these documents get filed in under exactly that location. 
+
+For posters, I select the item type ~journalArticle~ and set the field "extra" as ~poster=CONFERENCE_NAME~. With this, posters get renamed as ~Hoffmann_BCCN2016~, for example. 
 
 If you want to define wildcards yourself, or want to use the one above, you should first validate the JSON (I used [[http://pro.jsonlint.com/][pro.jsonlint.com]]) and then convert it to a single line of code (I used [[http://www.freeformatter.com/json-formatter.html#ad-output][freemformatter.com]]).
 
