@@ -1,0 +1,29 @@
+#+STARTUP: noindent showeverything
+#+OPTIONS: toc:nil; html-postamble:nil
+#+BEGIN_HTML
+---
+layout: post
+title: Expected value and variance of some stochastic processes
+permalink: 
+date: 2016-10-12
+type: post
+published: true
+status: publish
+categories:
+- 
+tags:
+- 
+---
+#+END_HTML
+
+As an exercise, I show how expected value and variance of various stochastic processes evolve in time.
+
+#+BEGIN_HTML
+<!-- more -->
+#+END_HTML
+
+* Poisson process
+
+Let $(N_t)_{t \in [0,\infty)$ be a Poisson process with rate $\lambda$. Then $\operatorname{E}(N_t) = \lambda t$ and $\operatorname{Var}(N_t) = \lambda t$. Below several paths of a Poisson process are shown. These are well contained within the three time standard deviation $3 \sigma$, where $\sigma = \sqrt{\lambda t}$ from above.
+
+
