@@ -1,0 +1,128 @@
+#+STARTUP: noindent showeverything
+#+OPTIONS: toc:nil; html-postamble:nil
+#+BEGIN_HTML
+---
+layout: post
+title: Maintaining a git project within another git repository
+permalink: git-submod-subtree
+date: 2016-12-07
+categories:
+ - version-control
+tags:
+ - version-control
+ - git
+ - tools
+---
+#+END_HTML
+
+I would like to maintain git project with its own commit history within another git repository. I keep hearing that either submodules or subtrees are the way to go. Here I try to understand both and find out what works best for me.
+
+#+BEGIN_HTML
+<!-- more -->
+#+END_HTML
+
+* Submodules
+
+** Setting up
+
+Ok, let's make a git repository first.
+
+#+BEGIN_SRC sh
+mkdir tryA
+cd tryA/
+git init
+touch fileA
+git add fileA 
+git commit -am 'init proj A'
+#+END_SRC
+
+Then /within/ this repository, let's create a folder ~subA~ and make this a separate git repository.
+
+#+BEGIN_SRC sh
+mkdir subA
+cd subA/
+git init
+touch fileSubA
+git add fileSubA 
+git commit -am 'sub A init'
+#+END_SRC
+
+Let's check the ~git log~ in ~subA~
+
+#+BEGIN_SRC sh
+git log 
+>>> commit 39352fc4864eb9de968b4826d840e92fb58fae6c
+>>> Author: Felix Z. Hoffmann <felix11h.dev@gmail.com>
+>>> Date:   Wed Dec 7 16:09:56 2016 +0100
+>>>
+>>>    sub A init
+#+END_SRC
+
+and in ~projA~
+#+BEGIN_SRC sh
+cd ..
+git log
+>>> commit 4e9b2bd7fa6adfce22ea1fb524a64f756863eca9
+>>> Author: Felix Z. Hoffmann <felix11h.dev@gmail.com>
+>>> Date:   Wed Dec 7 16:07:17 2016 +0100
+>>>
+>>>    init proj A
+#+END_SRC
+
+The status in ~projA~ is
+#+BEGIN_SRC sh
+git status -s
+?? subA/
+#+END_SRC
+
+
+** Adding as a submodule
+
+So far, so good. Let's now add ~subA/~ as a submodule of ~projA~.
+
+#+BEGIN_SRC sh
+git submodule add ./subA/
+>>> Adding existing repo at 'subA' to the index
+#+END_SRC
+
+It worked!
+
+#+BEGIN_SRC sh
+git status -s
+>>> A  .gitmodules
+>>> A  subA
+#+END_SRC
+
+We should commit this change to ~projA~
+
+#+BEGIN_SRC sh
+git commit -am 'add subA as submodule'
+>>> [master 24c7a9f] add subA as submodule
+>>>  2 files changed, 4 insertions(+)
+>>>  create mode 100644 .gitmodules
+>>>  create mode 160000 subA
+#+END_SRC
+
+** So how does this now work?
+
+
+
+#+BEGIN_SRC 
+git submodule add ./subA/
+ 2032  git log
+ 2033  git status -s
+ 2034  git commit -am 'added subA'
+ 2035  git status -s
+ 2036  git log
+ 2037  cd subA/
+ 2038  touch fileSubB
+ 2039  git log
+ 2040  git add fileSubB 
+ 2041  git status -s
+ 2042  cd ..
+ 2043  git log
+ 2044  git status -s
+ 2045  history
+
+#+END_SRC
+
