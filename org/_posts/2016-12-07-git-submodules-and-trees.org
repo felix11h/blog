@@ -105,24 +105,92 @@ git commit -am 'add subA as submodule'
 
 ** So how does this now work?
 
+We now have a submodule within a git repository. There's a few question I'd like to know the answer to:
+
+1. What happens if I make changes in ~subA~? 
+2. Should I commit changes of ~subA~ to ~subA~ or to ~projA~?
+3. How can I have ~projA~ with ~subA~ on GitHub?
+
+3. How can I clone ~projA~ so that it includes ~subA~?
 
 
-#+BEGIN_SRC 
-git submodule add ./subA/
- 2032  git log
- 2033  git status -s
- 2034  git commit -am 'added subA'
- 2035  git status -s
- 2036  git log
- 2037  cd subA/
- 2038  touch fileSubB
- 2039  git log
- 2040  git add fileSubB 
- 2041  git status -s
- 2042  cd ..
- 2043  git log
- 2044  git status -s
- 2045  history
+Let's go through these one by one:
 
+*** *1. Changes in ~subA~*
+
+Let's make a change in ~subA~
+
+#+BEGIN_SRC sh
+cd subA/
+touch subA_new.file
 #+END_SRC
 
+Already here it's interesting to see what happens. The statuses in ~subA~ and ~projA~ are
+
+#+BEGIN_SRC sh
+git status -s
+>>> ?? subA_new.file
+cd .. && git status -s
+>>> M subA
+#+END_SRC
+
+This means that even changes that aren't staged, or even are part of the git submodule repository, are seen by ~projA~ as modified.
+
+*** *2. Where to commit changes?*
+
+This seems fail-safe. Changes must be committed to ~subA~ first. Only commits of ~subA~ can be committed ~projA~. 
+
+Continuing from above with the unstaged file ~subA_new.file~ if in ~projA~
+
+#+BEGIN_SRC sh
+git commit subA -m 'trying to commit changes of subA to projA'
+>>> On branch master
+>>> Changes not staged for commit:
+>>> 	modified:   subA (untracked content)
+>>> 
+>>> no changes added to commit
+#+END_SRC
+
+Aha! So ~projA~ knows about changes to untracked content but won't let you commit. Even if we stage the file...
+
+#+BEGIN_SRC sh
+cd subA/ 
+git add subA_new.file
+cd ..
+git commit subA -m 'trying to commit changes of subA to projA'
+>>> On branch master
+>>> Changes not staged for commit:
+>>> 	modified:   subA (modified content)
+>>> 
+>>> no changes added to commit
+#+END_SRC
+ 
+... we can't commit from ~projA~. Notice though how it now says "modified content".
+
+Ok, so let's commit in ~subA~
+
+#+BEGIN_SRC sh
+cd subA/
+git commit subA_new.file -m 'add _new.file'
+>>> [master 039789e] add _new.file
+>>> 1 file changed, 0 insertions(+), 0 deletions(-)
+>>> create mode 100644 subA_new.file
+#+END_SRC
+
+and let's then commit in ~projA~
+
+#+BEGIN_SRC sh
+git commit subA/ -m 'commit changes of subA in projA'
+>>> [master 7d8af0c] commit changes of subA in projA
+>>> 1 file changed, 1 insertion(+), 1 deletion(-)
+#+END_SRC
+
+*** *3. How to clone repositories with submodules*
+
+Cloning submodules locally is easy
+#+BEGIN_SRC sh
+git clone --recursive projA projA_clone
+#+END_SRC
+will clone ~projA~ into ~projA_clone~, which will include ~subA~. 
+
+Getting our repository on GitHub, is a bit more complicated. First we do the usual
