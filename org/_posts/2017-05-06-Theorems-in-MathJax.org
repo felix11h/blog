@@ -1,0 +1,90 @@
+#+STARTUP: noindent showeverything
+#+OPTIONS: toc:nil; html-postamble:nil
+#+BEGIN_HTML
+---
+layout: post
+title: Theorems in MathJax - amsmath-like custom names with improved CSS
+permalink: mathjax-theorems
+date: 2017-05-06
+categories:
+ - LaTeX
+tags:
+ - LaTeX
+---
+#+END_HTML
+
+In LaTeX, using the [[https://www.ctan.org/pkg/amsthm?lang%3Den][amsthm]] package, one can write
+
+#+BEGIN_HTML
+<!-- more -->
+#+END_HTML
+
+#+BEGIN_SRC latex
+\begin{theorem}[Prime numbers]
+All odd numbers are prime
+\end{theorem}
+#+END_SRC
+
+to get 
+
+#+BEGIN_HTML
+<img src="{{ site.baseurl }}/assets/amsthm_render.png" width="550px" style="display:block;margin:1.5em auto 1.5em;"/>
+#+END_HTML
+
+
+To reproduce this functionality in HTML using [[https://www.mathjax.org/][MathJax]], one can define a style as
+
+#+BEGIN_SRC css
+.theorem {
+display: block;
+font-style: italic;
+}
+.theorem:before {
+content: "Theorem. ";
+font-weight: bold;
+font-style: normal;
+}
+.theorem[text]:before {
+content: "Theorem (" attr(text) ") ";
+}
+#+END_SRC
+
+and then write
+
+#+BEGIN_HTML
+<style>
+.theorem {
+display: block;
+font-style: italic;
+}
+.theorem:before {
+content: "Theorem. ";
+font-weight: bold;
+font-style: normal;
+}
+.theorem[text]:before {
+content: "Theorem (" attr(text) ") ";
+}
+</style>
+#+END_HTML
+
+
+#+BEGIN_SRC html
+<div class="theorem" text='Prime numbers'>
+All odd numbers are prime.
+</div>
+#+END_SRC
+
+to get 
+
+#+BEGIN_HTML
+<div class="theorem" text='Prime numbers' style="margin-left:5%; margin-right:5%;margin-bottom:2em;margin-top:2em;">
+All odd numbers are prime.
+</div>
+#+END_HTML
+
+
+
+This solution has a history to it. Zachary T. Harmany first [[http://drz.ac/2013/01/17/latex-theorem-like-environments-for-the-web/][explained]] how one can use CSS classes to get theorem-like environments in HTML. In my [[https://3diagramsperpage.wordpress.com/2013/08/29/mathjax-theorems-css-for-latex-like-environments-custom-names/][previous blog]] I reported on how extend these classes to allow for custom theorem names like in /amsthm/. Later, this solution stopped working in some browsers, and it was [[https://plus.google.com/107384162138080461538][Paul Siegel]] who came up with the solution shown above that now works again in all browsers. 
+
+You can use [[https://jsfiddle.net/ptujzbj5/][this JSFiddle]] to play around with the above implementation.
