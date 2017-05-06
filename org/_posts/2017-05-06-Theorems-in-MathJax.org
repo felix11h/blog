@@ -15,15 +15,15 @@ tags:
 
 In LaTeX, using the [[https://www.ctan.org/pkg/amsthm?lang%3Den][amsthm]] package, one can write
 
-#+BEGIN_HTML
-<!-- more -->
-#+END_HTML
-
 #+BEGIN_SRC latex
 \begin{theorem}[Prime numbers]
 All odd numbers are prime
 \end{theorem}
 #+END_SRC
+
+#+BEGIN_HTML
+<!-- more -->
+#+END_HTML
 
 to get 
 
