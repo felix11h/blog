@@ -82,114 +82,134 @@ This can be achieved by the following two wildcards <code>%3</code> and <code>%4
 <div class="org-src-container">
 
 <pre class="src src-json">{
-  <span style="color: #859900;">"3"</span>: {
-    <span style="color: #859900;">"default"</span>: {},
-    <span style="color: #859900;">"manuscript"</span>: {
-      <span style="color: #859900;">"field"</span>: <span style="color: #2aa198;">"title"</span>,
-      <span style="color: #859900;">"operations"</span>: [
-        {
-          <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
-          <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">" "</span>,
-          <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">"-"</span>
-        },
-        {
-          <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
-          <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">"^(.*)$"</span>,
-          <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">"_$1"</span>
-        }
-      ]
-    },
-    <span style="color: #859900;">"book"</span>: {
-      <span style="color: #859900;">"field"</span>: <span style="color: #2aa198;">"title"</span>,
-      <span style="color: #859900;">"operations"</span>: [
-        {
-          <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
-          <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">" "</span>,
-          <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">"-"</span>
-        },
-        {
-          <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
-          <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">"^(.*)$"</span>,
-          <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">"_$1"</span>
-        }
-      ]
-    },
-    <span style="color: #859900;">"report"</span>: {
-      <span style="color: #859900;">"field"</span>: <span style="color: #2aa198;">"title"</span>,
-      <span style="color: #859900;">"operations"</span>: [
-        {
-          <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
-          <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">" "</span>,
-          <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">"_"</span>
-        },
-        {
-          <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"toLowerCase"</span>
-        }
-      ]
-    }
-  },
-  <span style="color: #859900;">"4"</span>: {
-    <span style="color: #859900;">"default"</span>: {
-      <span style="color: #859900;">"field"</span>: <span style="color: #2aa198;">"itemType"</span>,
-      <span style="color: #859900;">"operations"</span>: [
-        {
-          <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
-          <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">"Journal Article"</span>,
-          <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">"articles"</span>
-        },
-        {
-          <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
-          <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">"^Book$"</span>,
-          <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">"books"</span>
-        },
-        {
-          <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
-          <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">"Manuscript"</span>,
-          <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">"manuscripts"</span>
-        },
-        {
-          <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
-          <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">"^Book Section$"</span>,
-          <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">"book_sections"</span>
-        },
-        {
-          <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
-          <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">"Document"</span>,
-          <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">"documents"</span>
-        },
-        {
-          <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
-          <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">"Thesis"</span>,
-          <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">"thesis"</span>
-        },
-        {
-          <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
-          <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">"Presentation"</span>,
-          <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">"presentations"</span>
-        }
-      ]
-    },
-    <span style="color: #859900;">"report"</span>: {
-      <span style="color: #859900;">"field"</span>: <span style="color: #2aa198;">"extra"</span>
-    }
-  },
-  <span style="color: #859900;">"5"</span>: {
-    <span style="color: #859900;">"default"</span>: {
-      <span style="color: #859900;">"field"</span>: <span style="color: #2aa198;">"extra"</span>,
-      <span style="color: #859900;">"operations"</span>: [
-        {
-          <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
-          <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">"^(?!poster).*$"</span>,
-          <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">""</span>
-        },
-        {
-          <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
-          <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">"poster=(.*)"</span>,
-          <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">"_$1"</span>
-        }
-      ]
-    }
-  }
+   <span style="color: #859900;">"3"</span>: {
+      <span style="color: #859900;">"default"</span>: {},
+      <span style="color: #859900;">"manuscript"</span>: {
+         <span style="color: #859900;">"field"</span>: <span style="color: #2aa198;">"title"</span>,
+         <span style="color: #859900;">"operations"</span>: [
+            {
+               <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
+               <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">" "</span>,
+               <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">"-"</span>
+            },
+            {
+               <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
+               <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">"^(.*)$"</span>,
+               <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">"_$1"</span>
+            }
+         ]
+      },
+      <span style="color: #859900;">"book"</span>: {
+         <span style="color: #859900;">"field"</span>: <span style="color: #2aa198;">"title"</span>,
+         <span style="color: #859900;">"operations"</span>: [
+            {
+               <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
+               <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">" "</span>,
+               <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">"-"</span>
+            },
+            {
+               <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
+               <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">"^(.*)$"</span>,
+               <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">"_$1"</span>
+            }
+         ]
+      },
+      <span style="color: #859900;">"conferencePaper"</span>: {
+         <span style="color: #859900;">"field"</span>: <span style="color: #2aa198;">"title"</span>,
+         <span style="color: #859900;">"operations"</span>: [
+            {
+               <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
+               <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">" "</span>,
+               <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">"-"</span>
+            },
+            {
+               <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
+               <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">"^(.*)$"</span>,
+               <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">"_$1"</span>
+            }
+         ]
+      },
+      <span style="color: #859900;">"report"</span>: {
+         <span style="color: #859900;">"field"</span>: <span style="color: #2aa198;">"title"</span>,
+         <span style="color: #859900;">"operations"</span>: [
+            {
+               <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
+               <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">" "</span>,
+               <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">"_"</span>
+            },
+            {
+               <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"toLowerCase"</span>
+            }
+         ]
+      }
+   },
+   <span style="color: #859900;">"4"</span>: {
+      <span style="color: #859900;">"default"</span>: {
+         <span style="color: #859900;">"field"</span>: <span style="color: #2aa198;">"itemType"</span>,
+         <span style="color: #859900;">"operations"</span>: [
+            {
+               <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
+               <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">"Journal Article"</span>,
+               <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">"articles"</span>
+            },
+            {
+               <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
+               <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">"^Book$"</span>,
+               <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">"books"</span>
+            },
+            {
+               <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
+               <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">"Manuscript"</span>,
+               <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">"manuscripts"</span>
+            },
+            {
+               <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
+               <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">"^Book Section$"</span>,
+               <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">"book_sections"</span>
+            },
+            {
+               <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
+               <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">"Document"</span>,
+               <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">"documents"</span>
+            },
+            {
+               <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
+               <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">"Thesis"</span>,
+               <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">"thesis"</span>
+            },
+            {
+               <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
+               <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">"Presentation"</span>,
+               <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">"presentations"</span>
+            },
+             {
+               <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
+               <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">"Conference Paper"</span>,
+               <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">"conferences"</span>
+            }
+         ]
+      },
+      <span style="color: #859900;">"report"</span>: {
+         <span style="color: #859900;">"field"</span>: <span style="color: #2aa198;">"extra"</span>
+      }
+   },
+   <span style="color: #859900;">"5"</span>: {
+      <span style="color: #859900;">"default"</span>: {
+         <span style="color: #859900;">"field"</span>: <span style="color: #2aa198;">"extra"</span>,
+         <span style="color: #859900;">"operations"</span>: [
+            {
+               <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
+               <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">"^(?!poster).*$"</span>,
+               <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">""</span>
+            },
+            {
+               <span style="color: #859900;">"function"</span>: <span style="color: #2aa198;">"replace"</span>,
+               <span style="color: #859900;">"regex"</span>: <span style="color: #2aa198;">"poster=(.*)"</span>,
+               <span style="color: #859900;">"replacement"</span>: <span style="color: #2aa198;">"_$1"</span>
+            }
+         ]
+      }
+   }
 }
 </pre>
 </div>

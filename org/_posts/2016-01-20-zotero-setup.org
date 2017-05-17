@@ -57,114 +57,134 @@ This can be achieved by the following two wildcards ~%3~ and ~%4~. The renaming 
 
 #+BEGIN_SRC json
 {
-  "3": {
-    "default": {},
-    "manuscript": {
-      "field": "title",
-      "operations": [
-        {
-          "function": "replace",
-          "regex": " ",
-          "replacement": "-"
-        },
-        {
-          "function": "replace",
-          "regex": "^(.*)$",
-          "replacement": "_$1"
-        }
-      ]
-    },
-    "book": {
-      "field": "title",
-      "operations": [
-        {
-          "function": "replace",
-          "regex": " ",
-          "replacement": "-"
-        },
-        {
-          "function": "replace",
-          "regex": "^(.*)$",
-          "replacement": "_$1"
-        }
-      ]
-    },
-    "report": {
-      "field": "title",
-      "operations": [
-        {
-          "function": "replace",
-          "regex": " ",
-          "replacement": "_"
-        },
-        {
-          "function": "toLowerCase"
-        }
-      ]
-    }
-  },
-  "4": {
-    "default": {
-      "field": "itemType",
-      "operations": [
-        {
-          "function": "replace",
-          "regex": "Journal Article",
-          "replacement": "articles"
-        },
-        {
-          "function": "replace",
-          "regex": "^Book$",
-          "replacement": "books"
-        },
-        {
-          "function": "replace",
-          "regex": "Manuscript",
-          "replacement": "manuscripts"
-        },
-        {
-          "function": "replace",
-          "regex": "^Book Section$",
-          "replacement": "book_sections"
-        },
-        {
-          "function": "replace",
-          "regex": "Document",
-          "replacement": "documents"
-        },
-        {
-          "function": "replace",
-          "regex": "Thesis",
-          "replacement": "thesis"
-        },
-        {
-          "function": "replace",
-          "regex": "Presentation",
-          "replacement": "presentations"
-        }
-      ]
-    },
-    "report": {
-      "field": "extra"
-    }
-  },
-  "5": {
-    "default": {
-      "field": "extra",
-      "operations": [
-        {
-          "function": "replace",
-          "regex": "^(?!poster).*$",
-          "replacement": ""
-        },
-        {
-          "function": "replace",
-          "regex": "poster=(.*)",
-          "replacement": "_$1"
-        }
-      ]
-    }
-  }
+   "3": {
+      "default": {},
+      "manuscript": {
+         "field": "title",
+         "operations": [
+            {
+               "function": "replace",
+               "regex": " ",
+               "replacement": "-"
+            },
+            {
+               "function": "replace",
+               "regex": "^(.*)$",
+               "replacement": "_$1"
+            }
+         ]
+      },
+      "book": {
+         "field": "title",
+         "operations": [
+            {
+               "function": "replace",
+               "regex": " ",
+               "replacement": "-"
+            },
+            {
+               "function": "replace",
+               "regex": "^(.*)$",
+               "replacement": "_$1"
+            }
+         ]
+      },
+      "conferencePaper": {
+         "field": "title",
+         "operations": [
+            {
+               "function": "replace",
+               "regex": " ",
+               "replacement": "-"
+            },
+            {
+               "function": "replace",
+               "regex": "^(.*)$",
+               "replacement": "_$1"
+            }
+         ]
+      },
+      "report": {
+         "field": "title",
+         "operations": [
+            {
+               "function": "replace",
+               "regex": " ",
+               "replacement": "_"
+            },
+            {
+               "function": "toLowerCase"
+            }
+         ]
+      }
+   },
+   "4": {
+      "default": {
+         "field": "itemType",
+         "operations": [
+            {
+               "function": "replace",
+               "regex": "Journal Article",
+               "replacement": "articles"
+            },
+            {
+               "function": "replace",
+               "regex": "^Book$",
+               "replacement": "books"
+            },
+            {
+               "function": "replace",
+               "regex": "Manuscript",
+               "replacement": "manuscripts"
+            },
+            {
+               "function": "replace",
+               "regex": "^Book Section$",
+               "replacement": "book_sections"
+            },
+            {
+               "function": "replace",
+               "regex": "Document",
+               "replacement": "documents"
+            },
+            {
+               "function": "replace",
+               "regex": "Thesis",
+               "replacement": "thesis"
+            },
+            {
+               "function": "replace",
+               "regex": "Presentation",
+               "replacement": "presentations"
+            },
+	     {
+               "function": "replace",
+               "regex": "Conference Paper",
+               "replacement": "conferences"
+            }
+         ]
+      },
+      "report": {
+         "field": "extra"
+      }
+   },
+   "5": {
+      "default": {
+         "field": "extra",
+         "operations": [
+            {
+               "function": "replace",
+               "regex": "^(?!poster).*$",
+               "replacement": ""
+            },
+            {
+               "function": "replace",
+               "regex": "poster=(.*)",
+               "replacement": "_$1"
+            }
+         ]
+      }
+   }
 }
 #+END_SRC
 
