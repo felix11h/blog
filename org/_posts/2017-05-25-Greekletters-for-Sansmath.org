@@ -16,7 +16,7 @@ tags:
 For presentations and labels in figures I like sans-serif fonts, [[https://www.ctan.org/pkg/tex-gyre-heros?lang%3Den][TeX Gyre Heros]] being my default choice. The default math font doesn't go together with sans-serif fonts:
 
 #+BEGIN_HTML
-<img src="{{ site.baseurl }}/assets/tgheros-default.png" width="90%" style="display:block;margin:1.5em auto 2.5em;"/>
+<img src="{{ site.baseurl }}/assets/tgheros-default.png" width="72%" style="display:block;margin:1.5em auto 2.5em;"/>
 #+END_HTML
 
 #+BEGIN_HTML
@@ -32,7 +32,7 @@ Which math font should you choose? An overview and comparison of free math fonts
 I'm using [[https://www.ctan.org/pkg/sansmath?lang%3Den][sansmath]]. With package enabled, the above example becomes
 
 #+BEGIN_HTML
-<img src="{{ site.baseurl }}/assets/tgheros-sansmath_default.png" width="90%" style="display:block;margin:1.5em auto 1.5em;"/>
+<img src="{{ site.baseurl }}/assets/tgheros-sansmath_default.png" width="72%" style="display:block;margin:1.5em auto 1.5em;"/>
 #+END_HTML
 
 from 
@@ -62,7 +62,7 @@ You notice that this is better, but not good enough yet. Greek letters are not b
 The most straight forward solution is to provide the ~eulergreek~ option to sansmath, obtaining
 
 #+BEGIN_HTML
-<img src="{{ site.baseurl }}/assets/tgheros-sansmath_eulergreek.png" width="90%" style="display:block;margin:1.5em auto 1.5em;"/>
+<img src="{{ site.baseurl }}/assets/tgheros-sansmath_eulergreek.png" width="72%" style="display:block;margin:1.5em auto 1.5em;"/>
 #+END_HTML
 
 from 
@@ -90,7 +90,7 @@ x^{\gamma_n}$. Also $\beta$, $\varrho$ and $\varphi$.
 Another option is to use the [[https://www.ctan.org/pkg/bm?lang%3Den][bm]] package. With the package we get 
 
 #+BEGIN_HTML
-<img src="{{ site.baseurl }}/assets/tgheros-sansmath_bm.png" width="90%" style="display:block;margin:1.5em auto 1.5em;"/>
+<img src="{{ site.baseurl }}/assets/tgheros-sansmath_bm.png" width="72%" style="display:block;margin:1.5em auto 1.5em;"/>
 #+END_HTML
 
 from 
@@ -121,7 +121,7 @@ Note that in this case every greek letter needed to bolded separately using ~\bn
 In an answer to a question on [[https://tex.stackexchange.com/questions/195832][tex.stackexchange.com]] on the topic, the following was suggested. One can get, for example, 
 
 #+BEGIN_HTML
-<img src="{{ site.baseurl }}/assets/tgheros-sansmath_iwona.png" width="90%" style="display:block;margin:1.5em auto 1.5em;"/>
+<img src="{{ site.baseurl }}/assets/tgheros-sansmath_iwona.png" width="72%" style="display:block;margin:1.5em auto 1.5em;"/>
 #+END_HTML
 
 by supply the greek letter definitions from another font - in this case [[https://www.ctan.org/tex-archive/fonts/iwona/][iwona]] - manually:
@@ -161,14 +161,16 @@ If you want to use this solution, make sure you use the full definition of Greek
 Here a comparison of the three solutions in the order that they were presented 
 
 #+BEGIN_HTML
-<img src="{{ site.baseurl }}/assets/tgheros-sansmath_eulergreek.png" width="90%" style="display:block;margin:1.5em auto 0em;"/>
+<img src="{{ site.baseurl }}/assets/tgheros-sansmath_eulergreek.png" width="85%" style="display:block;margin:1.5em auto 0em;"/>
 #+END_HTML
 
 #+BEGIN_HTML
-<img src="{{ site.baseurl }}/assets/tgheros-sansmath_bm.png" width="90%" style="display:block;margin:0em auto 0em;"/>
+<img src="{{ site.baseurl }}/assets/tgheros-sansmath_bm.png" width="85%" style="display:block;margin:0em auto 0em;"/>
 #+END_HTML
 
 
 #+BEGIN_HTML
-<img src="{{ site.baseurl }}/assets/tgheros-sansmath_iwona.png" width="90%" style="display:block;margin:0em auto 1.5em;"/>
+<img src="{{ site.baseurl }}/assets/tgheros-sansmath_iwona.png" width="85%" style="display:block;margin:0em auto 1.5em;"/>
 #+END_HTML
+
+There's a [[https://github.com/Felix11H/tgheros_sansmath][GitHub repository]] with all the above code.
