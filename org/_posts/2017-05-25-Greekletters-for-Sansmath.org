@@ -1,0 +1,174 @@
+#+STARTUP: noindent showeverything
+#+OPTIONS: toc:nil; html-postamble:nil
+#+BEGIN_HTML
+---
+layout: post
+title: Options for Greek letters in sansmath
+permalink: greek-sansmath
+date: 2017-05-25
+categories:
+ - LaTeX
+tags:
+ - LaTeX
+---
+#+END_HTML
+
+For presentations and labels in figures I like sans-serif fonts, [[https://www.ctan.org/pkg/tex-gyre-heros?lang%3Den][TeX Gyre Heros]] being my default choice. The default math font doesn't go together with sans-serif fonts:
+
+#+BEGIN_HTML
+<img src="{{ site.baseurl }}/assets/tgheros-default.png" width="90%" style="display:block;margin:1.5em auto 2.5em;"/>
+#+END_HTML
+
+#+BEGIN_HTML
+<!-- more -->
+#+END_HTML
+
+Which math font should you choose? An overview and comparison of free math fonts was done by Stephen G. Hartke and is available [[http://mirrors.xmu.edu.cn/CTAN/info/Free_Math_Font_Survey/survey.html][here]]. 
+
+* Using sansmath
+
+
+
+I'm using [[https://www.ctan.org/pkg/sansmath?lang%3Den][sansmath]]. With package enabled, the above example becomes
+
+#+BEGIN_HTML
+<img src="{{ site.baseurl }}/assets/tgheros-sansmath_default.png" width="90%" style="display:block;margin:1.5em auto 1.5em;"/>
+#+END_HTML
+
+from 
+
+#+BEGIN_SRC latex
+\documentclass[border=2,convert={density=600}]{standalone}
+
+\usepackage{tgheros}
+\renewcommand{\familydefault}{\sfdefault}
+
+\usepackage{sansmath}
+\sansmath
+
+\begin{document}
+
+A $\varepsilon$ character. Math is $\sum_{i=1}^{n} \alpha_n
+x^{\gamma_n}$. Also $\beta$, $\varrho$ and $\varphi$.
+
+\end{document}
+
+#+END_SRC
+
+You notice that this is better, but not good enough yet. Greek letters are not by default part of ~sansmath~. In the following I'm showing three options for Greek letters in ~sansmath~.
+
+*  1. eulergreek
+
+The most straight forward solution is to provide the ~eulergreek~ option to sansmath, obtaining
+
+#+BEGIN_HTML
+<img src="{{ site.baseurl }}/assets/tgheros-sansmath_eulergreek.png" width="90%" style="display:block;margin:1.5em auto 1.5em;"/>
+#+END_HTML
+
+from 
+
+#+BEGIN_SRC latex
+\documentclass[border=2,convert={density=600}]{standalone}
+
+\usepackage{tgheros}
+\renewcommand{\familydefault}{\sfdefault}
+
+\usepackage[eulergreek]{sansmath}
+\sansmath
+
+\begin{document}
+
+A $\varepsilon$ character. Math is $\sum_{i=1}^{n} \alpha_n
+x^{\gamma_n}$. Also $\beta$, $\varrho$ and $\varphi$.
+
+\end{document}
+#+END_SRC
+
+
+* 2. bm
+
+Another option is to use the [[https://www.ctan.org/pkg/bm?lang%3Den][bm]] package. With the package we get 
+
+#+BEGIN_HTML
+<img src="{{ site.baseurl }}/assets/tgheros-sansmath_bm.png" width="90%" style="display:block;margin:1.5em auto 1.5em;"/>
+#+END_HTML
+
+from 
+
+#+BEGIN_SRC latex
+\documentclass[border=2,convert={density=600}]{standalone}
+
+\usepackage{tgheros}
+\renewcommand{\familydefault}{\sfdefault}
+
+\usepackage{sansmath}
+\sansmath
+
+\usepackage{bm}
+
+\begin{document}
+
+A $\bm{\varepsilon}$ character. Math is $\sum_{i=1}^{n} \bm{\alpha}_n
+x^{\bm{\gamma}_n}$. Also $\bm{\beta}$, $\bm{\varrho}$ and $\bm{\varphi}$.
+
+\end{document}
+#+END_SRC
+
+Note that in this case every greek letter needed to bolded separately using ~\bn{ }~. 
+
+* 3. supplying Greek letters from a different font
+
+In an answer to a question on [[https://tex.stackexchange.com/questions/195832][tex.stackexchange.com]] on the topic, the following was suggested. One can get, for example, 
+
+#+BEGIN_HTML
+<img src="{{ site.baseurl }}/assets/tgheros-sansmath_iwona.png" width="90%" style="display:block;margin:1.5em auto 1.5em;"/>
+#+END_HTML
+
+by supply the greek letter definitions from another font - in this case [[https://www.ctan.org/tex-archive/fonts/iwona/][iwona]] - manually:
+
+#+BEGIN_SRC latex
+\documentclass[border=2,convert={density=600}]{standalone}
+
+\usepackage{tgheros}
+\renewcommand{\familydefault}{\sfdefault}
+
+\usepackage{sansmath}
+\sansmath
+
+\DeclareSymbolFont{Greekletters}{OT1}{iwona}{m}{n}
+\DeclareSymbolFont{greekletters}{OML}{iwona}{m}{it}
+
+\DeclareMathSymbol{\alpha}{\mathord}{greekletters}{"0B}
+\DeclareMathSymbol{\beta}{\mathord}{greekletters}{"0C}
+\DeclareMathSymbol{\gamma}{\mathord}{greekletters}{"0D}
+\DeclareMathSymbol{\varepsilon}{\mathord}{greekletters}{"22}
+\DeclareMathSymbol{\varrho}{\mathord}{greekletters}{"25}
+\DeclareMathSymbol{\varphi}{\mathord}{greekletters}{"27}
+
+\begin{document}
+
+A $\varepsilon$ character. Math is $\sum_{i=1}^{n} \alpha_n
+x^{\gamma_n}$. Also $\beta$, $\varrho$ and $\varphi$.
+
+\end{document}
+#+END_SRC
+
+If you want to use this solution, make sure you use the full definition of Greek symbols as presented by user [[https://tex.stackexchange.com/users/4427/egreg][egreg]] in the [[https://tex.stackexchange.com/a/195867/4912][LaTeX Stack Exchange post]].
+
+
+* Comparison
+
+Here a comparison of the three solutions in the order that they were presented 
+
+#+BEGIN_HTML
+<img src="{{ site.baseurl }}/assets/tgheros-sansmath_eulergreek.png" width="90%" style="display:block;margin:1.5em auto 0em;"/>
+#+END_HTML
+
+#+BEGIN_HTML
+<img src="{{ site.baseurl }}/assets/tgheros-sansmath_bm.png" width="90%" style="display:block;margin:0em auto 0em;"/>
+#+END_HTML
+
+
+#+BEGIN_HTML
+<img src="{{ site.baseurl }}/assets/tgheros-sansmath_iwona.png" width="90%" style="display:block;margin:0em auto 1.5em;"/>
+#+END_HTML

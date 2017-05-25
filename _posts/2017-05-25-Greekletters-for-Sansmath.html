@@ -1,0 +1,200 @@
+---
+layout: post
+title: Options for Greek letters in sansmath
+permalink: greek-sansmath
+date: 2017-05-25
+categories:
+ - LaTeX
+tags:
+ - LaTeX
+---
+
+<p>
+For presentations and labels in figures I like sans-serif fonts, <a href="https://www.ctan.org/pkg/tex-gyre-heros?lang=en">TeX Gyre Heros</a> being my default choice. The default math font doesn't go together with sans-serif fonts:<br  />
+</p>
+
+<img src="{{ site.baseurl }}/assets/tgheros-default.png" width="90%" style="display:block;margin:1.5em auto 2.5em;"/>
+
+<!-- more -->
+
+<p>
+Which math font should you choose? An overview and comparison of free math fonts was done by Stephen G. Hartke and is available <a href="http://mirrors.xmu.edu.cn/CTAN/info/Free_Math_Font_Survey/survey.html">here</a>.<br  />
+</p>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Using sansmath</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+I'm using <a href="https://www.ctan.org/pkg/sansmath?lang=en">sansmath</a>. With package enabled, the above example becomes<br  />
+</p>
+
+<img src="{{ site.baseurl }}/assets/tgheros-sansmath_default.png" width="90%" style="display:block;margin:1.5em auto 1.5em;"/>
+
+<p>
+from<br  />
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-latex"><span style="color: #859900;">\documentclass</span>[border=2,convert={density=600}]{<span style="color: #6c71c4;">standalone</span>}
+
+<span style="color: #859900;">\usepackage</span>{<span style="color: #6c71c4;">tgheros</span>}
+<span style="color: #859900;">\renewcommand</span>{<span style="color: #268bd2;">\familydefault</span>}{<span style="color: #859900;">\sfdefault</span>}
+
+<span style="color: #859900;">\usepackage</span>{<span style="color: #6c71c4;">sansmath</span>}
+<span style="color: #859900;">\sansmath</span>
+
+<span style="color: #859900;">\begin</span>{<span style="color: #268bd2;">document</span>}
+
+A <span style="color: #2aa198;">$\varepsilon$</span> character. Math is <span style="color: #2aa198;">$\sum_{i=1}^{n} \alpha_n</span>
+<span style="color: #2aa198;">x^{\gamma_</span><span style="color: #2aa198;">n}</span><span style="color: #2aa198;">$</span>. Also <span style="color: #2aa198;">$\beta$</span>, <span style="color: #2aa198;">$\varrho$</span> and <span style="color: #2aa198;">$\varphi$</span>.
+
+<span style="color: #859900;">\end</span>{<span style="color: #268bd2;">document</span>}
+</pre>
+</div>
+
+<p>
+You notice that this is better, but not good enough yet. Greek letters are not by default part of <code>sansmath</code>. In the following I'm showing three options for Greek letters in <code>sansmath</code>.<br  />
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2">1. eulergreek</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+The most straight forward solution is to provide the <code>eulergreek</code> option to sansmath, obtaining<br  />
+</p>
+
+<img src="{{ site.baseurl }}/assets/tgheros-sansmath_eulergreek.png" width="90%" style="display:block;margin:1.5em auto 1.5em;"/>
+
+<p>
+from<br  />
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-latex"><span style="color: #859900;">\documentclass</span>[border=2,convert={density=600}]{<span style="color: #6c71c4;">standalone</span>}
+
+<span style="color: #859900;">\usepackage</span>{<span style="color: #6c71c4;">tgheros</span>}
+<span style="color: #859900;">\renewcommand</span>{<span style="color: #268bd2;">\familydefault</span>}{<span style="color: #859900;">\sfdefault</span>}
+
+<span style="color: #859900;">\usepackage</span>[eulergreek]{<span style="color: #6c71c4;">sansmath</span>}
+<span style="color: #859900;">\sansmath</span>
+
+<span style="color: #859900;">\begin</span>{<span style="color: #268bd2;">document</span>}
+
+A <span style="color: #2aa198;">$\varepsilon$</span> character. Math is <span style="color: #2aa198;">$\sum_{i=1}^{n} \alpha_n</span>
+<span style="color: #2aa198;">x^{\gamma_</span><span style="color: #2aa198;">n}</span><span style="color: #2aa198;">$</span>. Also <span style="color: #2aa198;">$\beta$</span>, <span style="color: #2aa198;">$\varrho$</span> and <span style="color: #2aa198;">$\varphi$</span>.
+
+<span style="color: #859900;">\end</span>{<span style="color: #268bd2;">document</span>}
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3">2. bm</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Another option is to use the <a href="https://www.ctan.org/pkg/bm?lang=en">bm</a> package. With the package we get<br  />
+</p>
+
+<img src="{{ site.baseurl }}/assets/tgheros-sansmath_bm.png" width="90%" style="display:block;margin:1.5em auto 1.5em;"/>
+
+<p>
+from<br  />
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-latex"><span style="color: #859900;">\documentclass</span>[border=2,convert={density=600}]{<span style="color: #6c71c4;">standalone</span>}
+
+<span style="color: #859900;">\usepackage</span>{<span style="color: #6c71c4;">tgheros</span>}
+<span style="color: #859900;">\renewcommand</span>{<span style="color: #268bd2;">\familydefault</span>}{<span style="color: #859900;">\sfdefault</span>}
+
+<span style="color: #859900;">\usepackage</span>{<span style="color: #6c71c4;">sansmath</span>}
+<span style="color: #859900;">\sansmath</span>
+
+<span style="color: #859900;">\usepackage</span>{<span style="color: #6c71c4;">bm</span>}
+
+<span style="color: #859900;">\begin</span>{<span style="color: #268bd2;">document</span>}
+
+A <span style="color: #2aa198;">$\bm{\varepsilon}$</span> character. Math is <span style="color: #2aa198;">$\sum_{i=1}^{n} \bm{\alpha}_n</span>
+<span style="color: #2aa198;">x^{\bm{\gamma}_</span><span style="color: #2aa198;">n}</span><span style="color: #2aa198;">$</span>. Also <span style="color: #2aa198;">$\bm{\beta}$</span>, <span style="color: #2aa198;">$\bm{\varrho}$</span> and <span style="color: #2aa198;">$\bm{\varphi}$</span>.
+
+<span style="color: #859900;">\end</span>{<span style="color: #268bd2;">document</span>}
+</pre>
+</div>
+
+<p>
+Note that in this case every greek letter needed to bolded separately using <code>\bn{ }</code>.<br  />
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4">3. supplying Greek letters from a different font</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+In an answer to a question on <a href="https://tex.stackexchange.com/questions/195832">tex.stackexchange.com</a> on the topic, the following was suggested. One can get, for example,<br  />
+</p>
+
+<img src="{{ site.baseurl }}/assets/tgheros-sansmath_iwona.png" width="90%" style="display:block;margin:1.5em auto 1.5em;"/>
+
+<p>
+by supply the greek letter definitions from another font - in this case <a href="https://www.ctan.org/tex-archive/fonts/iwona/">iwona</a> - manually:<br  />
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-latex"><span style="color: #859900;">\documentclass</span>[border=2,convert={density=600}]{<span style="color: #6c71c4;">standalone</span>}
+
+<span style="color: #859900;">\usepackage</span>{<span style="color: #6c71c4;">tgheros</span>}
+<span style="color: #859900;">\renewcommand</span>{<span style="color: #268bd2;">\familydefault</span>}{<span style="color: #859900;">\sfdefault</span>}
+
+<span style="color: #859900;">\usepackage</span>{<span style="color: #6c71c4;">sansmath</span>}
+<span style="color: #859900;">\sansmath</span>
+
+<span style="color: #859900;">\DeclareSymbolFont</span>{Greekletters}{OT1}{iwona}{m}{n}
+<span style="color: #859900;">\DeclareSymbolFont</span>{greekletters}{OML}{iwona}{m}{it}
+
+<span style="color: #859900;">\DeclareMathSymbol</span>{<span style="color: #859900;">\alpha</span>}{<span style="color: #859900;">\mathord</span>}{greekletters}{"0B}
+<span style="color: #859900;">\DeclareMathSymbol</span>{<span style="color: #859900;">\beta</span>}{<span style="color: #859900;">\mathord</span>}{greekletters}{"0C}
+<span style="color: #859900;">\DeclareMathSymbol</span>{<span style="color: #859900;">\gamma</span>}{<span style="color: #859900;">\mathord</span>}{greekletters}{"0D}
+<span style="color: #859900;">\DeclareMathSymbol</span>{<span style="color: #859900;">\varepsilon</span>}{<span style="color: #859900;">\mathord</span>}{greekletters}{"22}
+<span style="color: #859900;">\DeclareMathSymbol</span>{<span style="color: #859900;">\varrho</span>}{<span style="color: #859900;">\mathord</span>}{greekletters}{"25}
+<span style="color: #859900;">\DeclareMathSymbol</span>{<span style="color: #859900;">\varphi</span>}{<span style="color: #859900;">\mathord</span>}{greekletters}{"27}
+
+<span style="color: #859900;">\begin</span>{<span style="color: #268bd2;">document</span>}
+
+A <span style="color: #2aa198;">$\varepsilon$</span> character. Math is <span style="color: #2aa198;">$\sum_{i=1}^{n} \alpha_n</span>
+<span style="color: #2aa198;">x^{\gamma_</span><span style="color: #2aa198;">n}</span><span style="color: #2aa198;">$</span>. Also <span style="color: #2aa198;">$\beta$</span>, <span style="color: #2aa198;">$\varrho$</span> and <span style="color: #2aa198;">$\varphi$</span>.
+
+<span style="color: #859900;">\end</span>{<span style="color: #268bd2;">document</span>}
+</pre>
+</div>
+
+<p>
+If you want to use this solution, make sure you use the full definition of Greek symbols as presented by user <a href="https://tex.stackexchange.com/users/4427/egreg">egreg</a> in the <a href="https://tex.stackexchange.com/a/195867/4912">LaTeX Stack Exchange post</a>.<br  />
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5">Comparison</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Here a comparison of the three solutions in the order that they were presented<br  />
+</p>
+
+<img src="{{ site.baseurl }}/assets/tgheros-sansmath_eulergreek.png" width="90%" style="display:block;margin:1.5em auto 0em;"/>
+
+<img src="{{ site.baseurl }}/assets/tgheros-sansmath_bm.png" width="90%" style="display:block;margin:0em auto 0em;"/>
+
+
+<img src="{{ site.baseurl }}/assets/tgheros-sansmath_iwona.png" width="90%" style="display:block;margin:0em auto 1.5em;"/>
+</div>
+</div>
