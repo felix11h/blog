@@ -42,12 +42,12 @@ I find this very impractical. But it gets worse: Even knowing this path, it is i
 
 Renaming and relocating the attachments is easy using Zotfile. Open the Zotfile preferences in Zotero (located right under the standard preferences) and define your location and renaming rules. Combing the [[http://zotfile.com/#renaming-rules][default wildcards]] you can get pretty nice results already.
 
-For long time, for example, I've been using ~%a%y~ as renaming rule to obtain names of the format ~Authorname2002~.
+For example, the rule ~%a%y~ renames attachments in the format ~Authorname2002~.
 
 
 * Document type specific renaming rules with custom wildcards
 
-However, if you would like document type specific renaming and relocating rules you have to resort to writing your own wildcards. Here's two things I wanted to do:
+However, if you would like /document type specific/ renaming and relocating rules you have to resort to writing your own wildcards. Here's two things I wanted to do:
 
 - For specific document types (manuscripts) I want to adapt the default ~AuthorYear~ renaming rule to include the title as well, ~AuthorYear_Title~.
 
@@ -200,7 +200,7 @@ and the relocating rules are
 <img src="{{ site.baseurl }}/assets/zotfile_relocating_rules.png" width="80%" style="display:block;margin:2em auto 2em;"/>
 #+END_HTML
 
-Since Zotero allows neither [[https://forums.zotero.org/discussion/33446/item-type-user-manual-and-product-brochure/][manual]] nor [[https://forums.zotero.org/discussion/33446/item-type-user-manual-and-product-brochure/][conference poster]] item types, I have custom solutions to create specific behavior for such documents. I give manuals the item type ~report~ but specify the "extra" field as, for example, ~manuals/latex~. Using ~%4~, these documents get filed in under exactly that location. 
+Since Zotero allows neither [[https://forums.zotero.org/discussion/33446/item-type-user-manual-and-product-brochure/][manual]] nor [[https://forums.zotero.org/discussion/33446/item-type-user-manual-and-product-brochure/][conference poster]] item types, I have custom solutions to create specific behavior for such documents. I give manuals the item type ~report~ while specifying the "extra" field as, for example, ~manuals/latex~. Using ~%4~, these documents get filed to exactly that location. 
 
 For posters, I select the item type ~journalArticle~ and set the field "extra" as ~poster=CONFERENCE_NAME~. With this, posters get renamed as ~Hoffmann_BCCN2016~, for example. 
 
