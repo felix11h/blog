@@ -28,7 +28,7 @@ Minted's compatibility with the Latex beamer class, however, is restricted and s
 <img src="{{ site.baseurl }}/assets/latex-beamer-minted.png" width="90%" style="display:block;margin:2em auto 2em;" />
 #+END_HTML
 
-Here's a [[https://raw.github.com/Felix11H/LaTeX/master/templates/beamer_syntaxhighlight.tex][template]] I made for anyone who wants to present code with the beamer class and the minted package, like in the image above:
+Here's a [[https://github.com/Felix11H/latex-beamer-minted-template][template]] I made for anyone who wants to present code with the beamer class and the minted package, like in the image above:
 
 #+BEGIN_SRC latex
 \documentclass{beamer}
