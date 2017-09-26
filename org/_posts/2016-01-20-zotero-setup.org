@@ -86,7 +86,13 @@ This can be achieved by the following two wildcards ~%3~ and ~%4~. The renaming 
                "function": "replace",
                "regex": "^(.*)$",
                "replacement": "_$1"
+            },
+	    {
+               "function": "replace",
+               "regex": "^(.{200}).*$",
+               "replacement": "$1"
             }
+	     
          ]
       },
       "conferencePaper": {
@@ -157,7 +163,7 @@ This can be achieved by the following two wildcards ~%3~ and ~%4~. The renaming 
                "regex": "Presentation",
                "replacement": "presentations"
             },
-	     {
+             {
                "function": "replace",
                "regex": "Conference Paper",
                "replacement": "conferences"
