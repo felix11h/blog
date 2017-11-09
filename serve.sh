@@ -5,4 +5,4 @@ docker run -it -p 127.0.0.1:4003:4000 \
        -v $(pwd):/blog \
        felix11h/jekyll3_env \
        /bin/bash -c \
-       'jekyll serve --host=0.0.0.0 --draft'
+       'jekyll serve --host=0.0.0.0'
