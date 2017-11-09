@@ -1,0 +1,89 @@
+---
+layout: post
+title: Local line spacing in LaTeX Beamer
+permalink: line-spacing-beamer
+date: 2017-11-08
+categories:
+ - LaTeX
+tags:
+ - LaTeX
+ - Beamer
+ - tools
+---
+
+<p>
+Selecting appropriate line spacing is crucial in order make comprehensible presentations in LaTeX Beamer. Sometimes the line spacing needs to be varied locally.<br  />
+</p>
+
+<!-- more -->
+
+<p>
+This can be done easily using the <a href="https://ctan.org/pkg/setspace?lang=en">setspace</a> package and <code>\setstretch{}</code> command, as long as one remembers to end the paragraph with <code>\\</code>, as pointed out by user vita001 on the forums of <a href="http://latex.org/forum/viewtopic.php?t=12424">latex.org</a>.<br  />
+</p>
+
+<p>
+The following example slide<br  />
+</p>
+
+<img src="{{ site.baseurl }}/assets/latex-beamer-line-spacing.png" width="90%" style="display:block;margin:2em auto 2em;"/>
+
+
+
+<p>
+is produced by the following template<br  />
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-latex"><span style="color: #859900;">\documentclass</span>{<span style="color: #6c71c4;">beamer</span>}
+
+<span style="color: #859900;">\usepackage</span>{<span style="color: #6c71c4;">setspace</span>}
+
+<span style="color: #859900;">\useinnertheme</span>{default}
+<span style="color: #859900;">\beamertemplatenavigationsymbolsempty</span>
+
+<span style="color: #859900;">\begin</span>{<span style="color: #268bd2;">document</span>}
+
+<span style="color: #859900;">\begin</span>{<span style="color: #268bd2;">frame</span>}{Line spacing in Beamer}
+  <span style="color: #657b83; font-style: italic;">% </span>
+  <span style="color: #859900;">\begin</span>{<span style="color: #268bd2;">columns</span>}
+    <span style="color: #657b83; font-style: italic;">%</span>
+    <span style="color: #859900;">\begin</span>{<span style="color: #268bd2;">column</span>}{.45<span style="color: #859900;">\textwidth</span>}
+
+      Using the <span style="color: #859900;">\texttt</span>{setspace} package, locally 
+      different line spacing can be achieved.
+
+      <span style="color: #859900;">\vspace</span>{0.7cm}
+
+      {<span style="color: #859900;">\setstretch</span>{2.0} For this, use the <span style="color: #859900;">\texttt</span>{setstretch}
+        command to get, for example, double spacing. It's 
+        <span style="color: #859900;">\textbf</span>{<span style="font-weight: bold;">important</span>} that you end your paragraph with
+        ``<span style="color: #859900;">\texttt</span>{<span style="color: #859900;">\textbackslash\textbackslash</span>}''.<span style="color: #dc322f; font-weight: bold;">\\</span>}
+
+    <span style="color: #859900;">\end</span>{<span style="color: #268bd2;">column</span>}
+    <span style="color: #657b83; font-style: italic;">%</span>
+    <span style="color: #859900;">\begin</span>{<span style="color: #268bd2;">column</span>}{.45<span style="color: #859900;">\textwidth</span>}
+
+      {<span style="color: #859900;">\setstretch</span>{2.5} With the symbol line space adjustment 
+       works fine for many values.<span style="color: #dc322f; font-weight: bold;">\\</span>}
+
+      <span style="color: #859900;">\vspace</span>{1.3cm}
+
+      {<span style="color: #859900;">\setstretch</span>{5.0} But without it, no matter the 
+       setstretch value, the paragraph has default spacing.}
+
+      <span style="color: #859900;">\vspace</span>{1.6cm}
+
+    <span style="color: #859900;">\end</span>{<span style="color: #268bd2;">column</span>}
+    <span style="color: #657b83; font-style: italic;">%</span>
+  <span style="color: #859900;">\end</span>{<span style="color: #268bd2;">columns</span>}
+  <span style="color: #657b83; font-style: italic;">%</span>
+<span style="color: #859900;">\end</span>{<span style="color: #268bd2;">frame</span>}
+
+<span style="color: #859900;">\end</span>{<span style="color: #268bd2;">document</span>}
+</pre>
+</div>
+
+<p>
+The code is also on <a href="https://github.com/Felix11H/latex-beamer-line-spacing-template">GitHub</a>.<br  />
+</p>

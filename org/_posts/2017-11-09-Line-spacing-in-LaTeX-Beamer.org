@@ -1,0 +1,89 @@
+#+STARTUP: noindent showeverything
+#+OPTIONS: toc:nil; html-postamble:nil
+#+BEGIN_HTML
+---
+layout: post
+title: Local line spacing in LaTeX Beamer
+permalink: line-spacing-beamer
+date: 2017-11-08
+categories:
+ - LaTeX
+tags:
+ - LaTeX
+ - Beamer
+ - tools
+---
+#+END_HTML
+
+Selecting appropriate line spacing is crucial in order make comprehensible presentations in LaTeX Beamer. Sometimes the line spacing needs to be varied locally. 
+
+#+BEGIN_HTML
+<!-- more -->
+#+END_HTML
+
+This can be done easily using the [[https://ctan.org/pkg/setspace?lang%3Den][setspace]] package and ~\setstretch{}~ command, as long as one remembers to end the paragraph with ~\\~, as pointed out by user vita001 on the forums of [[http://latex.org/forum/viewtopic.php?t%3D12424][latex.org]].
+
+The following example slide 
+
+#+BEGIN_HTML
+<img src="{{ site.baseurl }}/assets/latex-beamer-line-spacing.png" width="90%" style="display:block;margin:2em auto 2em;"/>
+#+END_HTML
+
+
+
+is produced by the following template
+
+#+BEGIN_SRC latex
+
+\documentclass{beamer}
+
+\usepackage{setspace}
+
+\useinnertheme{default}
+\beamertemplatenavigationsymbolsempty
+
+\begin{document}
+
+\begin{frame}{Line spacing in Beamer}
+  % 
+  \begin{columns}
+    %
+    \begin{column}{.45\textwidth}
+
+      Using the \texttt{setspace} package, locally 
+      different line spacing can be achieved.
+
+      \vspace{0.7cm}
+
+      {\setstretch{2.0} For this, use the \texttt{setstretch}
+        command to get, for example, double spacing. It's 
+        \textbf{important} that you end your paragraph with
+        ``\texttt{\textbackslash\textbackslash}''.\\}
+
+    \end{column}
+    %
+    \begin{column}{.45\textwidth}
+
+      {\setstretch{2.5} With the symbol line space adjustment 
+       works fine for many values.\\}
+
+      \vspace{1.3cm}
+
+      {\setstretch{5.0} But without it, no matter the 
+       setstretch value, the paragraph has default spacing.}
+
+      \vspace{1.6cm}
+
+    \end{column}
+    %
+  \end{columns}
+  %
+\end{frame}
+
+\end{document}
+
+#+END_SRC
+
+The code is also on [[https://github.com/Felix11H/latex-beamer-line-spacing-template][GitHub]].
+
+
