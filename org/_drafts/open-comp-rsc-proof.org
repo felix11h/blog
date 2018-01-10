@@ -1,0 +1,98 @@
+#+STARTUP: noindent showeverything
+#+OPTIONS: toc:nil; html-postamble:nil
+#+BEGIN_HTML
+---
+layout: post
+title: Open Computational Research Study - Proof of Concept
+permalink: open-comp-rsc-concept
+date: 2018-01-01
+categories:
+tags:
+---
+#+END_HTML
+
+Computational research is often published without the code and computational environment that generated the results, failing to meet openness and reproducibility criteria that are demanded by a growing number of researchers and journals[fn:nosek][fn:openneuro][fn:nature].
+
+Here I'm presenting a proof of concept, how code and results of a complex computational research project can be published in a way to hopefully satisfy all openness and reproducibility requirements. Requiring only a Docker installation, it should be possible for users on any system to comprehend and reproduce any and all parts of the study.
+
+#+BEGIN_HTML
+<!-- more -->
+#+END_HTML
+
+Specifically, the concept presented here addresses two issues not typically considered when publishing scientific code:
+
+1. Research code published without its computational dependencies may become exceedingly difficult to compile and execute, to the point that a rewrite of the study from the ground becomes a preferred solution over trying to recreate the computational environment[fn:topa][fn:rescience].
+2. A large computational project that is not sufficiently documented (which computations, when, why and how?) might be reproducible but in the sense a single run command creates all the figures shown the paper, but it might not be comprehendable for anyone not having written the code. Moreover, if the simulations are computationally expensive, it might be of importance to be able to identify and reproduce selected parts of the project.
+
+Both points may be equally detrimental to any effort of /straightforwardly/ reproducing the results. To the address 
+
+and code that fails to document how different computations need to be executed 
+
+
+
+* Implementation
+
+The implementation I'm suggesting here relies on two main software solutions: [[https://docs.docker.com/][Docker]], to provide an isolated computational environment that contains all needed dependencies and [[http://neuralensemble.org/sumatra/][Sumatra]], to provide a lab notebook of the computational project to be able to comprehend and replicate parts of a large and complex computational study.
+
+The Docker image in this example can be found on [[https://hub.docker.com/r/felix11h/docker-open-comp-rsc/][Docker Hub]] and is built from the following Dockerfile
+
+#+BEGIN_SRC Dockerfile
+FROM ubuntu:16.04
+MAINTAINER felix11h.dev@gmail.com
+
+USER root
+
+RUN apt-get -qy update
+RUN apt-get install -qy apt-utils python python-dev python-pip git screen 
+
+RUN pip install --upgrade pip
+RUN pip install numpy scipy matplotlib sumatra gitpython configparser 
+
+RUN useradd -ms /bin/bash docker
+USER docker
+#+END_SRC
+
+There are different levels of preservation of the computational environment that need to be considered[fn:gruening]. A Dockerfile alone will eventually not be sufficient to reproduce the environment as versions of the required libraries and their availability may quickly change[fn:docker_test]. To ensure that the computational environment remains available, the Docker image is archived at Zenodo as described in this [[https://www.software.ac.uk/blog/2016-09-12-reproducible-research-citing-your-execution-environment-using-docker-and-doi][article]] by Robert Haines and Caroline Jay. 
+
+With the Docker container running, the lab notebook interface of Sumatra can be accessed on the same machine through a web browser, displaying all information on simulations ("records") that were run and what data they produced:
+
+#+BEGIN_HTML
+<img src="{{ site.baseurl }}/assets/open-com-rsc-sumatra.gif" width="90%" style="display:block;margin:2em auto 2em;"/>
+#+END_HTML
+
+
+* Replication
+
+All data needed to is found at Zenodo. In the downloadable archive I'm providing the . The computational environment is provided in form of a Docker image, which is mostly easily obtained by simply executing the ~access_lab.sh~ script, the . For purposes of demonstration, the image is separately also available at Zenodo and after unpacking unpacking the archive can be added to the machine local images via
+
+:  
+
+Note that only part of this repository is in under git version control. This is done by design - parameters data, should not. This way. However, the full repository. 
+
+Steps needed to access the environment and replicate results
+
+1. Install Docker on your machine  
+2. Download the
+3. Access the container by executing the ~access_lab~ script (currently provided for Windows 7 and Linux)
+4. 
+
+This process, specifically steps 3. and 4. are illustrated below:
+
+
+#+BEGIN_HTML
+<img src="{{ site.baseurl }}/assets/open-com-rsc-sumatra_2.gif" width="90%" style="display:block;margin:2em auto 2em;"/>
+#+END_HTML
+
+
+
+
+
+* form of publication
+
+[fn:nosek] https://twitter.com/BrianNosek/status/949015512633274368
+[fn:openneuro] http://www.opensourceforneuroscience.org/
+[fn:nature] http://www.nature.com/authors/policies/availability.html
+[fn:rescience] Rougier, N. P. /et al./ Sustainable computational science: the ReScience initiative. [[https://arxiv.org/abs/1707.04393][arXiv:1707.04393]] (2017)
+[fn:gruening] Grüning, B. /et al./ Practical computational reproducibility in the life sciences.[[https://doi.org/10.1101/200683][ bioRxiv 200683]] (2017)
+[fn:docker_test] https://github.com/Felix11H/docker-reproduction-of-published-images
+[fn:topa] Topalidou, M., Leblois, A., Boraud, T. & Rougier, N. P. /A long journey into reproducible computational neuroscience/. Front. Comput. Neurosci. 9, (2015). 
