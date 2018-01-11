@@ -22,19 +22,26 @@ Here I'm presenting a proof of concept, how code and results of a complex comput
 Specifically, the concept presented here addresses two issues not typically considered when publishing scientific code:
 
 1. Research code published without its computational dependencies may become exceedingly difficult to compile and execute, to the point that a rewrite of the study from the ground becomes a preferred solution over trying to recreate the computational environment[fn:topa][fn:rescience].
-2. A large computational project that is not sufficiently documented (which computations, when, why and how?) might be reproducible but in the sense a single run command creates all the figures shown the paper, but it might not be comprehendable for anyone not having written the code. Moreover, if the simulations are computationally expensive, it might be of importance to be able to identify and reproduce selected parts of the project.
+2. A large computational project that is not sufficiently documented (which computations, when, why and how?) might be reproducible but in the sense a single run command creates all the figures shown the paper, but it might not be comprehensible. Moreover, if the simulations are computationally expensive, it might be of importance to be able to identify and reproduce only selected parts of the project.
+   
+Both points may be equally detrimental to any effort of /straightforwardly/ reproducing the computational results of a study. To demonstrate my concept I have created an example study (download here), containing two simple computations, that anyone having a Docker installation should be able to reproduce and expand. 
 
-Both points may be equally detrimental to any effort of /straightforwardly/ reproducing the results. To the address 
-
-and code that fails to document how different computations need to be executed 
+Below I'm describing my motivation for this project and give more detail on the technical implementation. I would love to hear your thoughts and feedback!
 
 
+* Motivation
 
-* Implementation
+Reproduction of computational research results can take place on many different levels. From a ground up implementation based purely on descriptions in the article, to the author of the study running their code on their own machine, ideally the results of the study should be reproducible in any setting. 
 
-The implementation I'm suggesting here relies on two main software solutions: [[https://docs.docker.com/][Docker]], to provide an isolated computational environment that contains all needed dependencies and [[http://neuralensemble.org/sumatra/][Sumatra]], to provide a lab notebook of the computational project to be able to comprehend and replicate parts of a large and complex computational study.
+Publication of research code is now highly encouraged and in some cases mandatory. When dealing with a complex computational project however, simply publishing the research code might not enable others to reproduce without significant effort. If the computational environment is highly customized, for example, 
 
-The Docker image in this example can be found on [[https://hub.docker.com/r/felix11h/docker-open-comp-rsc/][Docker Hub]] and is built from the following Dockerfile
+
+* An Example Study
+
+To address the issues above, the concept that I'm proposing relies on two software solutions: [[https://docs.docker.com/][Docker]], to provide an isolated computational environment that contains all needed dependencies and [[http://neuralensemble.org/sumatra/][Sumatra]], to provide a lab notebook of the computational project to be able to comprehend and replicate parts of a large and complex computational study.
+
+
+The Docker image in this example can be found on [[https://hub.docker.com/r/felix11h/docker-open-comp-rsc/][Docker Hub]] and is built from the following simple Dockerfile
 
 #+BEGIN_SRC Dockerfile
 FROM ubuntu:16.04
