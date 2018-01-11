@@ -1,0 +1,144 @@
+---
+layout: post
+title: Open Computational Research Study - A Proof of Concept
+permalink: open-comp-rsc-concept
+date: 2018-01-11
+categories:
+tags:
+---
+
+<p>
+Computational research is often published without the code and computational environment that generated the results, failing to meet openness and reproducibility criteria that are demanded by a growing number of researchers and journals<sup><a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a></sup><sup>, </sup><sup><a id="fnr.2" name="fnr.2" class="footref" href="#fn.2">2</a></sup><sup>, </sup><sup><a id="fnr.3" name="fnr.3" class="footref" href="#fn.3">3</a></sup>.<br  />
+</p>
+
+<p>
+Here I'm presenting a proof of concept, how code and results of a complex computational research project can be published in a way to satisfy important openness and reproducibility requirements. Requiring only a Docker installation, it should be possible for users on any system to comprehend and reproduce any and all parts of a project shared this way.<br  />
+</p>
+
+<!-- more -->
+
+<p>
+Specifically, the concept presented here addresses two issues not typically considered when publishing scientific code:<br  />
+</p>
+
+<ol class="org-ol">
+<li>Research code published without its computational dependencies may become exceedingly difficult to compile and execute, to the point that a rewrite of the code from the ground becomes a preferred solution over trying to recreate the computational environment<sup><a id="fnr.4" name="fnr.4" class="footref" href="#fn.4">4</a></sup><sup>, </sup><sup><a id="fnr.5" name="fnr.5" class="footref" href="#fn.5">5</a></sup>.<br  />
+</li>
+<li>A large computational project that is not sufficiently documented (which computations, when, why and how?) might be reproducible in the sense that a single run command creates all the figures shown the paper, but it might not be comprehensible, failing to show which parts of the code affect which results. Moreover, if the simulations are computationally expensive, it might be of importance to be able to identify and reproduce only selected parts of the project.<br  />
+</li>
+</ol>
+
+<p>
+Both points may be equally detrimental to any effort of <i>straightforwardly</i> reproducing the computational results of a study. To demonstrate the concept I'm proposing here, I have created an <a href="http://doi.org/10.5281/zenodo.1145678">example study</a> that anyone having a Docker installation should be able to reproduce and expand.<br  />
+</p>
+
+<p>
+Below I'm describing this example study in detail and explain how it is implemented. I would love to hear your thoughts and feedback!<br  />
+</p>
+
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">An Example Study</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+I've created a small <a href="http://doi.org/10.5281/zenodo.1145678">computational project</a> to demonstrate a way how the above issues may be solved in practice. My proposed solution relies on two main components: <a href="https://docs.docker.com/">Docker</a>, to provide an isolated computational environment that contains all needed dependencies and <a href="http://neuralensemble.org/sumatra/">Sumatra</a>, to provide a lab notebook of the computational project to be able to comprehend and replicate parts of a large and complex computational study.<br  />
+</p>
+
+<p>
+To reproduce the study, it is sufficient to download the <a href="http://doi.org/10.5281/zenodo.1145678">archive</a> containing the code and data, given that Docker is installed. In the archive I'm providing convenient access scripts to the computational environment for Linux, Mac and Windows 7 systems (I'm not able to test on other Windows versions).<br  />
+</p>
+
+<p>
+For example on Linux one would change into the unpacked archive and execute the corresponding access script<br  />
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">$ cd ~/open-comp-rsc
+$ source access_lab_linux.sh
+</pre>
+</div>
+
+<p>
+This runs the Docker image <code>felix11h/docker-open-comp-rsc</code>, which will be automatically downloaded from <a href="https://hub.docker.com/r/felix11h/docker-open-comp-rsc/">Docker Hub</a>, if it is not available on the machine already. In addition it hosts the current directory containing the code and data and runs the Sumatra lab notebook in the background.<br  />
+</p>
+
+<p>
+With this, the full research environment is now accessible to the user. To access the lab notebook for example, one can simply navigate the browser to the address printed in the terminal. The whole process is demonstrated in the animation below:<br  />
+</p>
+
+<img src="{{ site.baseurl }}/assets/open-com-rsc-sumatra_2.gif" width="90%" style="display:block;margin:2em auto 2em;"/>
+
+<p>
+One reason the Sumatra lab notebook is included is the ability to easily verify the results of any computation. To do this one can use the <code>smt repeat</code> command. To verify, for example, the results of the comupatation with label <code>18e35e47</code>, one can use the command<br  />
+</p>
+
+<pre class="example">
+$ smt repeat 18e35e47
+</pre>
+
+<p>
+The printed output should verify the results. Note that this doesn't only compare to output data file but checks various parameters that might influence results:<br  />
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">$ smt diff 18e35e47 20180111-121253
+Record 1                : 18e35e47
+Record 2                : 20180111-121253
+Executable differs      : no
+Code differs            : no
+  Repository differs    : no
+  Main file differs     : no
+  Version differs       : no
+  Non checked-in code   : no
+  Dependencies differ   : no
+Launch mode differs     : no
+Input data differ       : no
+Script arguments differ : no
+Parameters differ       : no
+Data differ             : no
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2">Going Forward</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Publishing a computational research project in this proposed format should provide direct access to the results of the study and a way to reproduce and interact with the code and data through the lab notebook interface. With the example study I provided I could shown that such an implementation is possible, however the concept still needs to be proven on the scale of a full study.<br  />
+</p>
+
+<p>
+As part of my participation in the <a href="https://en.wikiversity.org/wiki/Wikimedia_Deutschland/Open_Science_Fellows_Program">Open Science Fellows Program</a>, I'm <a href="https://de.wikiversity.org/wiki/Wikiversity:Fellow-Programm_Freies_Wissen/Einreichungen/Open_computational_research_study">planning</a> to publish my computational neuroscience research following this format. For this, and this is part of my motivation for this post, I want to ask for your feedback. Does the concept I present make for an open, reproducible computational research study? What aspects are you missing? What problems are you foreseeing? I would be very grateful for your feedback!<br  />
+</p>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" name="fn.1" class="footnum" href="#fnr.1">1</a></sup> <p class="footpara">
+<a href="https://twitter.com/BrianNosek/status/949015512633274368">https://twitter.com/BrianNosek/status/949015512633274368</a><br  />
+</p></div>
+
+<div class="footdef"><sup><a id="fn.2" name="fn.2" class="footnum" href="#fnr.2">2</a></sup> <p class="footpara">
+<a href="http://www.opensourceforneuroscience.org/">http://www.opensourceforneuroscience.org/</a><br  />
+</p></div>
+
+<div class="footdef"><sup><a id="fn.3" name="fn.3" class="footnum" href="#fnr.3">3</a></sup> <p class="footpara">
+<a href="http://www.nature.com/authors/policies/availability.html">http://www.nature.com/authors/policies/availability.html</a><br  />
+</p></div>
+
+<div class="footdef"><sup><a id="fn.4" name="fn.4" class="footnum" href="#fnr.4">4</a></sup> <p class="footpara">
+Topalidou, M., Leblois, A., Boraud, T. &amp; Rougier, N. P. <i>A long journey into reproducible computational neuroscience</i>. Front. Comput. Neurosci. 9, (2015).<br  />
+</p></div>
+
+<div class="footdef"><sup><a id="fn.5" name="fn.5" class="footnum" href="#fnr.5">5</a></sup> <p class="footpara">
+Rougier, N. P. <i>et al.</i> Sustainable computational science: the ReScience initiative. <a href="https://arxiv.org/abs/1707.04393">arXiv:1707.04393</a> (2017)<br  />
+</p></div>
+
+
+</div>
+</div>
