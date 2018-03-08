@@ -5,7 +5,7 @@
 layout: post
 title: Open Computational Research Study - A Proof of Concept
 permalink: open-comp-rsc-concept
-date: 2018-01-11
+date: 2018-03-08
 categories:
 tags:
 ---
@@ -24,16 +24,63 @@ Specifically, the concept presented here addresses two issues not typically cons
 1. Research code published without its computational dependencies may become exceedingly difficult to compile and execute, to the point that a rewrite of the code from the ground up becomes a preferred solution over trying to recreate the computational environment[fn:topa][fn:rescience].
 2. A large computational project that is not sufficiently documented (which computations, when, why and how?) might be reproducible in the sense that a single run command creates all the figures shown the paper, but it might not be comprehensible, failing to show which parts of the code affect which results. Moreover, if the simulations are computationally expensive, it might be of importance to be able to identify and reproduce only selected parts of the project.
    
-Both points may be equally detrimental to any effort of /straightforwardly/ reproducing the computational results of a study. To demonstrate the concept I'm proposing here, I have created an [[http://doi.org/10.5281/zenodo.1145678][example study]] that anyone having a Docker installation should be able to reproduce and expand. 
+Both points may be equally detrimental to any effort of /straightforwardly/ reproducing the computational results of a study. To demonstrate the concept I'm proposing here, I have created an [[http://dx.doi.org/10.5281/zenodo.1188953][example study]] that anyone having a Docker installation should be able to reproduce and expand. 
 
 Below I'm describing this example study in detail and explain how it is implemented. I would love to hear your thoughts and feedback!
 
 
 * An Example Study
 
-I've created a small [[http://doi.org/10.5281/zenodo.1145678][computational project]] to demonstrate a way how the above issues may be solved in practice. My proposed solution relies on two main components: [[https://docs.docker.com/][Docker]], to provide an isolated computational environment that contains all needed dependencies and [[http://neuralensemble.org/sumatra/][Sumatra]], to provide a lab notebook of the computational project to be able to comprehend and replicate parts of a large and complex computational study.
+I've created a small [[https://zenodo.org/record/1188953][computational project]] to demonstrate a way how the above issues may be solved in practice. My proposed solution relies on two main components: [[https://docs.docker.com/][Docker]], to provide an isolated computational environment that contains all needed dependencies and [[http://neuralensemble.org/sumatra/][Sumatra]], to provide a lab notebook of the computational project to be able to comprehend and replicate parts of a large and complex computational study.
 
-To reproduce the study, it is sufficient to download the [[http://doi.org/10.5281/zenodo.1145678][archive]] containing the code and data, given that Docker is installed. In the archive I'm providing convenient access scripts to the computational environment for Linux, Mac and Windows 7 systems (I'm not able to test on other Windows versions). 
+The downloadable [[https://zenodo.org/record/1188953/files/open-comp-rsc.tar.gz][archive]] for this example project contains the Python source code and the data it generated. Additionally included is version control (~.git/~) and simulation record information (~.smt/~). Finally, I provided scripts to access the computational environment through Docker for Linux, Mac and Windows 7 systems (I'm not able to test on other Windows versions).
+
+For Linux systems for example, ~access_lab_linux.sh~ contains
+
+#+BEGIN_SRC sh
+#!/bin/bash
+
+docker run -it -p 127.0.0.1:8015:8000 \
+       --user="$(id -u):$(id -g)" \
+       -v $(pwd):/home/lab \
+       felix11h/docker-open-comp-rsc \
+       /bin/bash -c \
+       'cd /home/lab/comp/;
+        screen -d -m smtweb --allips;
+        source ../startup_messg_linux.sh;
+         bash'
+#+END_SRC
+
+Running the script first tells Docker to run the image ~felix11h/open-com-rsc~. As the image is very likely not found on your machine, the image will be automatically downloaded from [[https://hub.docker.com/r/felix11h/docker-open-comp-rsc/][Docker Hub]]. This is convenient for users, but has another advantage: As the image was built by Docker Hub, you can verify the contents of the image by inspecting the associated [[https://hub.docker.com/r/felix11h/docker-open-comp-rsc/~/dockerfile/][Dockerfile]]. In this case the image was built from the following Dockerfile
+
+#+BEGIN_SRC Dockerfile
+FROM ubuntu:16.04 
+MAINTAINER felix11h.dev@gmail.com
+
+USER root 
+
+RUN apt-get -qy update 
+RUN apt-get install -qy apt-utils python python-dev python-pip git screen 
+
+RUN pip install --upgrade pip 
+RUN pip install numpy scipy matplotlib sumatra gitpython configparser 
+
+RUN useradd -ms /bin/bash docker
+USER docker
+#+END_SRC
+
+Once the image is downloaded, a few more things happen: The current directory containing code and data is mounted within the Docker container, the address ~0.0.0.0:8000~ in the container is mapped to ~127.0.0.1:8015~ on the host and the Sumatra web interface ~smtweb~ is run in a background screen and, finally, a welcome message is printed once the container is accessed.
+
+The steps from downloading the archive to accessing the container are illustrated in the animation below
+
+#+BEGIN_HTML
+<img src="{{ site.baseurl }}/assets/open-com-rsc_animated-docker.gif" width="85%" style="display:block;margin:2em auto 2em;"/>
+#+END_HTML
+
+
+
+
+, given that Docker is installed. In the archive I'm providing convenient access scripts to the computational environment for Linux, Mac and Windows 7 systems (I'm not able to test on other Windows versions). 
 
 For example on Linux one would change into the unpacked archive and execute the corresponding access script 
 
