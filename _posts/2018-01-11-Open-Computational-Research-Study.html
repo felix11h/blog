@@ -2,7 +2,7 @@
 layout: post
 title: Open Computational Research Study - A Proof of Concept
 permalink: open-comp-rsc-concept
-date: 2018-01-11
+date: 2018-03-08
 categories:
 tags:
 ---
@@ -29,7 +29,7 @@ Specifically, the concept presented here addresses two issues not typically cons
 </ol>
 
 <p>
-Both points may be equally detrimental to any effort of <i>straightforwardly</i> reproducing the computational results of a study. To demonstrate the concept I'm proposing here, I have created an <a href="http://doi.org/10.5281/zenodo.1145678">example study</a> that anyone having a Docker installation should be able to reproduce and expand.<br  />
+Both points may be equally detrimental to any effort of <i>straightforwardly</i> reproducing the computational results of a study. To demonstrate the concept I'm proposing here, I have created an <a href="http://dx.doi.org/10.5281/zenodo.1188953">example study</a> that anyone having a Docker installation should be able to reproduce and expand.<br  />
 </p>
 
 <p>
@@ -41,50 +41,103 @@ Below I'm describing this example study in detail and explain how it is implemen
 <h2 id="sec-1">An Example Study</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-I've created a small <a href="http://doi.org/10.5281/zenodo.1145678">computational project</a> to demonstrate a way how the above issues may be solved in practice. My proposed solution relies on two main components: <a href="https://docs.docker.com/">Docker</a>, to provide an isolated computational environment that contains all needed dependencies and <a href="http://neuralensemble.org/sumatra/">Sumatra</a>, to provide a lab notebook of the computational project to be able to comprehend and replicate parts of a large and complex computational study.<br  />
+I've created a small <a href="https://zenodo.org/record/1188953">computational project</a> to demonstrate a way how the above issues may be solved in practice. My proposed solution relies on two main components: <a href="https://docs.docker.com/">Docker</a>, to provide an isolated computational environment that contains all needed dependencies and <a href="http://neuralensemble.org/sumatra/">Sumatra</a>, to provide a lab notebook of the computational project to be able to comprehend and replicate parts of a large and complex computational study.<br  />
 </p>
 
 <p>
-To reproduce the study, it is sufficient to download the <a href="http://doi.org/10.5281/zenodo.1145678">archive</a> containing the code and data, given that Docker is installed. In the archive I'm providing convenient access scripts to the computational environment for Linux, Mac and Windows 7 systems (I'm not able to test on other Windows versions).<br  />
+The downloadable <a href="https://zenodo.org/record/1188953/files/open-comp-rsc.tar.gz">archive</a> for this example project contains the Python source code and the data it generated. Additionally included is version control (<code>.git/</code>) and simulation record information (<code>.smt/</code>). Finally, I provided scripts to access the computational environment through Docker for Linux, Mac and Windows 7 systems (I'm not able to test on other Windows versions).<br  />
 </p>
 
 <p>
-For example on Linux one would change into the unpacked archive and execute the corresponding access script<br  />
+For Linux systems for example, <code>access_lab_linux.sh</code> contains<br  />
 </p>
 
 <div class="org-src-container">
 
-<pre class="src src-sh">$ cd ~/open-comp-rsc
-$ source access_lab_linux.sh
+<pre class="src src-sh"><span style="color: #586e75; font-style: italic;">#</span><span style="color: #657b83; font-style: italic;">!/bin/</span><span style="color: #859900;">bash</span>
+
+docker run -it -p 127.0.0.1:8015:8000 <span style="color: #2aa198;">\</span>
+       --user=<span style="color: #2aa198;">"$(</span><span style="color: #839496;">id</span><span style="color: #2aa198;"> -u):$(</span><span style="color: #839496;">id</span><span style="color: #2aa198;"> -g)"</span> <span style="color: #2aa198;">\</span>
+       -v $(<span style="color: #839496;">pwd</span>):/home/lab <span style="color: #2aa198;">\</span>
+       felix11h/docker-open-comp-rsc <span style="color: #2aa198;">\</span>
+       /bin/bash -c <span style="color: #2aa198;">\</span>
+       <span style="color: #2aa198;">'cd /home/lab/comp/;</span>
+<span style="color: #2aa198;">        screen -d -m smtweb --allips;</span>
+<span style="color: #2aa198;">        source ../startup_messg_linux.sh;</span>
+<span style="color: #2aa198;">         bash'</span>
 </pre>
 </div>
 
 <p>
-This runs the Docker image <code>felix11h/docker-open-comp-rsc</code>, which will be automatically downloaded from <a href="https://hub.docker.com/r/felix11h/docker-open-comp-rsc/">Docker Hub</a>, if it is not available on the machine already. In addition it hosts the current directory containing the code and data and runs the Sumatra lab notebook in the background.<br  />
-</p>
-
-<p>
-With this, the full research environment is now accessible to the user. To access the lab notebook for example, one can simply navigate the browser to the address printed in the terminal. The whole process is demonstrated in the animation below:<br  />
-</p>
-
-<img src="{{ site.baseurl }}/assets/open-com-rsc-sumatra_2.gif" width="90%" style="display:block;margin:2em auto 2em;"/>
-
-<p>
-One reason the Sumatra lab notebook is included is the ability to easily verify the results of any computation. To do this one can use the <code>smt repeat</code> command. To verify, for example, the results of the comupatation with label <code>18e35e47</code>, one can use the command<br  />
-</p>
-
-<pre class="example">
-$ smt repeat 18e35e47
-</pre>
-
-<p>
-The printed output should verify the results. Note that this doesn't only compare to output data file but checks various parameters that might influence results:<br  />
+Running the script first tells Docker to run the image <code>felix11h/open-com-rsc</code>. As the image is very likely not found on your machine, the image will be automatically downloaded from <a href="https://hub.docker.com/r/felix11h/docker-open-comp-rsc/">Docker Hub</a>. This is convenient for users, but has another advantage: As the image was built by Docker Hub, you can verify the contents of the image by inspecting the associated <a href="https://hub.docker.com/r/felix11h/docker-open-comp-rsc/~/dockerfile/">Dockerfile</a>. In this case the image was built from the following Dockerfile<br  />
 </p>
 
 <div class="org-src-container">
 
-<pre class="src src-sh">$ smt diff 18e35e47 20180111-121253
-Record 1                : 18e35e47
+<pre class="src src-Dockerfile"><span style="color: #859900;">FROM</span> ubuntu:16.04 
+<span style="color: #859900;">MAINTAINER</span> felix11h.dev@gmail.com
+
+<span style="color: #859900;">USER</span> root 
+
+<span style="color: #859900;">RUN</span> apt-get -qy update 
+<span style="color: #859900;">RUN</span> apt-get install -qy apt-utils python python-dev python-pip git screen 
+
+<span style="color: #859900;">RUN</span> pip install --upgrade pip 
+<span style="color: #859900;">RUN</span> pip install numpy scipy matplotlib sumatra gitpython configparser 
+
+<span style="color: #859900;">RUN</span> useradd -ms /bin/bash docker
+<span style="color: #859900;">USER</span> docker
+</pre>
+</div>
+
+<p>
+Once the image is downloaded, a few more things happen: The current directory containing code and data is mounted within the Docker container, the address <code>0.0.0.0:8000</code> in the container is mapped to <code>127.0.0.1:8015</code> on the host, the Sumatra web interface <code>smtweb</code> is run in a background screen and, finally, a welcome message is printed once the container is accessed.<br  />
+</p>
+
+<p>
+The 5 steps from downloading the archive to accessing the container are illustrated in the animation below<br  />
+</p>
+
+<img src="{{ site.baseurl }}/assets/open-com-rsc_animated-docker.gif" width="80%" style="display:block;margin:2em auto 5em;"/>
+</div>
+</div>
+
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2">Sumatra lab notebook</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+With the Docker container the full research environment is now accessible to the user. To access the lab notebook for example, one can simply navigate the browser to the address printed in the terminal. On Linux systems one would open <code>http://127.0.0.1:8015</code>.<br  />
+</p>
+
+<p>
+This lab notebook was automatically generated by Sumatra while running the original simulations. The web interface lists all simulation records or, in the alternative view, all data of the computational project. The notebook contains the full information of the simulation: version of the code, parameters, input and output data information, dependencies, machine specification and standard output &#x2013; the full provenance of the results of this simulation is available. The animation below gives an overview of the lab notebooks contents of the example study<br  />
+</p>
+
+<img src="{{ site.baseurl }}/assets/open-com-rsc_animated-smtweb.gif" width="80%" style="display:block;margin:2em auto 5em;"/>
+</div>
+</div>
+
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3">Reproducibility</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Sumatra also provides the ability to easily replicate and verify the results of a given simulation via the <code>smt repeat</code> command. To verify, for example, the results of a computation with label <code>d6bcfd41</code>, one can use the command<br  />
+</p>
+
+<pre class="example">
+$ smt repeat d6bcfd41
+</pre>
+
+<p>
+This repeats the simulation <code>d6bcfd41</code> with the exact parameters and specifications as the original computation and records the output of this process under a new label. The printed output should verify that the reproduced and original simulation match exactly. Note that this doesn't only compare to output data file but checks various parameters that might influence results<br  />
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">$ smt diff d6bcfd41 20180111-121253
+Record 1                : d6bcfd41
 Record 2                : 20180111-121253
 Executable differs      : no
 Code differs            : no
@@ -100,14 +153,33 @@ Parameters differ       : no
 Data differ             : no
 </pre>
 </div>
+
+
+<p>
+In the example study I provide the script <code>repeat_all.sh</code> to repeat all computations of the project in chronological order<br  />
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh"><span style="color: #586e75; font-style: italic;">#</span><span style="color: #657b83; font-style: italic;">!/bin/</span><span style="color: #859900;">bash</span>
+
+smt list -r | xargs -L1 smt repeat
+</pre>
+</div>
+
+<p>
+With this all computations are executed in their original order &#x2013; the full study can be reproduced with this command. This also allows for sharing of the computational project without any generated data, which can be helpful if this data is large. The final animation shows the <code>smt repeat</code> command in the example study<br  />
+</p>
+
+<img src="{{ site.baseurl }}/assets/open-com-rsc_animated-smt-repeat.gif" width="80%" style="display:block;margin:2em auto 3.5em;"/>
 </div>
 </div>
 
-<div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2">Going Forward</h2>
-<div class="outline-text-2" id="text-2">
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4">Feedback?</h2>
+<div class="outline-text-2" id="text-4">
 <p>
-Publishing a computational research project in this proposed format should provide direct access to the results of the study and a way to reproduce and interact with the code and data through the lab notebook interface. With the example study I provided I could show that such an implementation is possible, however the concept still needs to be proven on the scale of a full study.<br  />
+Publishing computational research projects in this proposed format should provide direct access to the results and a straightfoward way to reproduce and interact with the code and generated results. With the example study I provided I wanted to show that such an implementation is possible, however the concept still needs to be proven on the scale of a full study.<br  />
 </p>
 
 <p>
