@@ -1,0 +1,86 @@
+#+STARTUP: noindent showeverything
+#+OPTIONS: toc:nil; html-postamble:nil
+#+BEGIN_EXPORT html
+---
+layout: post
+title: Installing Paprika on Ubuntu 16.04 using Wine
+permalink: install-paprika-wine
+date: 2020-05-07
+categories: 
+- linux
+tags:
+- wine
+---
+#+END_EXPORT
+
+Today I installed the recipe manager [[https://www.paprikaapp.com/][Paprika]] on Ubuntu 16.04 using [[https://www.winehq.org/][Wine]]. It is my first time installing an application with Wine and before I forget how I did this, I wanted to make a quick note of the steps I took.
+
+#+BEGIN_EXPORT html
+<!-- more -->
+#+END_EXPORT
+
+With a quick search I found a couple of forum posts [[[https://forum.winehq.org/viewtopic.php?t=26321][1]],[[https://forum.winehq.org/viewtopic.php?t=30742][2]]] discussing a Wine installation of Paprika. I couldn't get the suggested solutions from these posts to work, instead the method I had success with is described [[https://appdb.winehq.org/objectManager.php?sClass=version&iId=38674][here]]. 
+
+I first downloaded the Windows Paprika installer from the app's [[https://www.paprikaapp.com/windows/][website]]. I then installed Wine following the [[https://wiki.winehq.org/Ubuntu][instructions]] for Ubuntu 16.04
+
+#+BEGIN_SRC sh
+sudo dpkg --add-architecture i386 
+wget -O - https://dl.winehq.org/wine-builds/winehq.key | sudo apt-key add -
+sudo apt update
+sudo apt install --install-recommends winehq-stable
+#+END_SRC
+
+To get some dependencies I also got [[https://wiki.winehq.org/Winetricks#Installing_winetricks][winetricks]]. I just left the script in home folder and removed after the installation.
+
+#+BEGIN_SRC sh
+wget https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks
+chmod +x winetricks
+#+END_SRC
+
+I then ran
+#+BEGIN_SRC sh
+winecfg
+#+END_SRC
+and confirmed that the Windows version is set to Windows 7.
+
+Installing these dependencies took a long time, and I'm not sure if all of this is necessary, but this is the configuration that worked for me. I'm using here the ~winetricks~ script I downloaded earlier.
+
+#+BEGIN_SRC sh
+./winetricks allfonts
+./winetricks dotnet472
+./winetricks fontsmooth-rgb
+#+END_SRC
+
+Finally, I was able to install Paprika via
+#+BEGIN_SRC sh
+wine msiexec /i ~/PaprikaSetup.msi
+#+END_SRC
+
+After the installtion, the application can be run via
+#+BEGIN_SRC sh
+wine "c:\Program Files/Paprika Recipe Manager 3\Paprika.exe"
+#+END_SRC
+
+It doesn't look perfect, but I'm happy enough with it!
+
+#+BEGIN_EXPORT html
+<img src="{{ site.baseurl }}/assets/paprika_ubuntu_16-04.png" width="90%" style="display:block;margin:2em auto 2em;"/>
+#+END_EXPORT
+
+
+** Redshift 
+
+I quickly noticed that the Wine application collides with [[http://jonls.dk/redshift/][Redshift]]. When Paprika is started or, for example, the window is resized, screen gamma is changed. This interferes with Redshift's settings and leads to switching between different brightness settings. Here as well a solution is well [[https://wiki.archlinux.org/index.php/Redshift#Redshift_temporarily_resets_using_some_wine_apps_that_reset_gamma_values][documented]]. 
+
+Start the [[https://wiki.winehq.org/Useful_Registry_Keys][registry editor]] with
+#+BEGIN_SRC sh
+wine regedit
+#+END_SRC
+
+and in ~HKEY_CURRENT_USER\Software\Wine\X11 Driver~ (you might need to create this key) set ~UseXVidMode~ to ~N~, as shown in the screenshot below.
+
+#+BEGIN_EXPORT html
+<img src="{{ site.baseurl }}/assets/redshift_wine_regedit.png" width="80%" style="display:block;margin:2em auto 2em;"/>
+#+END_EXPORT
+
+Suggestions, comments or improvements on this? Please let me know!

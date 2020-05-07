@@ -1,0 +1,114 @@
+---
+layout: post
+title: Installing Paprika on Ubuntu 16.04 using Wine
+permalink: install-paprika-wine
+date: 2020-05-07
+categories: 
+- linux
+tags:
+- wine
+---
+
+<p>
+Today I installed the recipe manager <a href="https://www.paprikaapp.com/">Paprika</a> on Ubuntu 16.04 using <a href="https://www.winehq.org/">Wine</a>. It is my first time installing an application with Wine and before I forget how I did this, I wanted to make a quick note of the steps I took.<br />
+</p>
+
+<!-- more -->
+
+<p>
+With a quick search I found a couple of forum posts [<a href="https://forum.winehq.org/viewtopic.php?t=26321">1</a>,<a href="https://forum.winehq.org/viewtopic.php?t=30742">2</a>] discussing a Wine installation of Paprika. I couldn't get the suggested solutions from these posts to work, instead the method I had success with is described <a href="https://appdb.winehq.org/objectManager.php?sClass=version&amp;iId=38674">here</a>.<br />
+</p>
+
+<p>
+I first downloaded the Windows Paprika installer from the app's <a href="https://www.paprikaapp.com/windows/">website</a>. I then installed Wine following the <a href="https://wiki.winehq.org/Ubuntu">instructions</a> for Ubuntu 16.04<br />
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">sudo dpkg --add-architecture i386 
+wget -O - https://dl.winehq.org/wine-builds/winehq.key | sudo apt-key add -
+sudo apt update
+sudo apt install --install-recommends winehq-stable
+</pre>
+</div>
+
+<p>
+To get some dependencies I also got <a href="https://wiki.winehq.org/Winetricks#Installing_winetricks">winetricks</a>. I just left the script in home folder and removed after the installation.<br />
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">wget https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks
+chmod +x winetricks
+</pre>
+</div>
+
+<p>
+I then ran<br />
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">winecfg
+</pre>
+</div>
+<p>
+and confirmed that the Windows version is set to Windows 7.<br />
+</p>
+
+<p>
+Installing these dependencies took a long time, and I'm not sure if all of this is necessary, but this is the configuration that worked for me. I'm using here the <code>winetricks</code> script I downloaded earlier.<br />
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">./winetricks allfonts
+./winetricks dotnet472
+./winetricks fontsmooth-rgb
+</pre>
+</div>
+
+<p>
+Finally, I was able to install Paprika via<br />
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">wine msiexec /i ~/PaprikaSetup.msi
+</pre>
+</div>
+
+<p>
+After the installtion, the application can be run via<br />
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">wine <span style="color: #2aa198;">"c:\Program Files/Paprika Recipe Manager 3\Paprika.exe"</span>
+</pre>
+</div>
+
+<p>
+It doesn't look perfect, but I'm happy enough with it!<br />
+</p>
+
+<img src="{{ site.baseurl }}/assets/paprika_ubuntu_16-04.png" width="90%" style="display:block;margin:2em auto 2em;"/>
+
+
+<div id="outline-container-org0261a5f" class="outline-2">
+<h2 id="org0261a5f">Redshift</h2>
+<div class="outline-text-2" id="text-org0261a5f">
+<p>
+I quickly noticed that the Wine application collides with <a href="http://jonls.dk/redshift/">Redshift</a>. When Paprika is started or, for example, the window is resized, screen gamma is changed. This interferes with Redshift's settings and leads to switching between different brightness settings. Here as well a solution is well <a href="https://wiki.archlinux.org/index.php/Redshift#Redshift_temporarily_resets_using_some_wine_apps_that_reset_gamma_values">documented</a>.<br />
+</p>
+
+<p>
+Start the <a href="https://wiki.winehq.org/Useful_Registry_Keys">registry editor</a> with<br />
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">wine regedit
+</pre>
+</div>
+
+<p>
+and in <code>HKEY_CURRENT_USER\Software\Wine\X11 Driver</code> (you might need to create this key) set <code>UseXVidMode</code> to <code>N</code>, as shown in the screenshot below.<br />
+</p>
+
+<img src="{{ site.baseurl }}/assets/redshift_wine_regedit.png" width="80%" style="display:block;margin:2em auto 2em;"/>
+
+<p>
+Suggestions, comments or improvements on this? Please let me know!<br />
+</p>
+</div>
+</div>
