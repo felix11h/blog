@@ -6,14 +6,14 @@ permalink:           pretty
 
 # Setup
 title:               3 Diagrams per Page
-tagline:             Felix Z. Hoffmann's blog
-description:         Personal blog of Felix Z. Hoffmann on computational neuroscience, mathematics, open science and the tools he uses keep organizes his thoughts and ideas. 
+tagline:             Felix Hoffmann's blog
+description:         Personal blog of Felix Hoffmann on computational neuroscience, mathematics, open science and the tools he uses keep organizes his thoughts and ideas. 
 url:                 http://felix11h.github.io
 baseurl:             /blog
 
 # About/contact
 author:
-  name:              Felix Z. Hoffmann
+  name:              Felix Hoffmann
   url:               http://felix11h.github.io/
   email:             felix11h.dev@gmail.com
 
